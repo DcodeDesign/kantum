@@ -39,7 +39,12 @@
               }
             ],
             "styles": [
-              "src/styles.scss"
+              "src/scss/styles.scss",
+              {
+                "input": "src/scss/vendors/material/index.scss",
+                "bundleName": "theme",
+                "inject": true
+              }
             ],
             "scripts": []
           },
@@ -48,16 +53,17 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kB",
-                  "maximumError": "1MB"
+                  "maximumWarning": "10MB",
+                  "maximumError": "10MB"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kB",
-                  "maximumError": "4kB"
+                  "maximumWarning": "10MB",
+                  "maximumError": "10MB"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "serviceWorker": "ngsw-config.json"
             },
             "development": {
               "optimization": false,
@@ -98,9 +104,149 @@
               }
             ],
             "styles": [
-              "src/styles.scss"
+              "@angular/material/prebuilt-themes/azure-blue.css",
+              "src/scss/styles.scss",
+              {
+                "input": "src/scss/vendors/material/index.scss",
+                "bundleName": "theme",
+                "inject": true
+              }
             ],
-            "scripts": []
+            "scripts": [
+
+            ]
+          }
+        }
+      }
+    },
+    "ngx-tile-layout": {
+      "projectType": "library",
+      "root": "projects/ngx-tile-layout",
+      "sourceRoot": "projects/ngx-tile-layout/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/ngx-tile-layout/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ngx-tile-layout/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/ngx-tile-layout/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "projects/ngx-tile-layout/tsconfig.spec.json",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ]
+          }
+        }
+      }
+    },
+    "ngx-responsive-columns": {
+      "projectType": "library",
+      "root": "projects/ngx-responsive-columns",
+      "sourceRoot": "projects/ngx-responsive-columns/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/ngx-responsive-columns/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ngx-responsive-columns/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/ngx-responsive-columns/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "projects/ngx-responsive-columns/tsconfig.spec.json",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ]
+          }
+        }
+      }
+    },
+    "ngx-text-color-contrast": {
+      "projectType": "library",
+      "root": "projects/ngx-text-color-contrast",
+      "sourceRoot": "projects/ngx-text-color-contrast/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/ngx-text-color-contrast/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ngx-text-color-contrast/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/ngx-text-color-contrast/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "projects/ngx-text-color-contrast/tsconfig.spec.json",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ]
+          }
+        }
+      }
+    },
+    "ngx-material-themes": {
+      "projectType": "library",
+      "root": "projects/ngx-material-themes",
+      "sourceRoot": "projects/ngx-material-themes/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/ngx-material-themes/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ngx-material-themes/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/ngx-material-themes/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "projects/ngx-material-themes/tsconfig.spec.json",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ]
           }
         }
       }

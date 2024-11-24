@@ -1,0 +1,42 @@
+@use "@angular/material" as mat;
+
+@use "variables" as variables;
+@use "mixins" as mixins;
+
+@use 'custom-light' as light-theme;
+@use 'custom-dark' as dark-theme;
+
+@use "@angular/material/prebuilt-themes/azure-blue.css";
+
+@include mat.core();
+
+
+// Global theme styling
+html,
+body {
+  margin: 0;
+  height: 100%;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  color-scheme: light;
+
+  @include mixins.apply-theme-colors(light-theme.$light-theme);
+
+  &.dark-theme {
+    @include mixins.apply-theme-colors(dark-theme.$dark-theme);
+    --mat-app-background-color: #{variables.$body-background-color};
+    color-scheme: dark;
+  }
+}
+
+// Apply theme based on user's color scheme preference
+@media (prefers-color-scheme: light) {
+  :root {
+    color-scheme: light;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+  }
+}

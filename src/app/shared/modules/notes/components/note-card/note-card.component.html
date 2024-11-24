@@ -1,0 +1,113 @@
+
+
+<!-- <div class="overlay" [class.show]="currentEditNoteId || newNoteId"></div>-->
+
+<ng-container *ngIf="!currentEditNoteId && !newNoteId" [ngTemplateOutlet]="readNote"></ng-container>
+
+<ng-container *ngIf="currentEditNoteId || newNoteId" [ngTemplateOutlet]="modifyNote"></ng-container>
+
+<ng-template #readNote>
+  <mat-card [formGroup]="noteForm"
+            appearance="outlined"
+            class="note-card read"
+            [ngxTextContrast]="note?.color || null"
+            [ngStyle]="{'background': note?.color}"
+            [class.mat-elevation-z2]="mouseOvered"
+            (mouseover)="mouseOvered = true"
+            (mouseout)="mouseOvered = false">
+
+    <mat-card-header class="note-card-header mb-3">
+        <mat-card-title class="note-title">{{ note?.title }}</mat-card-title>
+        <p class="date">{{ note?.createdAt | date: "dd/MM/YYYY HH:mm" }}</p>
+    </mat-card-header>
+    <mat-card-content class="note-card-content">
+        <p class="note-content">{{ note?.content || '...' }}</p>
+    </mat-card-content>
+    <mat-card-footer class="note-card-footer" [class.showActions]="mouseOvered">
+      <mat-card-actions class="note-card-actions" >
+          <button mat-icon-button
+                  mat-small-icon-button
+                  type="button"
+                  (click)="editNote(note || null)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button
+                  mat-small-icon-button
+                  type="button"
+                  class="icon-button-small"
+                  (click)="deleteNote(note?.id || null)">
+            <mat-icon>delete</mat-icon>
+          </button>
+      </mat-card-actions>
+    </mat-card-footer>
+  </mat-card>
+</ng-template>
+
+<ng-template #modifyNote>
+  <mat-card [formGroup]="noteForm"
+            appearance="outlined"
+            class="note-card edit"
+            [ngxTextContrast]="noteForm.get('color')?.value || note?.color || null"
+            [ngStyle]="{'background': noteForm.get('color')?.value || note?.color}"
+            [class.mat-elevation-z2]="mouseOvered"
+            (mouseover)="mouseOvered = true"
+            (mouseout)="mouseOvered = false">
+
+    <mat-card-header class="note-card-header mb-3">
+      <textarea class="edit-title-note-form"
+                formControlName="title"
+                (focusin)="textAreaResizeObserver(textAreaElement)"
+                cdkTextareaAutosize
+                #textAreaElement
+                #autosize="cdkTextareaAutosize"
+                placeholder="Titre...">
+          </textarea>
+      <p class="date">{{ note?.createdAt | date: "dd/MM/YYYY HH:mm" }}</p>
+    </mat-card-header>
+    <mat-card-content class="note-card-content">
+        <textarea class="edit-content-note-form"
+                  (focusin)="textAreaResizeObserver(textAreaElement)"
+                  cdkTextareaAutosize
+                  #textAreaElement
+                  #autosize="cdkTextareaAutosize"
+                  placeholder="Contenu..."
+                  formControlName="content">
+          </textarea>
+    </mat-card-content>
+    <mat-card-footer class="note-card-footer">
+      <mat-card-actions class="note-card-actions">
+          <ngx-colors ngx-colors-trigger
+                      [ngxTextContrast]="noteForm.get('color')?.value || note?.color || null"
+                      [hideTextInput]="true"
+                      style="display: inline-block;"
+                      formControlName="color"></ngx-colors>
+
+          <button mat-icon-button
+                  (click)="saveNote()"
+                  mat-small-icon-button
+                  class="small-icon-button"
+                  type="button">
+            <mat-icon>save</mat-icon>
+          </button>
+
+          <button
+                  mat-icon-button
+                  mat-small-icon-button
+                  class="small-icon-button"
+                  (click)="onCancel()"
+                  type="button">
+            <mat-icon>cancel</mat-icon>
+          </button>
+
+          <button *ngIf="editingNote"
+                  mat-icon-button
+                  mat-small-icon-button
+                  type="button"
+                  (click)="deleteNote(note?.id || null)">
+            <mat-icon>delete</mat-icon>
+          </button>
+      </mat-card-actions>
+    </mat-card-footer>
+  </mat-card>
+</ng-template>
+

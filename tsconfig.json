@@ -9,6 +9,20 @@
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
+    "paths": {
+      "ngx-material-themes": [
+        "./dist/ngx-material-themes"
+      ],
+      "ngx-responsive-columns": [
+        "./dist/ngx-responsive-columns"
+      ],
+      "ngx-text-color-contrast": [
+        "./dist/ngx-text-color-contrast"
+      ],
+      "ngx-tile-layout": [
+        "./dist/ngx-tile-layout"
+      ]
+    },
     "skipLibCheck": true,
     "isolatedModules": true,
     "esModuleInterop": true,

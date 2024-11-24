@@ -1,0 +1,6 @@
+@use "@angular/material" as mat;
+@include mat.core();
+
+.mat-datepicker-content {
+  box-shadow: var(--mat-app-elevation-shadow-level-2) !important;
+}

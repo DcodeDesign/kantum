@@ -1,0 +1,5 @@
+<div #tileLayoutContainer class="tile-layout-container">
+  <ng-container *ngFor="let item of items; trackBy: trackById; let index = index;">
+      <ng-container *ngTemplateOutlet="itemTemplate; context: { $implicit: item, index: index}"></ng-container>
+  </ng-container>
+</div>

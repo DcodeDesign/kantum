@@ -1,0 +1,10 @@
+@use "@angular/material" as mat;
+@use "custom-palette" as palette;
+
+$light-theme: mat.define-theme((
+  color: (
+    theme-type: light,
+    primary: palette.$primary,
+    tertiary: palette.$tertiary
+  ),
+)) !default;

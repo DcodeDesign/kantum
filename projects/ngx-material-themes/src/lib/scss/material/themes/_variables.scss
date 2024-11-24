@@ -1,0 +1,13 @@
+// Common colors
+$color-black: lighten(#000000, 10%) !default;
+$color-white: darken(#ffffff, 10%) !default;
+
+$body-background-color: lighten($color-black, 2%) !default;
+
+// Base colors
+$primary-base: #ff5a36 !default;
+$secondary-base: #3b4754 !default;
+$tertiary-base: #e2b93b !default;
+$neutral-base: #4a90e2 !default;
+$neutral-variant-base: #6d7b8d !default;
+$error-base: #d9534f !default;

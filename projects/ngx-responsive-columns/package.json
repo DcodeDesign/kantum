@@ -1,0 +1,13 @@
+{
+  "name": "ngx-responsive-columns",
+  "version": "0.0.2",
+  "peerDependencies": {
+    "@angular/common": "^18.2.11",
+    "@angular/core": "^18.2.11",
+    "@juggle/resize-observer": "^3.4.0"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "sideEffects": false
+}

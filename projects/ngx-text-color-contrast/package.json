@@ -1,0 +1,12 @@
+{
+  "name": "ngx-text-color-contrast",
+  "version": "0.0.5",
+  "peerDependencies": {
+    "@angular/common": "18.2.11",
+    "@angular/core": "18.2.11"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "sideEffects": false
+}

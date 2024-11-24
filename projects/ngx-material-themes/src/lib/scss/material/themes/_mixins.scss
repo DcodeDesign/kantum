@@ -1,0 +1,8 @@
+@use "@angular/material/index" as mat;
+
+// Mixin to apply Material theme colors with custom label styling
+@mixin apply-theme-colors($theme) {
+  @include mat.all-component-colors($theme);
+  @include mat.system-level-colors($theme);
+  @include mat.system-level-typography($theme);
+}

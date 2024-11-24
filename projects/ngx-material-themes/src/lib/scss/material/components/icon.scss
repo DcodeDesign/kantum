@@ -1,0 +1,31 @@
+@mixin MatIconButtonSize($name, $buttonSize, $iconSize) {
+  .mat-#{$name}-icon-button {
+    width: $buttonSize !important;
+    height: $buttonSize !important;
+    padding: 0px !important;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+
+    & > *[role=img] {
+      width: $iconSize;
+      height: $iconSize;
+      font-size: $iconSize;
+
+      svg {
+        width: $iconSize;
+        height: $iconSize;
+      }
+    }
+
+    .mat-mdc-button-touch-target {
+      width: $buttonSize !important;
+      height: $buttonSize !important;
+    }
+  }
+}
+
+@include MatIconButtonSize('large', 40px, 24px);
+@include MatIconButtonSize('medium', 32px, 19px);
+@include MatIconButtonSize('small', 26px, 16px);
+@include MatIconButtonSize('tiny', 20px, 12px);

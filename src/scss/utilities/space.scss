@@ -1,0 +1,78 @@
+// _variables.scss
+$spacing-unit: 4px; // Base spacing unit. Can be modified to adjust all spacing values.
+$spacing-scale: (
+  0: 0,
+  1: $spacing-unit,
+  2: $spacing-unit * 2,
+  3: $spacing-unit * 3,
+  4: $spacing-unit * 4,
+  5: $spacing-unit * 5,
+  6: $spacing-unit * 6,
+  7: $spacing-unit * 7,
+  8: $spacing-unit * 8,
+  9: $spacing-unit * 9,
+  10: $spacing-unit * 10
+);
+
+// _mixins.scss
+// Mixin for margin and padding
+@mixin spacing($property, $value) {
+  #{$property}: map-get($spacing-scale, $value);
+}
+
+// Mixin for margin and padding on specific sides
+@mixin spacing-side($property, $value, $side) {
+  #{$property}-#{$side}: map-get($spacing-scale, $value);
+}
+
+@function first-letter($string) {
+  @return str-slice($string, 1, 1);
+}
+
+
+// _spacing-utilities.scss
+// Générer les classes de margin et padding pour chaque côté (haut, bas, gauche, droite)
+@mixin generate-spacing-utilities($property) {
+  $first-letter-property: first-letter($property);
+
+  @each $size, $value in $spacing-scale {
+    .#{$first-letter-property}-#{$size} {
+      #{$property}: $value;
+    }
+
+    // Générer les classes de margin spécifique pour chaque côté
+    @each $side in top, right, bottom, left {
+      $first-letter-side: first-letter($side);
+      .#{$first-letter-property}#{$first-letter-side}-#{$size} {
+        @include spacing-side($property, $size, $side);
+      }
+    }
+  }
+}
+
+// Include the utilities for margin and padding
+@include generate-spacing-utilities(margin);
+@include generate-spacing-utilities(padding);
+
+// _responsive-spacing.scss
+// Responsive Spacing based on breakpoints
+$breakpoints: (
+  sm: 600px,
+  md: 960px,
+  lg: 1280px,
+  xl: 1920px
+);
+
+@mixin responsive-spacing($property, $value, $breakpoint: sm) {
+  @media (min-width: map-get($breakpoints, $breakpoint)) {
+    #{$property}: map-get($spacing-scale, $value);
+  }
+}
+
+@mixin responsive-spacing-sides($property, $value, $breakpoint: sm) {
+  @each $side in top, right, bottom, left {
+    @media (min-width: map-get($breakpoints, $breakpoint)) {
+      #{$property}-#{$side}: map-get($spacing-scale, $value);
+    }
+  }
+}
