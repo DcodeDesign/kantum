@@ -16,9 +16,6 @@ import {CdkTextareaAutosize} from '@angular/cdk/text-field';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {CommonModule} from '@angular/common';
 import {ReactiveFormsModule} from '@angular/forms';
-
-// import {NgxMaterialThemesModules} from 'ngx-material-themes';
-import {NgxResponsiveColumnsModules} from 'ngx-responsive-columns';
 import {NgxTextColorContrastModules} from 'ngx-text-color-contrast';
 import {NgxTileLayoutModules} from 'ngx-tile-layout';
 
@@ -53,7 +50,6 @@ import {NgxTileLayoutModules} from 'ngx-tile-layout';
     StoreDevtoolsModule.instrument({maxAge: 25, logOnly: !isDevMode()}),
     NgxTextColorContrastModules,
     NgxTileLayoutModules,
-    // NgxMaterialThemesModules
   ],
 })
 export class NotesModules {}

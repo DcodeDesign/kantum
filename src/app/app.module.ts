@@ -15,9 +15,19 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import {NotesModules} from './shared/modules/notes/notes.modules';
 
 import {NgxMaterialThemesModules, ThemePreviewComponent} from 'ngx-material-themes';
-import {NgxResponsiveColumnsModules} from 'ngx-responsive-columns';
+import {Breakpoint, BREAKPOINTS, NgxResponsiveColumnsModules} from 'ngx-responsive-columns';
 import {NgxTextColorContrastModules} from 'ngx-text-color-contrast';
 import {NgxTileLayoutModules} from 'ngx-tile-layout';
+
+const customBreakpoints: Breakpoint[] = [
+  { width: 1536, cols: 6 },
+  { width: 1280, cols: 4 },
+  { width: 1024, cols: 3 },
+  { width: 768, cols: 2 },
+  { width: 640, cols: 2 },
+  { width: 480, cols: 1 },
+  { width: 0, cols: 1 },
+];
 
 @NgModule({
   declarations: [
@@ -46,7 +56,8 @@ import {NgxTileLayoutModules} from 'ngx-tile-layout';
     ThemePreviewComponent,
   ],
   providers: [
-    provideAnimationsAsync()
+    provideAnimationsAsync(),
+    { provide: BREAKPOINTS, useValue: customBreakpoints },
   ],
   bootstrap: [AppComponent]
 })
