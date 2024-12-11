@@ -1,6 +1,10 @@
 .note-container {
   padding: 15px;
 
+  .spacer {
+    flex: 1 1 auto;
+  }
+
   .add-note-button {
     display: flex;
     justify-content: center;

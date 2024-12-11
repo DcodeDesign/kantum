@@ -1,7 +1,3 @@
-
-
-<!-- <div class="overlay" [class.show]="currentEditNoteId || newNoteId"></div>-->
-
 <ng-container *ngIf="!currentEditNoteId && !newNoteId" [ngTemplateOutlet]="readNote"></ng-container>
 
 <ng-container *ngIf="currentEditNoteId || newNoteId" [ngTemplateOutlet]="modifyNote"></ng-container>
@@ -12,32 +8,43 @@
             class="note-card read"
             [ngxTextContrast]="note?.color || null"
             [ngStyle]="{'background': note?.color}"
-            [class.mat-elevation-z2]="mouseOvered"
+            [class.border-hover]="mouseOvered"
             (mouseover)="mouseOvered = true"
             (mouseout)="mouseOvered = false">
 
     <mat-card-header class="note-card-header mb-3">
-        <mat-card-title class="note-title">{{ note?.title }}</mat-card-title>
-        <p class="date">{{ note?.createdAt | date: "dd/MM/YYYY HH:mm" }}</p>
+      <mat-card-title class="note-title">{{ note?.title }}</mat-card-title>
+      <p class="date">{{ note?.createdAt | date: "dd/MM/YYYY HH:mm" }}</p>
     </mat-card-header>
     <mat-card-content class="note-card-content">
-        <p class="note-content">{{ note?.content || '...' }}</p>
+      <p class="note-content">{{ note?.content || '...' }}</p>
     </mat-card-content>
-    <mat-card-footer class="note-card-footer" [class.showActions]="mouseOvered">
-      <mat-card-actions class="note-card-actions" >
-          <button mat-icon-button
-                  mat-small-icon-button
-                  type="button"
-                  (click)="editNote(note || null)">
-            <mat-icon>edit</mat-icon>
-          </button>
-          <button mat-icon-button
-                  mat-small-icon-button
-                  type="button"
-                  class="icon-button-small"
-                  (click)="deleteNote(note?.id || null)">
-            <mat-icon>delete</mat-icon>
-          </button>
+    <mat-card-footer class="note-card-footer" [class.showActions]="mouseOvered || checked">
+      <mat-card-actions class="note-card-actions">
+
+        <mat-checkbox color="primary" (change)="onChecked($event.checked, note)"></mat-checkbox>
+
+        <div class="spacer"></div>
+
+        <button mat-icon-button
+                mat-small-icon-button
+                type="button"
+                (click)="editNote(note || null)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button
+                mat-small-icon-button
+                type="button"
+                (click)="onArchiveNote(note || null)">
+          <mat-icon>archive</mat-icon>
+        </button>
+        <button mat-icon-button
+                mat-small-icon-button
+                type="button"
+                class="icon-button-small"
+                (click)="deleteNote(note?.id || null)">
+          <mat-icon>delete</mat-icon>
+        </button>
       </mat-card-actions>
     </mat-card-footer>
   </mat-card>
@@ -76,36 +83,36 @@
     </mat-card-content>
     <mat-card-footer class="note-card-footer">
       <mat-card-actions class="note-card-actions">
-          <ngx-colors ngx-colors-trigger
-                      [ngxTextContrast]="noteForm.get('color')?.value || note?.color || null"
-                      [hideTextInput]="true"
-                      style="display: inline-block;"
-                      formControlName="color"></ngx-colors>
+        <ngx-colors ngx-colors-trigger
+                    [ngxTextContrast]="noteForm.get('color')?.value || note?.color || null"
+                    [hideTextInput]="true"
+                    style="display: inline-block;"
+                    formControlName="color"></ngx-colors>
 
-          <button mat-icon-button
-                  (click)="saveNote()"
-                  mat-small-icon-button
-                  class="small-icon-button"
-                  type="button">
-            <mat-icon>save</mat-icon>
-          </button>
+        <button mat-icon-button
+                (click)="saveNote()"
+                mat-small-icon-button
+                class="small-icon-button"
+                type="button">
+          <mat-icon>save</mat-icon>
+        </button>
 
-          <button
-                  mat-icon-button
-                  mat-small-icon-button
-                  class="small-icon-button"
-                  (click)="onCancel()"
-                  type="button">
-            <mat-icon>cancel</mat-icon>
-          </button>
+        <button
+          mat-icon-button
+          mat-small-icon-button
+          class="small-icon-button"
+          (click)="onCancel()"
+          type="button">
+          <mat-icon>cancel</mat-icon>
+        </button>
 
-          <button *ngIf="editingNote"
-                  mat-icon-button
-                  mat-small-icon-button
-                  type="button"
-                  (click)="deleteNote(note?.id || null)">
-            <mat-icon>delete</mat-icon>
-          </button>
+        <button *ngIf="editingNote"
+                mat-icon-button
+                mat-small-icon-button
+                type="button"
+                (click)="deleteNote(note?.id || null)">
+          <mat-icon>delete</mat-icon>
+        </button>
       </mat-card-actions>
     </mat-card-footer>
   </mat-card>

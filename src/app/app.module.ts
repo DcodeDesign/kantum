@@ -9,7 +9,7 @@ import { SharedModule } from './shared/shared.module';
 
 import {MatToolbar} from '@angular/material/toolbar';
 import {MatIcon} from '@angular/material/icon';
-import {MatIconButton} from '@angular/material/button';
+import {MatButton, MatIconButton} from '@angular/material/button';
 
 import { ServiceWorkerModule } from '@angular/service-worker';
 import {NotesModules} from './shared/modules/notes/notes.modules';
@@ -18,6 +18,8 @@ import {NgxMaterialThemesModules, ThemePreviewComponent} from 'ngx-material-them
 import {Breakpoint, BREAKPOINTS, NgxResponsiveColumnsModules} from 'ngx-responsive-columns';
 import {NgxTextColorContrastModules} from 'ngx-text-color-contrast';
 import {NgxTileLayoutModules} from 'ngx-tile-layout';
+import {MatDrawer, MatDrawerContainer} from '@angular/material/sidenav';
+import {MatTree, MatTreeNode, MatTreeNodeDef, MatTreeNodePadding, MatTreeNodeToggle} from '@angular/material/tree';
 
 const customBreakpoints: Breakpoint[] = [
   { width: 1536, cols: 6 },

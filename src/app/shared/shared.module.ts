@@ -7,7 +7,9 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {NotesModules} from './modules/notes/notes.modules';
 
 @NgModule({
-  declarations: [],
+  declarations: [
+
+  ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -18,5 +20,8 @@ import {NotesModules} from './modules/notes/notes.modules';
 
     NotesModules,
   ],
+  exports: [
+
+  ]
 })
 export class SharedModule { }

@@ -1,7 +1,11 @@
 @use "../../../../../../../node_modules/ngx-material-themes/scss/material/themes/_variables" as variables;
 
-:host {
+.spacer {
+  flex: 1 1 auto;
+}
 
+:host {
+  overflow: hidden;
   &.edit-note-card {
     /*position: absolute !important;
     top: 50% !important;
@@ -132,20 +136,22 @@
     .note-card-footer {
       display: flex;
       flex-direction: row;
-      justify-content: flex-end;
+      width: 100%;
       align-items: center;
-      padding: 0 4px 0 16px;
 
-      .note-actions {
+      .note-card-actions {
         display: flex;
         flex-direction: row;
-        justify-content: flex-end;
         align-items: center;
+        width: 100%;
+        padding: 8px 18px  8px 8px;
       }
     }
   }
 
   .note-card.dark-text {
+    color: variables.$color-black;
+
     .note-card-header {
       .date {
         color: variables.$color-black;
@@ -188,6 +194,8 @@
   }
 
   .note-card.light-text {
+    color: variables.$color-white;
+
     .note-card-header {
       .date {
         color: variables.$color-white;
@@ -236,5 +244,9 @@
         transition: opacity 0.2s ease-in-out;
       }
     }
+  }
+
+  .field-note-collections-choice {
+    margin-right: 5px;
   }
 }

@@ -12,7 +12,7 @@ import {
 import { Note } from '../../interfaces/note.interface';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { Subject } from 'rxjs';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { v4 as uuidv4 } from 'uuid';
 
 @Component({
@@ -30,14 +30,18 @@ export class NoteCardComponent implements OnInit, OnDestroy, AfterViewInit {
   @Output() cancelEdit: EventEmitter<void> = new EventEmitter<void>();
   @Output() resizeTextArea: EventEmitter<void> = new EventEmitter<void>();
   @Output() isEditMode: EventEmitter<string | undefined> = new EventEmitter<string | undefined>();
+  @Output() isChecked: EventEmitter<Note | undefined> = new EventEmitter<Note | undefined>();
+  @Output() archiveNote: EventEmitter<Note | undefined> = new EventEmitter<Note | undefined>();
 
   private _note: Note | undefined;
 
   newNoteId: string | null = null;
   private resizeObserver: ResizeObserver | undefined;
 
-  @Input() set note(value: Note | undefined) {
+  setNoteList: string[] = ['All'];
+  checked: boolean | undefined;
 
+  @Input() set note(value: Note | undefined) {
     if (value) {
       if(!value.id) {
         value = {...value, id :uuidv4()};
@@ -82,6 +86,7 @@ export class NoteCardComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     const note: Note = {
+      ...this._note,
       ...this.noteForm.value,
       id: this.currentEditNoteId || this.newNoteId || uuidv4(),
       createdAt: this.editingNote?.createdAt || new Date()
@@ -151,5 +156,16 @@ export class NoteCardComponent implements OnInit, OnDestroy, AfterViewInit {
 
   loadImage() {
     this.resizeTextArea.emit();
+  }
+
+  onChecked($event: boolean, note: Note | undefined) {
+    this.checked = $event;
+    this.isChecked.emit(note);
+  }
+
+  onArchiveNote($event: Note | null) {
+    if($event) {
+      this.archiveNote.emit($event)
+    }
   }
 }

@@ -19,4 +19,3 @@ export const noteReducer = createReducer(
     notes: state.notes.filter(note => note.id !== id)
   }))
 );
-

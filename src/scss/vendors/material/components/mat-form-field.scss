@@ -1,0 +1,44 @@
+$mat-form-field-height: 38px;
+
+mat-form-field {
+  &.customize {
+    min-height: $mat-form-field-height !important;
+    height: $mat-form-field-height;
+
+    --mat-form-field-container-height: #{$mat-form-field-height};
+
+    .mat-mdc-form-field-input-control {
+      min-height: $mat-form-field-height !important;
+    }
+
+    .mat-mdc-form-field-infix {
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
+    }
+
+    .mat-mdc-form-field-infix, input {
+      min-height: $mat-form-field-height !important;
+    }
+
+    .mat-mdc-select {
+      min-height: $mat-form-field-height !important;
+      height: 100%;
+      display: flex;
+    }
+
+    .mat-mdc-chip.mat-mdc-standard-chip {
+      --mdc-chip-container-height: 24px;
+    }
+
+    .mat-datepicker-toggle {
+      .mat-mdc-icon-button.mat-mdc-button-base {
+        --mdc-icon-button-state-layer-size: 28px;
+        width: var(--mdc-icon-button-state-layer-size) !important;
+        height: var(--mdc-icon-button-state-layer-size) !important;
+        padding: 2px !important;
+        margin-right: 9px;
+      }
+    }
+
+  }
+}

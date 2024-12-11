@@ -1,12 +1,12 @@
-<mat-toolbar class="mat-elevation-z2" style="position: sticky;top: 0;z-index: 999">
-  <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
-   <mat-icon>menu</mat-icon>
+<mat-toolbar class="mat-elevation-z0" style="position: sticky;top: 0;z-index: 999999">
+  <button mat-icon-button
+          class="example-icon"
+          aria-label="Example icon-button with menu icon">
+    <mat-icon>apps</mat-icon>
   </button>
-  <span>Kantum</span>
-  <span class="example-spacer"></span>
+  <span> {{ title }} </span>
+  <span class="spacer"></span>
   <ngx-theme-switcher></ngx-theme-switcher>
 </mat-toolbar>
 
-<app-notes></app-notes>
-<!-- <nxg-theme-preview></nxg-theme-preview> -->
-
+<app-side-nav-notes></app-side-nav-notes>

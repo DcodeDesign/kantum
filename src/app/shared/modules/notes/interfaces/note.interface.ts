@@ -5,6 +5,7 @@ export interface Note {
   color: string | null | undefined;
   createdAt: Date | null;
   disabled: boolean | null;
+  collections?: string[]
 }
 
 export interface NoteState {
