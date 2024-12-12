@@ -1,15 +1,16 @@
 .container {
-  background: transparent;
+  background: var(--mat-app-background-color);
 
-  .example-sidenav {
+  .sidenav {
     padding: 20px;
-    overflow: hidden;
+    overflow: auto;
+    background: var(--mat-app-background-color);
   }
 
   .sidenav-content {
     height: calc(100vh - 64px);
     padding-bottom: -20px;
     border-radius: 0 !important;
-    background: transparent;
+    background: var(--mat-app-background-color);
   }
 }
