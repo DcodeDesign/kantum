@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NoteCardComponent } from './note-card.component';
+import { ToolbarComponent } from './toolbar.component';
 
-describe('NoteCardComponent', () => {
-  let component: NoteCardComponent;
-  let fixture: ComponentFixture<NoteCardComponent>;
+describe('PrimaryToolbarComponent', () => {
+  let component: ToolbarComponent;
+  let fixture: ComponentFixture<ToolbarComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [NoteCardComponent]
+      declarations: [ToolbarComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(NoteCardComponent);
+    fixture = TestBed.createComponent(ToolbarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

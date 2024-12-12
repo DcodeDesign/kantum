@@ -1,0 +1,35 @@
+<mat-toolbar-row class="toolbar mat-elevation-z2">
+  <button (click)="onToggleSideNav()"
+          mat-icon-button
+          class="btn-menu">
+    <mat-icon>menu</mat-icon>
+  </button>
+
+  <span class="spacer"></span>
+
+  <mat-form-field class="customize field-search" appearance="outline">
+    <mat-label>Search...</mat-label>
+    <input matInput type="text" [formControl]="searchForm">
+    @if (searchForm.value) {
+      <button matSuffix mat-icon-button aria-label="Clear" (click)="onClearSearch()">
+        <mat-icon>close</mat-icon>
+      </button>
+    }
+  </mat-form-field>
+
+  <span class="spacer"></span>
+
+  <button mat-icon-button (click)="onAddNote()">
+    <mat-icon>add</mat-icon>
+  </button>
+
+  <ng-container *ngIf="selectedNotes.length > 0">
+    <button mat-icon-button (click)="onArchiveNotes()">
+      <mat-icon>archive</mat-icon>
+    </button>
+
+    <button mat-icon-button (click)="onDeleteNotes()">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </ng-container>
+</mat-toolbar-row>

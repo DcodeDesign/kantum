@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SideNavNotesComponent } from './side-nav-notes.component';
+import { CollectionMenuComponent } from './collection-menu.component';
 
-describe('SideNavNotesComponent', () => {
-  let component: SideNavNotesComponent;
-  let fixture: ComponentFixture<SideNavNotesComponent>;
+describe('CollectionMenuComponent', () => {
+  let component: CollectionMenuComponent;
+  let fixture: ComponentFixture<CollectionMenuComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [SideNavNotesComponent]
+      declarations: [CollectionMenuComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(SideNavNotesComponent);
+    fixture = TestBed.createComponent(CollectionMenuComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

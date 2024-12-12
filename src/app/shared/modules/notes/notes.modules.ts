@@ -1,9 +1,8 @@
 import {isDevMode, NgModule} from '@angular/core';
-import {NotesComponent} from './components/notes/notes.component';
-import {NoteCardComponent} from './components/note-card/note-card.component';
+import {NoteComponent} from './components/notes/note-list/note/note.component';
 import {StoreModule} from '@ngrx/store';
-import {noteReducer} from './stores/note.reducer';
-import {metaReducers} from './stores/localStorageSync.reducer';
+import {noteReducer} from './stores/note/note.reducer';
+import {metaReducers} from './stores/note/localStorageSync.reducer';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {MatButton, MatButtonModule} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -22,22 +21,36 @@ import {NgxMaterialThemesModules} from 'ngx-material-themes';
 import {MatToolbarRow} from '@angular/material/toolbar';
 import {MatDrawer, MatDrawerContainer} from '@angular/material/sidenav';
 import {MatTree, MatTreeNode, MatTreeNodeDef, MatTreeNodePadding, MatTreeNodeToggle} from '@angular/material/tree';
-import {MatSelectModule, MatSelectTrigger} from '@angular/material/select';
-import {SideNavNotesComponent} from './components/side-nav-notes/side-nav-notes.component';
+import {MatSelectModule} from '@angular/material/select';
+import {NotesComponent} from './components/notes/notes.component';
 import {MatChipListbox, MatChipRow} from '@angular/material/chips';
 import {MatInput} from '@angular/material/input';
 import {MatCheckbox} from '@angular/material/checkbox';
+import {NoteListComponent} from './components/notes/note-list/note-list.component';
+import {SharedModule} from '../../shared.module';
+import {ToolbarComponent} from './components/notes/toolbar/toolbar.component';
+import {CollectionMenuComponent} from './components/notes/collection-menu/collection-menu.component';
+import {SideNavComponent} from './components/notes/side-nav/side-nav.component';
 
 @NgModule({
   declarations: [
+    NoteComponent,
+    ToolbarComponent,
+    CollectionMenuComponent,
+    SideNavComponent,
+
     NotesComponent,
-    NoteCardComponent,
-    SideNavNotesComponent
+    NoteListComponent,
+
   ],
   exports: [
+    NoteComponent,
+    ToolbarComponent,
+    CollectionMenuComponent,
+    SideNavComponent,
+
     NotesComponent,
-    NoteCardComponent,
-    SideNavNotesComponent,
+    NoteListComponent
   ],
   imports: [
     CommonModule,
@@ -51,7 +64,6 @@ import {MatCheckbox} from '@angular/material/checkbox';
     MatDividerModule,
     MatGridListModule,
     DragDropModule,
-    CdkTextareaAutosize,
     MatToolbarRow,
     MatDrawerContainer,
     MatDrawer,
@@ -64,7 +76,11 @@ import {MatCheckbox} from '@angular/material/checkbox';
     MatTreeNodeToggle,
     MatFormFieldModule,
     MatSelectModule,
-
+    MatChipListbox,
+    MatChipRow,
+    MatInput,
+    MatCheckbox,
+    CdkTextareaAutosize,
 
     NgxColorsModule,
 
@@ -77,10 +93,6 @@ import {MatCheckbox} from '@angular/material/checkbox';
       {metaReducers}
     ),
     StoreDevtoolsModule.instrument({maxAge: 25, logOnly: !isDevMode()}),
-    MatChipListbox,
-    MatChipRow,
-    MatInput,
-    MatCheckbox,
   ],
 })
 export class NotesModules {}

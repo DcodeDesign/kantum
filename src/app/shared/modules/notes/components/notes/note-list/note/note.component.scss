@@ -1,4 +1,4 @@
-@use "../../../../../../../node_modules/ngx-material-themes/scss/material/themes/_variables" as variables;
+@use "../../../../../../../../../node_modules/ngx-material-themes/scss/material/themes/variables" as variables;
 
 .spacer {
   flex: 1 1 auto;
@@ -12,16 +12,16 @@
     left: 50% !important;
     transform: translate(-50%, -50%) !important; */
     z-index: 999;
-    -webkit-box-shadow: 0 0 3000px 3000px rgba(0,0,0,0.75);
-    -moz-box-shadow: 0 0 3000px 3000px rgba(0,0,0,0.75);
-    box-shadow: 0 0 3000px 3000px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 0px 18px 63px 10px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 18px 63px 10px rgba(0,0,0,0.75);
+    box-shadow: 0px 18px 63px 10px rgba(0,0,0,0.75);
     border-radius: var(--mdc-outlined-card-container-shape, var(--mat-app-corner-medium));
     transition: all 0.2s ease-in-out;
   }
 
   &.add-note-card {
-    position: absolute !important;
-    top: 50px !important;
+    position: fixed !important;
+    top: 110px !important;
     left: 50% !important;
     transform: translate(-50%, 0) !important;
     z-index: 999;
@@ -49,6 +49,8 @@
   }
 
   .note-card {
+    background: var(--mat-app-background-color);
+
     .date {
       margin: 0;
       padding: 0;
@@ -134,17 +136,14 @@
     }
 
     .note-card-footer {
-      display: flex;
-      flex-direction: row;
-      width: 100%;
-      align-items: center;
-
+      // height: 30px;
       .note-card-actions {
         display: flex;
         flex-direction: row;
         align-items: center;
         width: 100%;
-        padding: 8px 18px  8px 8px;
+        padding: 0 8px;
+        // min-height: 30px!important;
       }
     }
   }

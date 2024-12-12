@@ -1,48 +1,37 @@
-.note-container {
-  padding: 15px;
-
-  .spacer {
-    flex: 1 1 auto;
-  }
-
-  .add-note-button {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 16px;
-  }
-
-  .mat-grid-list {
-    margin-top: 16px;
-  }
-
-  .masonry-layout {
-    margin-top: 16px;
-  }
-
-  .note-card-container {
-    width: 100%;
-  }
+.field-note-collections-choice {
+  margin: 0 15px;
 }
 
-.tile-item {
-  opacity: 0;
-  transition: opacity 0.9s ease;
-}
-
-.example-custom-placeholder {
-  position: absolute;
-  background: red;
-  width:50px;
-  height:50px;
-}
-
-.example-custom-placeholder {
-  background: #ccc;
-  opacity: 0.8;
-  border: dotted 3px #999;
-  height: 100%;
+.field-search {
   width: 100%;
-  position: absolute;
-  z-index: 99999;
-  border-radius: var(--mdc-outlined-card-container-shape, var(--mat-app-corner-medium));
+  margin: 0 15px;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.example-container {
+  background: transparent;
+}
+
+.example-sidenav-content {
+  height: calc(100vh - 64px);
+  padding-bottom: -20px;
+  border-radius: 0 !important;
+  background: transparent;
+}
+
+.example-sidenav {
+  padding: 20px;
+  overflow: hidden;
+  // background: transparent;
+}
+
+mat-tree {
+  // background: transparent;
+}
+
+mat-tree-node {
+  cursor: pointer;
 }

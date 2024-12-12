@@ -8,7 +8,7 @@
             class="note-card read"
             [ngxTextContrast]="note?.color || null"
             [ngStyle]="{'background': note?.color}"
-            [class.border-hover]="mouseOvered"
+            [class.border-highlight]="mouseOvered"
             (mouseover)="mouseOvered = true"
             (mouseout)="mouseOvered = false">
 
@@ -20,6 +20,9 @@
       <p class="note-content">{{ note?.content || '...' }}</p>
     </mat-card-content>
     <mat-card-footer class="note-card-footer" [class.showActions]="mouseOvered || checked">
+
+      <mat-divider></mat-divider>
+
       <mat-card-actions class="note-card-actions">
 
         <mat-checkbox color="primary" (change)="onChecked($event.checked, note)"></mat-checkbox>
@@ -82,7 +85,7 @@
           </textarea>
     </mat-card-content>
     <mat-card-footer class="note-card-footer">
-      <mat-card-actions class="note-card-actions">
+      <mat-card-actions class="note-card-actions justify-flex-end">
         <ngx-colors ngx-colors-trigger
                     [ngxTextContrast]="noteForm.get('color')?.value || note?.color || null"
                     [hideTextInput]="true"

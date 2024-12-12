@@ -1,0 +1,42 @@
+<div class="note-container">
+  <ng-container *ngIf="newNote">
+    <app-note
+      [note]="newNote"
+      (noteAdded)="addNoteHandler($event)"
+      (noteUpdated)="updateNoteHandler($event)"
+      (cancelEdit)="cancelEditNoteHandler()"
+      (noteDeleted)="deleteNoteHandler($event)">
+    </app-note>
+  </ng-container>
+
+  <div cdkDropList
+       cdkDropListOrientation="mixed"
+       class="example-list"
+       (cdkDropListDropped)="drop($event)">
+    <ngx-tile-layout
+      #masonryLayoutComponent
+      class="masonry-layout"
+      [itemTemplate]="itemTemplate"
+      [items]="noteList"
+      [columnCount]="breakpoint"
+      [gutter]="15">
+      <ng-template #itemTemplate let-note>
+        <app-note
+          cdkDrag
+          class="tile-item"
+          [note]="note"
+          [cdkDragDisabled]="note.id === noteEdit"
+          (cdkDragMoved)="dragMoved($event)"
+          (isChecked)="onSelectedNote($event)"
+          (noteAdded)="addNoteHandler($event)"
+          (noteUpdated)="updateNoteHandler($event)"
+          (cancelEdit)="cancelEditNoteHandler()"
+          (resizeTextArea)="resizeTextArea()"
+          (isEditMode)="currentNoteEdite($event)"
+          (archiveNote)="archiveNote($event)"
+          (noteDeleted)="deleteNoteHandler($event)">
+        </app-note>
+      </ng-template>
+    </ngx-tile-layout>
+  </div>
+</div>

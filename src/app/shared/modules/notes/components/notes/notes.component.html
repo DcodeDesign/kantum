@@ -1,43 +1,18 @@
-<div class="note-container">
+<app-toolbar [selectedNotes]="selectedNotes"
+                     (toggleSideNav)="onToggleSideNav()"
+                     (archiveNotes)="archiveNotes()"
+                     (addNote)="addNote()"
+                     (deleteNotes)="deleteNotes()"
+                     (search)="search($event)"></app-toolbar>
+<mat-divider></mat-divider>
 
-  <ng-container *ngIf="newNote">
-    <app-note-card
-      [note]="newNote"
-      (noteAdded)="addNoteHandler($event)"
-      (noteUpdated)="updateNoteHandler($event)"
-      (cancelEdit)="cancelEditNoteHandler()"
-      (noteDeleted)="deleteNoteHandler($event)">
-    </app-note-card>
-  </ng-container>
+<app-side-nav [toggleSideNav]="toggleSideNav">
+  <menu>
+    <app-collection-menu [treeList]="treeList"></app-collection-menu>
+  </menu>
 
-  <div cdkDropList
-       cdkDropListOrientation="mixed"
-       class="example-list"
-       (cdkDropListDropped)="drop($event)">
-    <ngx-tile-layout
-      #masonryLayoutComponent
-      class="masonry-layout"
-      [itemTemplate]="itemTemplate"
-      [items]="noteList"
-      [columnCount]="breakpoint"
-      [gutter]="15">
-      <ng-template #itemTemplate let-note>
-        <app-note-card
-          cdkDrag
-          class="tile-item"
-          [cdkDragDisabled]="note.id === noteEdit"
-          (cdkDragMoved)="dragMoved($event)"
-          [note]="note"
-          (isChecked)="onSelectedNote($event)"
-          (noteAdded)="addNoteHandler($event)"
-          (noteUpdated)="updateNoteHandler($event)"
-          (cancelEdit)="cancelEditNoteHandler()"
-          (resizeTextArea)="resizeTextArea()"
-          (isEditMode)="currentNoteEdite($event)"
-          (archiveNote)="archiveNote($event)"
-          (noteDeleted)="deleteNoteHandler($event)">
-        </app-note-card>
-      </ng-template>
-    </ngx-tile-layout>
-  </div>
-</div>
+  <content>
+    <app-note-list (notesSelectedEmitter)="onSelectedNotes($event)"></app-note-list>
+  </content>
+</app-side-nav>
+
