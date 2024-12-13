@@ -100,6 +100,7 @@ export class NotesComponent implements AfterViewInit, OnInit {
   }
 
   addNote() {
+    this.toggleSideNav = !this.toggleSideNav;
     this.noteListComponent?.addNewNote();
   }
 

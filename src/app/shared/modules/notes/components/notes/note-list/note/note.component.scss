@@ -28,6 +28,10 @@
     box-shadow: 0 0 3000px 3000px rgba(0,0,0,0.75);
     border-radius: var(--mdc-outlined-card-container-shape, var(--mat-app-corner-medium));
     min-width: 300px;
+
+    .note-card-content {
+      margin-bottom: 30px;
+    }
   }
 
   .note-card {
