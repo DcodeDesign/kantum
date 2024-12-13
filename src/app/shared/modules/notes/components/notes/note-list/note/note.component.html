@@ -14,12 +14,15 @@
 
     <mat-card-header class="note-card-header mb-3">
       <mat-card-title class="note-title">{{ note?.title }}</mat-card-title>
-      <p class="date">{{ note?.createdAt | date: "dd/MM/YYYY HH:mm" }}</p>
     </mat-card-header>
     <mat-card-content class="note-card-content">
       <p class="note-content">{{ note?.content || '...' }}</p>
+
+      <p class="date">{{ note?.createdAt | date: "dd/MM/YYYY HH:mm" }}</p>
     </mat-card-content>
-    <mat-card-footer class="note-card-footer" [class.showActions]="mouseOvered || checked">
+    <mat-card-footer class="note-card-footer"
+                     [class.showActions]="mouseOvered || checked"
+                     [ngStyle]="{'background': note?.color}">
 
       <mat-divider></mat-divider>
 
@@ -72,7 +75,6 @@
                 #autosize="cdkTextareaAutosize"
                 placeholder="Titre...">
           </textarea>
-      <p class="date">{{ note?.createdAt | date: "dd/MM/YYYY HH:mm" }}</p>
     </mat-card-header>
     <mat-card-content class="note-card-content">
         <textarea class="edit-content-note-form"
@@ -83,14 +85,21 @@
                   placeholder="Contenu..."
                   formControlName="content">
           </textarea>
+
+          <p class="date">{{ note?.createdAt | date: "dd/MM/YYYY HH:mm" }}</p>
     </mat-card-content>
-    <mat-card-footer class="note-card-footer">
-      <mat-card-actions class="note-card-actions justify-flex-end">
+    <mat-card-footer class="note-card-footer" [ngStyle]="{'background': noteForm.get('color')?.value || note?.color}">
+
+      <mat-divider></mat-divider>
+
+      <mat-card-actions class="note-card-actions">
         <ngx-colors ngx-colors-trigger
                     [ngxTextContrast]="noteForm.get('color')?.value || note?.color || null"
                     [hideTextInput]="true"
                     style="display: inline-block;"
                     formControlName="color"></ngx-colors>
+
+        <div class="spacer"></div>
 
         <button mat-icon-button
                 (click)="saveNote()"

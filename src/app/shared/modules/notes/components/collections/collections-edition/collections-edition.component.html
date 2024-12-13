@@ -1,0 +1,35 @@
+<form class="collection-name-form" (submit)="addCollections()">
+  <mat-form-field class="customize field-search" appearance="outline">
+    <mat-label>add collection</mat-label>
+    <input matInput type="text" [formControl]="collectionNameForm">
+    @if (collectionNameForm.value) {
+      <button matSuffix mat-icon-button aria-label="Clear" (click)="onClearSearch()">
+        <mat-icon>close</mat-icon>
+      </button>
+    }
+  </mat-form-field>
+  <button mat-icon-button>
+    <mat-icon class="mat-icon-rtl-mirror">add</mat-icon>
+  </button>
+</form>
+
+<mat-list>
+  <mat-list-item *ngFor="let collection of collectionList"
+                 (mouseover)="mouseOveredId = collection.id"
+                 (mouseout)="mouseOveredId = null">
+    <div class="collection-item">
+      <button *ngIf="collection.id && mouseOveredId && mouseOveredId === collection.id; else labelIcon"
+              (click)="deleteCollection(collection.id)" mat-icon-button>
+        <mat-icon class="mat-icon-rtl-mirror">delete</mat-icon>
+      </button>
+
+      <ng-template #labelIcon>
+        <button mat-icon-button>
+          <mat-icon class="mat-icon-rtl-mirror">label</mat-icon>
+        </button>
+      </ng-template>
+
+      <mat-label>{{ collection.name }}</mat-label>
+    </div>
+  </mat-list-item>
+</mat-list>

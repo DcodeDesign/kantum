@@ -12,7 +12,7 @@ const mergeReducer = (state: any, rehydratedState: any, action: any) => {
   return state;
 };
 
-export function localStorageSyncReducer(reducer: ActionReducer<any>): ActionReducer<any> {
+export function localStorageSyncNoteReducer(reducer: ActionReducer<any>): ActionReducer<any> {
   return localStorageSync({
     keys: ['notes'],
     rehydrate: true,
@@ -20,4 +20,4 @@ export function localStorageSyncReducer(reducer: ActionReducer<any>): ActionRedu
   })(reducer);
 }
 
-export const metaReducers: Array<MetaReducer<any, any>> = [localStorageSyncReducer];
+export const metaNoteReducers: MetaReducer<any, any> = localStorageSyncNoteReducer;

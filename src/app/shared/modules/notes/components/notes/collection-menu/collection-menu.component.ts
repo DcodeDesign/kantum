@@ -1,5 +1,5 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {noteMenu} from '../../../interfaces/note-menu.interface';
+import {Component, Input} from '@angular/core';
+import {CollectionMenu} from '../../../interfaces/collection-menu.interface';
 
 @Component({
   selector: 'app-collection-menu',
@@ -7,9 +7,9 @@ import {noteMenu} from '../../../interfaces/note-menu.interface';
   styleUrl: './collection-menu.component.scss'
 })
 export class CollectionMenuComponent {
-  @Input() treeList: noteMenu[] = [];
+  @Input() treeList: CollectionMenu[] = [];
 
-  childrenAccessor = (node: noteMenu) => node.children ?? [];
+  childrenAccessor = (node: CollectionMenu) => node.children ?? [];
 
-  hasChild = (_: number, node: noteMenu) => !!node.children && node.children.length > 0;
+  hasChild = (_: number, node: CollectionMenu) => !!node.children && node.children.length > 0;
 }

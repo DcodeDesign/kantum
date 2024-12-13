@@ -1,20 +1,17 @@
 @use "../../../../../../../../../node_modules/ngx-material-themes/scss/material/themes/variables" as variables;
 
-.spacer {
-  flex: 1 1 auto;
-}
-
 :host {
   overflow: hidden;
+
   &.edit-note-card {
     /*position: absolute !important;
     top: 50% !important;
     left: 50% !important;
     transform: translate(-50%, -50%) !important; */
     z-index: 999;
-    -webkit-box-shadow: 0px 8px 20px 0px rgba(0,0,0,0.5);
-    -moz-box-shadow: 0px 8px 20px 0px rgba(0,0,0,0.5);
-    box-shadow: 0px 8px 20px 0px rgba(0,0,0,0.5);
+    -webkit-box-shadow: 0 8px 20px 0 rgba(0,0,0,0.5);
+    -moz-box-shadow: 0 8px 20px 0 rgba(0,0,0,0.5);
+    box-shadow: 0 8px 20px 0 rgba(0,0,0,0.5);
     border-radius: var(--mdc-outlined-card-container-shape, var(--mat-app-corner-medium));
     transition: all 0.2s ease-in-out;
   }
@@ -33,28 +30,12 @@
     min-width: 300px;
   }
 
-  .overlay {
-    display: none;
-    position: fixed !important;
-    height: 100vh;
-    width: 100vw;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) !important;
-    background: rgba(0, 0, 0, 0.8) !important;
-
-    &.show {
-      display: block;
-    }
-  }
-
   .note-card {
     background: var(--mat-app-background-color);
 
     .date {
-      margin: 0;
-      padding: 0;
-      font-size: 12px
+      font-size: 12px;
+      padding: 0 0 15px 0;
     }
 
     .note-card-header {
@@ -100,13 +81,11 @@
     .note-card-content {
       flex: 1;
       overflow: auto;
-      margin-bottom: 15px;
 
       .note-content {
         font: 400 1.2rem / 1.5rem Roboto, sans-serif;
         letter-spacing: .031rem;
         white-space: pre-wrap;
-        margin: 0;
         padding: 0;
       }
 
@@ -115,7 +94,7 @@
         letter-spacing: .031rem;
         border: 0;
         background-color: transparent;
-        margin: 0;
+        margin: 0 0 0.75em;
         padding: 0;
 
         display: block;
@@ -137,14 +116,22 @@
     }
 
     .note-card-footer {
-      // height: 30px;
+      position: absolute;
+      width: 100%;
+      height: 42px;
+      bottom: 0;
+      background: var(--mat-app-background-color);
+      border-bottom-right-radius: var(--mdc-outlined-card-container-shape, var(--mat-app-corner-medium));;
+      border-bottom-left-radius: var(--mdc-outlined-card-container-shape, var(--mat-app-corner-medium));;
+
       .note-card-actions {
+        height: 42px;
+        margin-top: -5px;
         display: flex;
         flex-direction: row;
         align-items: center;
         width: 100%;
         padding: 0 8px;
-        // min-height: 30px!important;
       }
     }
   }
@@ -153,10 +140,6 @@
     color: variables.$color-black;
 
     .note-card-header {
-      .date {
-        color: variables.$color-black;
-      }
-
       .note-title {
         color: variables.$color-black;
       }
@@ -197,10 +180,6 @@
     color: variables.$color-white;
 
     .note-card-header {
-      .date {
-        color: variables.$color-white;
-      }
-
       .note-title {
         color: variables.$color-white;
       }

@@ -12,10 +12,10 @@ export interface NoteState {
   notes: Note[];
 }
 
-export const initialNoteState: AppState = {
+export const initialNoteState: AppStateNote = {
   notes: []
 };
 
-export interface AppState {
+export interface AppStateNote {
   notes: Note[];
 }

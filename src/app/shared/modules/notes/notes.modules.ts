@@ -2,7 +2,7 @@ import {isDevMode, NgModule} from '@angular/core';
 import {NoteComponent} from './components/notes/note-list/note/note.component';
 import {StoreModule} from '@ngrx/store';
 import {noteReducer} from './stores/note/note.reducer';
-import {metaReducers} from './stores/note/localStorageSync.reducer';
+import {metaNoteReducers} from './stores/note/localStorageSyncNote.reducer';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {MatButton, MatButtonModule} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -31,6 +31,14 @@ import {SharedModule} from '../../shared.module';
 import {ToolbarComponent} from './components/notes/toolbar/toolbar.component';
 import {CollectionMenuComponent} from './components/notes/collection-menu/collection-menu.component';
 import {SideNavComponent} from './components/notes/side-nav/side-nav.component';
+import {CollectionsEditionComponent} from './components/collections/collections-edition/collections-edition.component';
+import {
+  DialogCollectionsEditionComponent
+} from './components/collections/dialog-collections-edition/dialog-collections-edition.component';
+import {MatDialogActions, MatDialogContent, MatDialogTitle} from '@angular/material/dialog';
+import {collectionReducer} from './stores/collection/collection.reducer';
+import {metaCollectionReducers} from './stores/collection/localStorageSyncCollection.reducer';
+import {MatList, MatListItem} from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -42,6 +50,8 @@ import {SideNavComponent} from './components/notes/side-nav/side-nav.component';
     NotesComponent,
     NoteListComponent,
 
+    CollectionsEditionComponent,
+    DialogCollectionsEditionComponent
   ],
   exports: [
     NoteComponent,
@@ -50,7 +60,10 @@ import {SideNavComponent} from './components/notes/side-nav/side-nav.component';
     SideNavComponent,
 
     NotesComponent,
-    NoteListComponent
+    NoteListComponent,
+
+    CollectionsEditionComponent,
+    DialogCollectionsEditionComponent
   ],
   imports: [
     CommonModule,
@@ -81,6 +94,9 @@ import {SideNavComponent} from './components/notes/side-nav/side-nav.component';
     MatInput,
     MatCheckbox,
     CdkTextareaAutosize,
+    MatDialogTitle,
+    MatDialogContent,
+    MatDialogActions,
 
     NgxColorsModule,
 
@@ -89,10 +105,13 @@ import {SideNavComponent} from './components/notes/side-nav/side-nav.component';
     NgxMaterialThemesModules,
 
     StoreModule.forRoot(
-      {notes: noteReducer},
-      {metaReducers}
+      {notes: noteReducer, collections: collectionReducer},
+      {metaReducers: [metaNoteReducers, metaCollectionReducers]}
     ),
+
     StoreDevtoolsModule.instrument({maxAge: 25, logOnly: !isDevMode()}),
+    MatList,
+    MatListItem,
   ],
 })
 export class NotesModules {}
