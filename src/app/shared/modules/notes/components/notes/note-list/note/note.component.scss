@@ -4,33 +4,15 @@
   overflow: hidden;
 
   &.edit-note-card {
-    /*position: absolute !important;
-    top: 50% !important;
-    left: 50% !important;
-    transform: translate(-50%, -50%) !important; */
     z-index: 999;
-    -webkit-box-shadow: 0 8px 20px 0 rgba(0,0,0,0.5);
-    -moz-box-shadow: 0 8px 20px 0 rgba(0,0,0,0.5);
-    box-shadow: 0 8px 20px 0 rgba(0,0,0,0.5);
-    border-radius: var(--mdc-outlined-card-container-shape, var(--mat-app-corner-medium));
+    -webkit-box-shadow: 0 8px 20px 0 rgba(0,0,0,0.5)!important;
+    -moz-box-shadow: 0 8px 20px 0 rgba(0,0,0,0.5)!important;
+    box-shadow: 0 8px 20px 0 rgba(0,0,0,0.5)!important;
+    border-radius: var(--mdc-outlined-card-container-shape, var(--mat-app-corner-medium)) !important;
     transition: all 0.2s ease-in-out;
-  }
 
-  &.add-note-card {
-    position: fixed !important;
-    top: 110px !important;
-    left: 50% !important;
-    transform: translate(-50%, 0) !important;
-    z-index: 999;
-    transition: box-shadow 0.2s ease-in-out;
-    -webkit-box-shadow: 0 0 3000px 3000px rgba(0,0,0,0.75);
-    -moz-box-shadow: 0 0 3000px 3000px rgba(0,0,0,0.75);
-    box-shadow: 0 0 3000px 3000px rgba(0,0,0,0.75);
-    border-radius: var(--mdc-outlined-card-container-shape, var(--mat-app-corner-medium));
-    min-width: 300px;
-
-    .note-card-content {
-      margin-bottom: 30px;
+    .note-card-footer {
+      opacity: 1!important;
     }
   }
 
@@ -44,9 +26,8 @@
 
     .note-card-header {
       flex-direction: column;
-      .note-title {
-        display: flex;
 
+      .note-title, .edit-title-note-form {
         font-family: var(--mat-card-title-text-font, var(--mat-app-title-large-font)) !important;
         line-height: var(--mat-card-title-text-line-height, var(--mat-app-title-large-line-height)) !important;
         font: 800 1rem / 1.5rem Roboto, sans-serif;
@@ -54,12 +35,11 @@
         font-weight: var(--mat-card-title-text-weight, var(--mat-app-title-large-weight)) !important;
       }
 
+      .note-title {
+        display: flex;
+      }
+
       .edit-title-note-form {
-        font-family: var(--mat-card-title-text-font, var(--mat-app-title-large-font)) !important;
-        line-height: var(--mat-card-title-text-line-height, var(--mat-app-title-large-line-height)) !important;
-        font: 800 1rem / 1.5rem Roboto, sans-serif;
-        letter-spacing: var(--mat-card-title-text-tracking, var(--mat-app-title-large-tracking)) !important;
-        font-weight: var(--mat-card-title-text-weight, var(--mat-app-title-large-weight)) !important;
         border: none;
         background-color: transparent;
 
@@ -120,6 +100,7 @@
     }
 
     .note-card-footer {
+      opacity: 0;
       position: absolute;
       width: 100%;
       height: 42px;
@@ -136,6 +117,11 @@
         align-items: center;
         width: 100%;
         padding: 0 8px;
+      }
+
+      &.showActions {
+        opacity: 1;
+        transition: opacity 0.2s ease-in-out;
       }
     }
   }
@@ -217,19 +203,5 @@
         color: variables.$color-white;
       }
     }
-  }
-
-  .note-card.read {
-    .note-card-footer {
-      opacity: 0;
-      &.showActions {
-        opacity: 1;
-        transition: opacity 0.2s ease-in-out;
-      }
-    }
-  }
-
-  .field-note-collections-choice {
-    margin-right: 5px;
   }
 }

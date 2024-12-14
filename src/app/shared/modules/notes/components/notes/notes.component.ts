@@ -35,52 +35,44 @@ export class NotesComponent implements AfterViewInit, OnInit {
     this.store.select(selectAllCollection).pipe(
       map((collections) => collections?.slice()?.reverse())
     ).subscribe(collections => {
-      let children: ChildrenCollectionMenu[] = [];
+      this.treeList = this.buildTreeList(collections);
+    })
+  }
 
-      if(collections.length > 0) {
-        children = collections.map((collection) => {
-          return {
-            id: collection.id,
-            name: collection.name,
-            icon: 'label',
-            createdAt: collection.createdAt,
-            action: (collectionsName: string | undefined) => {
-              this.showCollections(collectionsName)
-            }
-          }
-        })
-      }
+  private buildTreeList(collections: any[]): CollectionMenu[] {
+    const children = collections.map(collection => ({
+      id: collection.id,
+      name: collection.name,
+      icon: 'label',
+      createdAt: collection.createdAt,
+      action: (collectionName: string | undefined) => this.showCollections(collectionName),
+    }));
 
-      this.treeList = [
-        {
-          name: DEFAULT_COLLECTIONS.ALL,
-          icon: 'label',
-          action: (collectionsName: string | undefined) => {
-            this.showCollections(collectionsName)
-          }
-        },
-        {
-          name: 'Collections',
-          children: [
-            ...children
-          ]
-        },
-        {
-          name: 'Ajouter une collection',
-          icon: 'new_label',
-          action: () => {
-            this.addCollections()
-          }
-        },
-        {
-          name: DEFAULT_COLLECTIONS.ARCHIVE,
-          icon: 'archive',
-          action: (collectionsName: string | undefined) => {
-            this.showCollections(collectionsName)
-          }
-        }
-      ];
-    });
+    const treeList: CollectionMenu[] = [
+      {
+        name: DEFAULT_COLLECTIONS.ALL,
+        icon: 'label',
+        action: (collectionName: string | undefined) => this.showCollections(collectionName),
+      },
+      ...(children.length > 0
+        ? [{
+          name: 'My collections',
+          children,
+        }]
+        : []),
+      {
+        name: 'Ajouter une collection',
+        icon: 'new_label',
+        action: () => this.addCollections(),
+      },
+      {
+        name: DEFAULT_COLLECTIONS.ARCHIVE,
+        icon: 'archive',
+        action: (collectionName: string | undefined) => this.showCollections(collectionName),
+      },
+    ];
+
+    return treeList;
   }
 
   ngOnInit(): void {

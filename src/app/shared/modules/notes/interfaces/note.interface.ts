@@ -1,11 +1,11 @@
 export interface Note {
-  id: string | null;
-  title: string | null;
-  content: string | null;
-  color: string | null | undefined;
-  createdAt: Date | null;
-  disabled: boolean | null;
-  collections?: string[]
+  id?: string | undefined;
+  title: string | undefined;
+  content: string | undefined;
+  color: string | undefined;
+  createdAt: Date | undefined;
+  updatedAt: Date | undefined;
+  collections: string[] | undefined;
 }
 
 export interface NoteState {

@@ -1,0 +1,5 @@
+export enum NOTE_MODE {
+  CREATE = 'CREATE',
+  DETAIL = 'DETAIL',
+  EDITION = 'EDITION'
+}

@@ -1,0 +1,52 @@
+<mat-card appearance="outlined"
+          class="note-card read"
+          [ngxTextContrast]="note?.color || null"
+          [ngStyle]="{'background': note?.color}"
+          [class.border-highlight]="mouseOvered"
+          (mouseover)="isMouseOvered(true)"
+          (mouseout)="isMouseOvered(false)">
+
+  <mat-card-header class="note-card-header mb-3">
+    <mat-card-title class="note-title">{{ note?.title }}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="note-card-content">
+    <p class="note-content">{{ note?.content || '...' }}</p>
+
+    <p class="date">{{ note?.createdAt | date: "dd/MM/YYYY HH:mm" }}</p>
+  </mat-card-content>
+  <mat-card-footer class="note-card-footer"
+                   [class.showActions]="mouseOvered || isChecked"
+                   [ngStyle]="{'background': note?.color}">
+
+    <mat-divider></mat-divider>
+
+    <mat-card-actions class="note-card-actions">
+
+      <mat-checkbox color="primary"
+                    [checked]="isChecked"
+                    (change)="onChecked($event.checked, note)"></mat-checkbox>
+
+      <div class="spacer"></div>
+
+      <button mat-icon-button
+              mat-small-icon-button
+              type="button"
+              (click)="onEditNote(note)">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-icon-button
+              mat-small-icon-button
+              type="button"
+              (click)="onArchiveNote(note)">
+        <mat-icon>archive</mat-icon>
+      </button>
+      <button mat-icon-button
+              mat-small-icon-button
+              type="button"
+              class="icon-button-small"
+              (click)="onDeleteNote(note?.id)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </mat-card-actions>
+  </mat-card-footer>
+</mat-card>

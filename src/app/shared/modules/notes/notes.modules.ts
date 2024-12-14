@@ -39,10 +39,16 @@ import {MatDialogActions, MatDialogContent, MatDialogTitle} from '@angular/mater
 import {collectionReducer} from './stores/collection/collection.reducer';
 import {metaCollectionReducers} from './stores/collection/localStorageSyncCollection.reducer';
 import {MatList, MatListItem} from '@angular/material/list';
+import {EditionNoteComponent} from './components/notes/note-list/note/edition-note/edition-note.component';
+import {NoteDetailComponent} from './components/notes/note-list/note/note-detail/note-detail.component';
+import {NotesService} from './services/notes.service';
 
 @NgModule({
   declarations: [
     NoteComponent,
+    EditionNoteComponent,
+    NoteDetailComponent,
+
     ToolbarComponent,
     CollectionMenuComponent,
     SideNavComponent,
@@ -55,6 +61,9 @@ import {MatList, MatListItem} from '@angular/material/list';
   ],
   exports: [
     NoteComponent,
+    EditionNoteComponent,
+    NoteDetailComponent,
+
     ToolbarComponent,
     CollectionMenuComponent,
     SideNavComponent,
@@ -113,5 +122,8 @@ import {MatList, MatListItem} from '@angular/material/list';
     MatList,
     MatListItem,
   ],
+  providers: [
+    NotesService
+  ]
 })
 export class NotesModules {}

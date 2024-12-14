@@ -1,0 +1,61 @@
+<mat-card *ngIf="noteForm"
+          [formGroup]="noteForm"
+          appearance="outlined"
+          class="note-card edit"
+          [ngxTextContrast]="noteForm.get('color')?.value || note?.color || null"
+          [ngStyle]="{'background': noteForm.get('color')?.value || note?.color}">
+
+  <mat-card-header class="note-card-header mb-3">
+      <textarea class="edit-title-note-form"
+                formControlName="title"
+                (focusin)="textAreaResizeObserver(textAreaElement)"
+                cdkTextareaAutosize
+                #textAreaElement
+                #autosize="cdkTextareaAutosize"
+                placeholder="Titre...">
+          </textarea>
+  </mat-card-header>
+  <mat-card-content class="note-card-content">
+        <textarea class="edit-content-note-form"
+                  (focusin)="textAreaResizeObserver(textAreaElement)"
+                  cdkTextareaAutosize
+                  #textAreaElement
+                  #autosize="cdkTextareaAutosize"
+                  placeholder="Contenu..."
+                  formControlName="content">
+          </textarea>
+
+    <p class="date">{{ note?.createdAt | date: "dd/MM/YYYY HH:mm" }}</p>
+  </mat-card-content>
+  <mat-card-footer class="note-card-footer"
+                   [ngStyle]="{'background': noteForm.get('color')?.value || note?.color}">
+
+    <mat-divider></mat-divider>
+
+    <mat-card-actions class="note-card-actions">
+
+      <ngx-colors ngx-colors-trigger
+                  [ngxTextContrast]="noteForm.get('color')?.value || note?.color || null"
+                  [hideTextInput]="true"
+                  style="display: inline-block;"
+                  formControlName="color"></ngx-colors>
+
+      <div class="spacer"></div>
+
+      <button mat-icon-button
+              (click)="onSaveNote()"
+              mat-small-icon-button
+              class="small-icon-button"
+              type="button">
+        <mat-icon>save</mat-icon>
+      </button>
+
+      <button mat-icon-button mat-small-icon-button
+              class="small-icon-button"
+              (click)="onCancel()"
+              type="button">
+        <mat-icon>cancel</mat-icon>
+      </button>
+    </mat-card-actions>
+  </mat-card-footer>
+</mat-card>
