@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {MatDrawer} from '@angular/material/sidenav';
-import {Note} from '../../../interfaces/note.interface';
+import {Note} from '../../../shared/interfaces/note.interface';
 
 @Component({
   selector: 'app-toolbar',
@@ -14,9 +14,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
   @Output() toggleSideNav: EventEmitter<boolean> = new EventEmitter();
 
-  @Output() search: EventEmitter<string | null> = new EventEmitter();
-  @Output() archiveNotes: EventEmitter<void> = new EventEmitter();
-  @Output() deleteNotes: EventEmitter<void> = new EventEmitter();
+  @Output() search = new EventEmitter<string>();
+  @Output() archiveNotes = new EventEmitter();
+  @Output() deleteNotes = new EventEmitter();
+  @Output() changesNoteCollection= new EventEmitter();
   @Output() addNote: EventEmitter<void> = new EventEmitter();
 
   searchForm = new FormControl(null);
@@ -27,7 +28,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.searchForm.valueChanges.subscribe(
       value => {
-        this.search.emit(value)
+        if(!value) return;
+
+        this.search.emit(value);
       }
     );
   }
@@ -50,5 +53,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
   onAddNote() {
     this.addNote.emit();
+  }
+
+  onChangesNoteCollection() {
+    this.changesNoteCollection.emit();
   }
 }

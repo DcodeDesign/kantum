@@ -1,3 +1,8 @@
+.tile-item {
+  opacity: 0;
+  transition: opacity 0.9s ease;
+}
+
 .note-container {
   padding: 15px 15px 90px;
 
@@ -25,11 +30,7 @@
   }
 }
 
-.tile-item {
-  opacity: 0;
-  transition: opacity 0.9s ease;
-}
-
+/*
 .example-custom-placeholder {
   position: absolute;
   background: red;
@@ -47,3 +48,4 @@
   z-index: 99999;
   border-radius: var(--mdc-outlined-card-container-shape, var(--mat-app-corner-medium));
 }
+*/

@@ -18,6 +18,7 @@ import {NgxMaterialThemesModules, ThemePreviewComponent} from 'ngx-material-them
 import {Breakpoint, BREAKPOINTS, NgxResponsiveColumnsModules} from 'ngx-responsive-columns';
 import {NgxTextColorContrastModules} from 'ngx-text-color-contrast';
 import {NgxTileLayoutModules} from 'ngx-tile-layout';
+import {MatDivider} from '@angular/material/divider';
 
 const customBreakpoints: Breakpoint[] = [
   { width: 1536, cols: 6 },
@@ -54,6 +55,8 @@ const customBreakpoints: Breakpoint[] = [
     NgxTextColorContrastModules,
     NgxTileLayoutModules,
     ThemePreviewComponent,
+
+    MatDivider,
   ],
   providers: [
     provideAnimationsAsync(),

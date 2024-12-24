@@ -2,6 +2,7 @@
              [selectedNotes]="selectedNotes"
              (toggleSideNav)="onToggleSideNav()"
              (archiveNotes)="archiveNotes()"
+             (changesNoteCollection)="changedCollectionNotes()"
              (addNote)="addNote()"
              (deleteNotes)="deleteNotes()"
              (search)="search($event)"></app-toolbar>
@@ -12,7 +13,8 @@
   </menu>
 
   <content>
-    <app-note-list (notesSelectedEmitter)="onSelectedNotes($event)"></app-note-list>
+    <app-note-list (selectedNotes)="onSelectedNotes($event)"
+                   [collectionSelected]="collectionNameSelected"></app-note-list>
   </content>
 </app-side-nav>
 

@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {map} from 'rxjs';
 import {Store} from '@ngrx/store';
 import {selectAllCollection} from '../../../stores/collection/collection.selectors';
-import {Collection} from '../../../interfaces/collection.interface';
+import {Collection} from '../../interfaces/collection.interface';
 import {addCollection, deleteCollection, updateCollection} from '../../../stores/collection/collection.actions';
 import {FormControl, Validators} from '@angular/forms';
 import { v4 as uuidv4 } from 'uuid';

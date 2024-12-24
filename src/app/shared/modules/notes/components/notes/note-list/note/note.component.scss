@@ -19,11 +19,6 @@
   .note-card {
     background: var(--mat-app-background-color);
 
-    .date {
-      font-size: 12px;
-      padding: 0 0 15px 0;
-    }
-
     .note-card-header {
       flex-direction: column;
 
@@ -97,6 +92,12 @@
           outline: 0 solid transparent;
         }
       }
+
+      .date {
+        height: 22px;
+        font-size: 12px;
+        padding: 0 0 15px 0;
+      }
     }
 
     .note-card-footer {
@@ -168,6 +169,10 @@
 
   .note-card.light-text {
     color: variables.$color-white;
+
+    .mat-divider {
+      border-top-color: variables.$color-white;
+    }
 
     .note-card-header {
       .note-title {

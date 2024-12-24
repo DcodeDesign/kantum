@@ -1,3 +1,22 @@
-ngx-colors-panel .opened {
- // background: #2c2a2a !important;
+@use "../../../../node_modules/ngx-material-themes/scss/material/themes/variables" as variables;
+
+.dark-theme {
+  ngx-colors-panel {
+    .opened {
+      background: variables.$color-black !important;
+    }
+
+    button {
+      color: white !important;
+    }
+
+    .circle.button {
+      background: transparent !important;
+    }
+
+    svg {
+      fill: white;
+    }
+  }
 }
+

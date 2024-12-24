@@ -1,0 +1,7 @@
+<div *ngFor="let collection of collectionList" class="note-checkbox">
+  <mat-checkbox
+    [checked]="isChecked(collection)"
+    (change)="toggleCollectionSelection(collection, $event.checked)">
+    {{ collection.name }}
+  </mat-checkbox>
+</div>

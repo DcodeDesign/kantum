@@ -1,6 +1,16 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ViewChild
+} from '@angular/core';
 import {Subject, takeUntil} from 'rxjs';
-import {Note} from '../../../interfaces/note.interface';
+import {Note} from '../../../shared/interfaces/note.interface';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import {
   NgxTileLayoutComponent
@@ -8,18 +18,19 @@ import {
 import {NgxResponsiveColumnsService} from 'ngx-responsive-columns';
 import {MatDrawer} from '@angular/material/sidenav';
 import {DEFAULT_COLLECTIONS} from '../notes.component';
-import {NOTE_MODE} from '../../../enums/note-mode.enum';
-import {NotesService} from '../../../services/notes.service';
+import {NOTE_MODE} from '../../../shared/enums/note-mode.enum';
+import {NotesService} from '../../../shared/services/notes.service';
 
 @Component({
   selector: 'app-note-list',
   templateUrl: './note-list.component.html',
   styleUrls: ['./note-list.component.scss']
 })
-export class NoteListComponent implements OnInit, OnDestroy {
+export class NoteListComponent implements OnInit, OnChanges, OnDestroy {
   @Input() drawer: MatDrawer | undefined;
+  @Input() collectionSelected: string | undefined;
   @ViewChild('masonryLayoutComponent') masonryLayoutComponent: NgxTileLayoutComponent | undefined;
-  @Output() notesSelectedEmitter: EventEmitter<Note[]> = new EventEmitter<Note[]>();
+  @Output() selectedNotes = new EventEmitter<Note[]>();
   protected readonly NOTE_MODE = NOTE_MODE;
 
   noteMode: NOTE_MODE = NOTE_MODE.DETAIL;
@@ -27,16 +38,6 @@ export class NoteListComponent implements OnInit, OnDestroy {
   noteIdEdited: string | null = null;
   newNote: Note | null = null;
   breakpoint = 3;
-
-  private initNewNote: Note = {
-    id: undefined,
-    title: undefined,
-    content: undefined,
-    createdAt: undefined,
-    updatedAt: undefined,
-    color: undefined,
-    collections: [DEFAULT_COLLECTIONS.ALL]
-  };
 
   private selectedCollections: string[] = [DEFAULT_COLLECTIONS.ALL];
   private destroy$ = new Subject<void>();
@@ -52,22 +53,22 @@ export class NoteListComponent implements OnInit, OnDestroy {
       .subscribe((cols) => {
         this.breakpoint = cols;
       });
+
+    this.loadNote()
   }
 
   loadNote(collections: string[] = [DEFAULT_COLLECTIONS.ALL]) {
     this.selectedCollections = collections;
     this.noteService.getNotesByCollections(collections)
-      .subscribe(notes => this.noteList = notes);
+      .subscribe(notes => {
+        console.log(notes)
+        this.noteList = notes
+      });
   }
 
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
-  }
-
-  addNewNote(): void {
-    this.initNewNote.collections = this.selectedCollections;
-    this.newNote = {...this.initNewNote};
   }
 
   drop($event: CdkDragDrop<any, any>) {
@@ -96,5 +97,17 @@ export class NoteListComponent implements OnInit, OnDestroy {
 
   getNoteIdEditionMode(noteId: string) {
     this.noteIdEdited = noteId;
+  }
+
+  onNoteSelected(selectedNote: { note: Note; isSelected: boolean }) {
+    const selectedNotes =  this.noteService.selectedNote(selectedNote)
+    this.selectedNotes.emit(selectedNotes);
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if(changes['collectionSelected']) {
+      const collectionName = changes['collectionSelected'].currentValue
+      this.loadNote([collectionName]);
+    }
   }
 }

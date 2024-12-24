@@ -23,6 +23,7 @@
           class="tile-item"
           [note]="note"
           [noteMode]="noteMode"
+          (notesSelected)="onNoteSelected($event)"
           (cancelEdition)="cancelEdition()"
           (closeEdition)="closeEdition()"
           (resizeTextArea)="resizeTextArea()"

@@ -1,0 +1,7 @@
+<div *ngFor="let note of notes" class="note-checkbox">
+  <mat-checkbox
+    [checked]="isChecked(note)"
+    (change)="toggleNoteSelection(note, $event.checked)">
+    {{ note.title }}
+  </mat-checkbox>
+</div>

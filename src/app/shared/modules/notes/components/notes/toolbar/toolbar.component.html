@@ -24,16 +24,30 @@
   </button>
 
   <ng-container *ngIf="selectedNotes.length > 0">
-    <button mat-icon-button (click)="onArchiveNotes()">
+    <mat-divider vertical="true" style="height: 100%; margin: 0 15px"></mat-divider>
+
+    <button mat-icon-button ngx-colors-trigger>
+      <mat-icon>palette</mat-icon>
+    </button>
+
+    <mat-divider vertical="true" style="height: 100%; margin: 0 15px"></mat-divider>
+
+    <button mat-icon-button (click)="onChangesNoteCollection()">
       <mat-icon>label</mat-icon>
     </button>
+
+    <mat-divider vertical="true" style="height: 100%; margin: 0 15px"></mat-divider>
 
     <button mat-icon-button (click)="onArchiveNotes()">
       <mat-icon>archive</mat-icon>
     </button>
+
+    <mat-divider vertical="true" style="height: 100%; margin: 0 15px"></mat-divider>
 
     <button mat-icon-button (click)="onDeleteNotes()">
       <mat-icon>delete</mat-icon>
     </button>
   </ng-container>
 </mat-toolbar-row>
+
+<mat-divider></mat-divider>

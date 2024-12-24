@@ -1,14 +1,21 @@
-import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {Note} from '../../interfaces/note.interface';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {Note} from '../../shared/interfaces/note.interface';
 import {NoteListComponent} from './note-list/note-list.component';
-import {ChildrenCollectionMenu, CollectionMenu} from '../../interfaces/collection-menu.interface';
+import {CollectionMenu} from '../../shared/interfaces/collection-menu.interface';
 import {
   DialogCollectionsEditionComponent
-} from '../collections/dialog-collections-edition/dialog-collections-edition.component';
+} from './dialogs/dialog-collections-edition/dialog-collections-edition.component';
 import {MatDialog} from '@angular/material/dialog';
 import {selectAllCollection} from '../../stores/collection/collection.selectors';
 import {map} from 'rxjs';
 import {Store} from '@ngrx/store';
+import {DialogDeletedNotesComponent} from './dialogs/dialog-deleted-notes/dialog-deleted-notes.component';
+import {DialogArchivedNotesComponent} from './dialogs/dialog-archived-notes/dialog-archived-notes.component';
+import {
+  DialogChangedCollectionNotesComponent
+} from './dialogs/dialog-changed-collection-notes/dialog-changed-collection-notes.component';
+import {DialogAddNoteComponent} from './dialogs/dialog-add-note/dialog-add-note.component';
+
 
 export const DEFAULT_COLLECTIONS = {
   ALL: 'All',
@@ -20,13 +27,14 @@ export const DEFAULT_COLLECTIONS = {
   templateUrl: './notes.component.html',
   styleUrl: './notes.component.scss'
 })
-export class NotesComponent implements AfterViewInit, OnInit {
+export class NotesComponent {
   @ViewChild(NoteListComponent, {static: true}) noteListComponent: NoteListComponent | undefined;
 
   selectedNotes: Note[] = [];
   toggleSideNav = false;
 
   treeList: CollectionMenu[] = [];
+  protected collectionNameSelected: string | undefined;
 
   constructor(
     private dialog: MatDialog,
@@ -39,6 +47,44 @@ export class NotesComponent implements AfterViewInit, OnInit {
     })
   }
 
+  onSelectedNotes(selectedNotes: Note[]) {
+    this.selectedNotes = selectedNotes;
+  }
+
+  addNote() {
+    this.openDialogAddNote();
+  }
+
+  deleteNotes() {
+    this.openDeletedNotes();
+  }
+
+  archiveNotes() {
+    this.openArchivedNotes();
+  }
+
+  changedCollectionNotes() {
+    this.openChangedCollectionNotes();
+  }
+
+  search($event: string | null) {
+
+  }
+
+  addCollections() {
+    this.openDialogCollectionEdition();
+  }
+
+  showCollections(collectionName: string | undefined) {
+    if (collectionName) {
+      this.collectionNameSelected = collectionName;
+    }
+  }
+
+  onToggleSideNav() {
+    this.toggleSideNav = !this.toggleSideNav;
+  }
+
   private buildTreeList(collections: any[]): CollectionMenu[] {
     const children = collections.map(collection => ({
       id: collection.id,
@@ -48,7 +94,7 @@ export class NotesComponent implements AfterViewInit, OnInit {
       action: (collectionName: string | undefined) => this.showCollections(collectionName),
     }));
 
-    const treeList: CollectionMenu[] = [
+    return [
       {
         name: DEFAULT_COLLECTIONS.ALL,
         icon: 'label',
@@ -71,60 +117,52 @@ export class NotesComponent implements AfterViewInit, OnInit {
         action: (collectionName: string | undefined) => this.showCollections(collectionName),
       },
     ];
-
-    return treeList;
   }
 
-  ngOnInit(): void {
-    this.noteListComponent?.loadNote([DEFAULT_COLLECTIONS.ALL]);
+  openDeletedNotes(): void {
+    this.dialog.open(DialogDeletedNotesComponent, {
+      data: {
+        selectedNotes: this.selectedNotes
+      }
+    });
   }
 
-  ngAfterViewInit(): void {
-
+  openArchivedNotes(): void {
+    this.dialog.open(DialogArchivedNotesComponent, {
+      data: {
+        selectedNotes: this.selectedNotes
+      }
+    });
   }
 
-  onSelectedNotes($event: Note[]) {
-    this.selectedNotes = $event;
+  openChangedCollectionNotes(): void {
+    this.dialog.open(DialogChangedCollectionNotesComponent, {
+      data: {
+        selectedNotes: this.selectedNotes
+      }
+    });
   }
 
-  archiveNotes() {
+  openDialogAddNote(): void {
+    console.log(this.collectionNameSelected);
+    const newNote = {
+      id: undefined,
+      title: undefined,
+      content: undefined,
+      createdAt: undefined,
+      updatedAt: undefined,
+      color: undefined,
+      collections: [this.collectionNameSelected, DEFAULT_COLLECTIONS.ALL]
+    };
 
-  }
-
-  addNote() {
-    this.toggleSideNav = !this.toggleSideNav;
-    this.noteListComponent?.addNewNote();
-  }
-
-  deleteNotes() {
-
-  }
-
-  search($event: string | null) {
-
-  }
-
-  addCollections() {
-    this.openDialogCollectionEdition();
-  }
-
-  showCollections(collectionName: string | undefined) {
-    if (collectionName) {
-      this.noteListComponent?.loadNote([collectionName]);
-    }
-  }
-
-  onToggleSideNav() {
-    this.toggleSideNav = !this.toggleSideNav;
+    this.dialog.open(DialogAddNoteComponent, {
+      data: {
+        note: newNote
+      }
+    });
   }
 
   openDialogCollectionEdition(): void {
-    const dialogRef = this.dialog.open(DialogCollectionsEditionComponent, {
-      data: {},
-    });
-
-    dialogRef.afterClosed().subscribe((result: undefined) => {
-      console.log('The dialog was closed');
-    });
+    const dialogRef = this.dialog.open(DialogCollectionsEditionComponent);
   }
 }

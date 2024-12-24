@@ -11,11 +11,11 @@ import {
   ViewChild
 } from '@angular/core';
 import {CdkTextareaAutosize} from '@angular/cdk/text-field';
-import {Note} from '../../../../../interfaces/note.interface';
+import {Note} from '../../../../../shared/interfaces/note.interface';
 import {Subject} from 'rxjs';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ResizeObserver} from '@juggle/resize-observer';
-import {NotesService} from '../../../../../services/notes.service';
+import {NotesService} from '../../../../../shared/services/notes.service';
 
 @Component({
   selector: 'app-edition-note',
@@ -89,13 +89,15 @@ export class EditionNoteComponent implements OnInit, AfterViewInit, OnDestroy {
       return;
     }
 
+    const editionNote = {
+      ...this.note,
+      ...this.noteForm.value
+    };
+
     if (this.note?.id) {
-      this.noteService.updateNote({
-        ...this.note,
-        ...this.noteForm.value
-      });
+      this.noteService.updateNote(editionNote);
     } else {
-      this.noteService.saveNote(this.noteForm.value);
+      this.noteService.saveNote(editionNote);
     }
 
     this.closeEdition.emit();

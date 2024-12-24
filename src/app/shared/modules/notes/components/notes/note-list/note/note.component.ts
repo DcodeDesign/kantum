@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
-import { Note } from '../../../../interfaces/note.interface';
-import {NOTE_MODE} from '../../../../enums/note-mode.enum';
+import {Note} from '../../../../shared/interfaces/note.interface';
+import {NOTE_MODE} from '../../../../shared/enums/note-mode.enum';
+import {ISelectedNote} from '../../../../shared/interfaces/selected-note.interface';
 
 @Component({
   selector: 'app-note',
@@ -11,17 +12,17 @@ export class NoteComponent implements OnInit, OnDestroy {
   @Input() note: Note | undefined;
   @Input() noteMode: NOTE_MODE = NOTE_MODE.DETAIL;
 
-  @Output() cancelEdition: EventEmitter<void> = new EventEmitter<void>();
-  @Output() closeEdition: EventEmitter<void> = new EventEmitter<void>();
-  @Output() noteIdEditionMode: EventEmitter<string> = new EventEmitter<string>();
-  @Output() resizeTextArea: EventEmitter<void> = new EventEmitter<void>();
+  @Output() cancelEdition = new EventEmitter<void>();
+  @Output() closeEdition = new EventEmitter<void>();
+  @Output() noteIdEditionMode = new EventEmitter<string>();
+  @Output() resizeTextArea = new EventEmitter<void>();
+  @Output() notesSelected = new EventEmitter<ISelectedNote>();
 
   protected readonly NOTE_MODE = NOTE_MODE;
 
   constructor() {}
 
   ngOnInit(): void {
-    console.log(this.note);
   }
 
   ngOnDestroy(): void {}
@@ -43,5 +44,9 @@ export class NoteComponent implements OnInit, OnDestroy {
 
   onResizeTextArea() {
     this.resizeTextArea.emit();
+  }
+
+  noteSelected(selectedNote: ISelectedNote) {
+    this.notesSelected.emit(selectedNote);
   }
 }

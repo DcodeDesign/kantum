@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {CollectionMenu} from '../../../interfaces/collection-menu.interface';
+import {CollectionMenu} from '../../../shared/interfaces/collection-menu.interface';
 
 @Component({
   selector: 'app-collection-menu',

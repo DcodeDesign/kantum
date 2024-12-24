@@ -1,5 +1,6 @@
 <ng-container *ngIf="noteMode === NOTE_MODE.DETAIL; else modeEdition">
   <app-note-detail [note]="note"
+                   (noteSelected)="noteSelected($event)"
                    (editionNote)="editionNote($event)"
                    (resizeTextArea)="onResizeTextArea()"></app-note-detail>
 </ng-container>

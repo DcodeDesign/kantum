@@ -27,27 +27,48 @@ import {MatChipListbox, MatChipRow} from '@angular/material/chips';
 import {MatInput} from '@angular/material/input';
 import {MatCheckbox} from '@angular/material/checkbox';
 import {NoteListComponent} from './components/notes/note-list/note-list.component';
-import {SharedModule} from '../../shared.module';
 import {ToolbarComponent} from './components/notes/toolbar/toolbar.component';
 import {CollectionMenuComponent} from './components/notes/collection-menu/collection-menu.component';
 import {SideNavComponent} from './components/notes/side-nav/side-nav.component';
-import {CollectionsEditionComponent} from './components/collections/collections-edition/collections-edition.component';
+import {CollectionsEditionComponent} from './shared/components/collections-edition/collections-edition.component';
 import {
   DialogCollectionsEditionComponent
-} from './components/collections/dialog-collections-edition/dialog-collections-edition.component';
-import {MatDialogActions, MatDialogContent, MatDialogTitle} from '@angular/material/dialog';
+} from './components/notes/dialogs/dialog-collections-edition/dialog-collections-edition.component';
+import {MatDialogActions, MatDialogClose, MatDialogContent, MatDialogTitle} from '@angular/material/dialog';
 import {collectionReducer} from './stores/collection/collection.reducer';
 import {metaCollectionReducers} from './stores/collection/localStorageSyncCollection.reducer';
 import {MatList, MatListItem} from '@angular/material/list';
 import {EditionNoteComponent} from './components/notes/note-list/note/edition-note/edition-note.component';
 import {NoteDetailComponent} from './components/notes/note-list/note/note-detail/note-detail.component';
-import {NotesService} from './services/notes.service';
+import {NotesService} from './shared/services/notes.service';
+import {
+  CollectionCheckboxListComponent
+} from './shared/components/collection-checkbox-list/collection-checkbox-list.component';
+import {DialogAddNoteComponent} from './components/notes/dialogs/dialog-add-note/dialog-add-note.component';
+import {
+  DialogArchivedNotesComponent
+} from './components/notes/dialogs/dialog-archived-notes/dialog-archived-notes.component';
+import {
+  DialogChangedCollectionNotesComponent
+} from './components/notes/dialogs/dialog-changed-collection-notes/dialog-changed-collection-notes.component';
+import {
+  DialogDeletedNotesComponent
+} from './components/notes/dialogs/dialog-deleted-notes/dialog-deleted-notes.component';
+import {NoteCheckboxListComponent} from './shared/components/note-checkbox-list/note-checkbox-list.component';
 
 @NgModule({
   declarations: [
     NoteComponent,
     EditionNoteComponent,
     NoteDetailComponent,
+    DialogAddNoteComponent,
+
+    DialogArchivedNotesComponent,
+    DialogChangedCollectionNotesComponent,
+    DialogDeletedNotesComponent,
+
+    NoteCheckboxListComponent,
+    CollectionCheckboxListComponent,
 
     ToolbarComponent,
     CollectionMenuComponent,
@@ -63,6 +84,14 @@ import {NotesService} from './services/notes.service';
     NoteComponent,
     EditionNoteComponent,
     NoteDetailComponent,
+    DialogAddNoteComponent,
+
+    DialogArchivedNotesComponent,
+    DialogChangedCollectionNotesComponent,
+    DialogDeletedNotesComponent,
+
+    NoteCheckboxListComponent,
+    CollectionCheckboxListComponent,
 
     ToolbarComponent,
     CollectionMenuComponent,
@@ -106,21 +135,27 @@ import {NotesService} from './services/notes.service';
     MatDialogTitle,
     MatDialogContent,
     MatDialogActions,
+    MatDialogTitle,
+    MatDialogContent,
+    MatDialogActions,
+    MatButton,
+    MatDialogClose,
+    MatCheckbox,
 
     NgxColorsModule,
 
     NgxTextColorContrastModules,
     NgxTileLayoutModules,
     NgxMaterialThemesModules,
+    MatList,
+    MatListItem,
 
     StoreModule.forRoot(
       {notes: noteReducer, collections: collectionReducer},
       {metaReducers: [metaNoteReducers, metaCollectionReducers]}
     ),
 
-    StoreDevtoolsModule.instrument({maxAge: 25, logOnly: !isDevMode()}),
-    MatList,
-    MatListItem,
+    StoreDevtoolsModule.instrument({maxAge: 25, logOnly: !isDevMode()})
   ],
   providers: [
     NotesService

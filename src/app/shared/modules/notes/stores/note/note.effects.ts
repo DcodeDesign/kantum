@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { loadNotes, loadNotesSuccess } from './note.actions';
 import { map } from 'rxjs/operators';
-import {Note} from '../../interfaces/note.interface';
+import {Note} from '../../shared/interfaces/note.interface';
 import {of} from 'rxjs';
 
 @Injectable()

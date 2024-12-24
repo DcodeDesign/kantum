@@ -1,0 +1,14 @@
+<div class="dialog-container">
+  <h2 mat-dialog-title> Changed collection Notes </h2>
+  <mat-dialog-content>
+    <p> êtes-vous sur de modifier les collections des notes : </p>
+    <app-note-checkbox-list [notes]="data.selectedNotes" (selectionChange)="selectionNotesChange($event)"></app-note-checkbox-list>
+
+    <p> Choisissez les collections : </p>
+    <app-collection-checkbox-list></app-collection-checkbox-list>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>No</button>
+    <button mat-button mat-dialog-close>Ok</button>
+  </mat-dialog-actions>
+</div>

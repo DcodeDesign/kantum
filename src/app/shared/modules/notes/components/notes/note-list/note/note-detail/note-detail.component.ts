@@ -11,10 +11,11 @@ import {
   ViewChild
 } from '@angular/core';
 import {CdkTextareaAutosize} from '@angular/cdk/text-field';
-import {Note} from '../../../../../interfaces/note.interface';
+import {Note} from '../../../../../shared/interfaces/note.interface';
 import {Subject} from 'rxjs';
-import {NotesService} from '../../../../../services/notes.service';
+import {NotesService} from '../../../../../shared/services/notes.service';
 import {DEFAULT_COLLECTIONS} from '../../../notes.component';
+import {ISelectedNote} from '../../../../../shared/interfaces/selected-note.interface';
 
 @Component({
   selector: 'app-note-detail',
@@ -27,14 +28,14 @@ export class NoteDetailComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('textAreaElement') textAreaElement: ElementRef | undefined;
 
   @Output() editionNote: EventEmitter<Note> = new EventEmitter<Note>();
-  @Output() resizeTextArea: EventEmitter<void> = new EventEmitter<void>();
+  @Output() resizeTextArea = new EventEmitter<void>();
+  @Output() noteSelected = new EventEmitter<ISelectedNote>();
 
   @Input() note: Note | undefined;
 
   private resizeObserver: ResizeObserver | undefined;
   private _injector = inject(Injector);
   private destroy$ = new Subject<void>();
-
 
   mouseOvered: boolean | undefined;
   isChecked: boolean | undefined;
@@ -81,7 +82,8 @@ export class NoteDetailComponent implements OnInit, AfterViewInit, OnDestroy {
     if(!note) return;
 
     this.isChecked = checked;
-    this.noteService.selectedNote(note);
+
+    this.noteSelected.emit({ note: note, isSelected: checked });
   }
 
   triggerResize(): void {
