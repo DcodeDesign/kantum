@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import {loadCollections, loadCollectionsSuccess} from './collection.actions';
 import { map } from 'rxjs/operators';
-import {Collection} from '../../shared/interfaces/collection.interface';
+import {Collection} from '../../interfaces/collection.interface';
 
 @Injectable()
 export class CollectionEffects {

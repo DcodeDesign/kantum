@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import {addNote, updateNote, deleteNote, loadNotesSuccess, updateAllNotes} from './note.actions';
-import {initialNoteState} from '../../shared/interfaces/note.interface';
+import {initialNoteState} from '../../interfaces/note.interface';
 
 export const noteReducer = createReducer(
   initialNoteState,

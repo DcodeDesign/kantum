@@ -1,0 +1,212 @@
+@use "../../../../../../../../node_modules/ngx-material-themes/scss/material/themes/variables" as variables;
+
+:host {
+  overflow: hidden;
+
+  &.edit-note-card {
+    z-index: 999;
+    -webkit-box-shadow: 0 8px 20px 0 rgba(0,0,0,0.5)!important;
+    -moz-box-shadow: 0 8px 20px 0 rgba(0,0,0,0.5)!important;
+    box-shadow: 0 8px 20px 0 rgba(0,0,0,0.5)!important;
+    border-radius: var(--mdc-outlined-card-container-shape, var(--mat-app-corner-medium)) !important;
+    transition: all 0.2s ease-in-out;
+
+    .note-card-footer {
+      opacity: 1!important;
+    }
+  }
+
+  .note-card {
+    background: var(--mat-app-background-color);
+
+    .note-card-header {
+      flex-direction: column;
+
+      .note-title, .edit-title-note-form {
+        font-family: var(--mat-card-title-text-font, var(--mat-app-title-large-font)) !important;
+        line-height: var(--mat-card-title-text-line-height, var(--mat-app-title-large-line-height)) !important;
+        font: 800 1rem / 1.5rem Roboto, sans-serif;
+        letter-spacing: var(--mat-card-title-text-tracking, var(--mat-app-title-large-tracking)) !important;
+        font-weight: var(--mat-card-title-text-weight, var(--mat-app-title-large-weight)) !important;
+      }
+
+      .note-title {
+        display: flex;
+      }
+
+      .edit-title-note-form {
+        border: none;
+        background-color: transparent;
+
+        margin: 0;
+        padding: 0;
+
+        width: 100%;
+
+        border-radius: 1px 1px 0 0;
+
+        &:focus-visible {
+          outline: 0 solid transparent;
+          border: 0 solid transparent;
+        }
+
+        &:focus {
+          outline: 0 solid transparent;
+          border: 0 solid transparent;
+        }
+      }
+    }
+
+    .note-card-content {
+      flex: 1;
+      overflow: auto;
+
+      .note-content {
+        font: 400 1.2rem / 1.5rem Roboto, sans-serif;
+        letter-spacing: .031rem;
+        white-space: pre-wrap;
+        padding: 0;
+      }
+
+      .edit-content-note-form {
+        font: 400 1.2rem / 1.5rem Roboto, sans-serif;
+        letter-spacing: .031rem;
+        border: 0;
+        background-color: transparent;
+        margin: 0 0 0.75em;
+        padding: 0;
+
+        display: block;
+        width: 100%;
+        height: calc(100% - 9px);
+        resize: none;
+        border-radius: 0 0 1px 1px;
+
+        &:focus-visible {
+          border: 0 solid transparent;
+          outline: 0 solid transparent;
+        }
+
+        &:focus {
+          border: 0 solid transparent;
+          outline: 0 solid transparent;
+        }
+      }
+
+      .date {
+        height: 22px;
+        font-size: 12px;
+        padding: 0 0 15px 0;
+      }
+    }
+
+    .note-card-footer {
+      opacity: 0;
+      position: absolute;
+      width: 100%;
+      height: 42px;
+      bottom: 0;
+      background: var(--mat-app-background-color);
+      border-bottom-right-radius: var(--mdc-outlined-card-container-shape, var(--mat-app-corner-medium));;
+      border-bottom-left-radius: var(--mdc-outlined-card-container-shape, var(--mat-app-corner-medium));;
+
+      .note-card-actions {
+        height: 42px;
+        margin-top: -5px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        width: 100%;
+        padding: 0 8px;
+      }
+
+      &.showActions {
+        opacity: 1;
+        transition: opacity 0.2s ease-in-out;
+      }
+    }
+  }
+
+  .note-card.dark-text {
+    color: variables.$color-black;
+
+    .note-card-header {
+      .note-title {
+        color: variables.$color-black;
+      }
+
+      .edit-title-note-form {
+        color: variables.$color-black;
+
+        &::placeholder {
+          color: lighten(variables.$color-black, 15%);
+        }
+      }
+    }
+
+    .note-card-content {
+      .note-content {
+        color: variables.$color-black;
+      }
+
+      .edit-content-note-form {
+        color: variables.$color-black;
+
+        &::placeholder {
+          color: lighten(variables.$color-black, 15%);
+        }
+      }
+    }
+
+    .note-card-footer {
+      color: variables.$color-black;
+
+      mat-icon {
+        color: variables.$color-black;
+      }
+    }
+  }
+
+  .note-card.light-text {
+    color: variables.$color-white;
+
+    .mat-divider {
+      border-top-color: variables.$color-white;
+    }
+
+    .note-card-header {
+      .note-title {
+        color: variables.$color-white;
+      }
+
+      .edit-title-note-form {
+        color: variables.$color-white;
+
+        &::placeholder {
+          color: darken(variables.$color-white, 15%);
+        }
+      }
+    }
+
+    .note-card-content {
+      .note-content {
+        color: variables.$color-white;
+      }
+
+      .edit-content-note-form {
+        color: variables.$color-white;
+
+        &::placeholder {
+          color: darken(variables.$color-white, 15%);
+        }
+      }
+    }
+
+    .note-card-footer {
+      color: variables.$color-white;
+      mat-icon {
+        color: variables.$color-white;
+      }
+    }
+  }
+}

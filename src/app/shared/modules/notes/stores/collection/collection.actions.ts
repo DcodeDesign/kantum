@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import {Collection} from '../../shared/interfaces/collection.interface';
+import {Collection} from '../../interfaces/collection.interface';
 
 export const addCollection = createAction('[Collection] Add Collection', props<{ collection: Collection }>());
 export const updateCollection = createAction('[Collection] Update Collection', props<{ collection: Collection }>());

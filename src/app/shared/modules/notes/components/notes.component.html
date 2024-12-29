@@ -1,0 +1,20 @@
+<app-toolbar class="mat-elevation-z3"
+             [selectedNotes]="noteService.selectedNotes"
+             (toggleSideNav)="onToggleSideNav()"
+             (archiveNotes)="openArchiveNotesDialog()"
+             (changesNoteCollection)="onChangedCollectionNotes()"
+             (addNote)="openAddNoteDialog()"
+             (deleteNotes)="openDeleteNotesDialog()"
+             (search)="onSearchNotes($event)"></app-toolbar>
+
+<app-side-nav [toggleSideNav]="toggleSideNav">
+  <menu class="collection-menu">
+    <app-collection-menu></app-collection-menu>
+  </menu>
+
+  <content>
+    <app-note-list (selectedNotes)="onSelectedNotes($event)"
+                   [collectionSelected]="collectionService.collectionNameSelected"></app-note-list>
+  </content>
+</app-side-nav>
+

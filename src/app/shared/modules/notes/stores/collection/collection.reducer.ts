@@ -6,7 +6,7 @@ import {
   updateAllCollections,
   updateCollection
 } from './collection.actions';
-import {Collection, initialCollectionState} from '../../shared/interfaces/collection.interface';
+import {Collection, initialCollectionState} from '../../interfaces/collection.interface';
 
 export const collectionReducer = createReducer(
   initialCollectionState,
