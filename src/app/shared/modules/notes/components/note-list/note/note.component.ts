@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import { NOTE_MODE } from '../../../enums/note-mode.enum';
 import {Note} from '../../../interfaces/note.interface';
 import {ISelectedNote} from '../../../interfaces/selected-note.interface';

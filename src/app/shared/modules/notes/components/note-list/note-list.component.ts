@@ -9,7 +9,7 @@ import {
   SimpleChanges,
   ViewChild
 } from '@angular/core';
-import {Subject, takeUntil} from 'rxjs';
+import {map, Subject, takeUntil} from 'rxjs';
 import {NgxTileLayoutComponent} from 'ngx-tile-layout';
 import {MatDrawer} from '@angular/material/sidenav';
 import {Note} from '../../interfaces/note.interface';
@@ -27,9 +27,13 @@ import { NOTE_MODE } from '../../enums/note-mode.enum';
 })
 export class NoteListComponent implements OnInit, OnChanges, OnDestroy {
   @Input() drawer: MatDrawer | undefined;
-  @Input() collectionSelected: string | undefined;
-  @ViewChild('masonryLayoutComponent') masonryLayoutComponent: NgxTileLayoutComponent | undefined;
+  @Input() collectionSelected: string = DEFAULT_COLLECTIONS.ALL;
+  @Input() searchText: string | undefined | null;
+
   @Output() selectedNotes = new EventEmitter<Note[]>();
+
+  @ViewChild('masonryLayoutComponent') masonryLayoutComponent: NgxTileLayoutComponent | undefined;
+
   protected readonly NOTE_MODE = NOTE_MODE;
 
   noteMode: NOTE_MODE = NOTE_MODE.DETAIL;
@@ -55,13 +59,21 @@ export class NoteListComponent implements OnInit, OnChanges, OnDestroy {
     this.loadNote()
   }
 
-  loadNote(collections: string[] = [DEFAULT_COLLECTIONS.ALL]) {
+  loadNote(collections: string[] = [DEFAULT_COLLECTIONS.ALL], searchText?: string): void {
     this.noteService.getNotesByCollections(collections)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((notes: Note[]) => {
-        this.noteList = notes
+      .pipe(
+        takeUntil(this.destroy$),
+        map((notes: Note[]) =>
+          searchText
+            ? notes?.filter(note => note?.title?.includes(searchText) || note?.content?.includes(searchText))
+            : notes
+        )
+      )
+      .subscribe((filteredNotes: Note[]) => {
+        this.noteList = filteredNotes;
       });
   }
+
 
   ngOnDestroy(): void {
     this.destroy$.next();
@@ -103,8 +115,13 @@ export class NoteListComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnChanges(changes: SimpleChanges): void {
     if(changes['collectionSelected']) {
-      const collectionName = changes['collectionSelected'].currentValue
-      this.loadNote([collectionName]);
+      this.collectionSelected = changes['collectionSelected'].currentValue;
+      this.loadNote([this.collectionSelected]);
+    }
+
+    if(changes['searchText']) {
+      const searchText = changes['searchText'].currentValue;
+      this.loadNote([this.collectionSelected], searchText);
     }
   }
 }

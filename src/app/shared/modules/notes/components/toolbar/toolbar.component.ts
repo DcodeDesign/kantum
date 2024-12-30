@@ -14,7 +14,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
   @Output() toggleSideNav: EventEmitter<boolean> = new EventEmitter();
 
-  @Output() search = new EventEmitter<string>();
+  @Output() search = new EventEmitter<string | null | undefined>();
   @Output() archiveNotes = new EventEmitter();
   @Output() deleteNotes = new EventEmitter();
   @Output() changesNoteCollection= new EventEmitter();
@@ -28,8 +28,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.searchForm.valueChanges.subscribe(
       value => {
-        if(!value) return;
-
         this.search.emit(value);
       }
     );

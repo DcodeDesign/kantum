@@ -4,15 +4,8 @@ import {selectAllCollection} from '../stores/collection/collection.selectors';
 import {map, Observable} from 'rxjs';
 import {Store} from '@ngrx/store';
 import {Collection} from '../interfaces/collection.interface';
-import {MatDialog} from '@angular/material/dialog';
-import {Note} from '../interfaces/note.interface';
 import {DEFAULT_COLLECTIONS} from '../constants/default-collections.constant';
-import {
-  DialogChangedCollectionNotesComponent
-} from '../components/dialogs/dialog-changed-collection-notes/dialog-changed-collection-notes.component';
-import {
-  DialogCollectionsEditionComponent
-} from '../components/dialogs/dialog-collections-edition/dialog-collections-edition.component';
+import {DialogService} from './dialog.service';
 
 @Injectable({
   providedIn: 'root'
@@ -22,9 +15,8 @@ export class CollectionService {
 
   constructor(
     private store: Store,
-    private dialog: MatDialog
-  ) {
-  }
+    private dialogService: DialogService
+  ) { }
 
   getTreeList(): Observable<CollectionMenu[]> {
     return this.getCollection().pipe(
@@ -62,7 +54,7 @@ export class CollectionService {
       {
         name: 'Ajouter une collection',
         icon: 'new_label',
-        action: () => this.openCollectionEditionDialog(),
+        action: () => this.dialogService.openCollectionEditionDialog(),
       },
       {
         name: DEFAULT_COLLECTIONS.ARCHIVE,
@@ -70,18 +62,6 @@ export class CollectionService {
         action: (collectionName: string | undefined) => this.showCollections(collectionName),
       },
     ];
-  }
-
-  openCollectionEditionDialog() {
-    this.dialog.open(DialogCollectionsEditionComponent);
-  }
-
-  openChangedCollectionNotesDialog(selectedNotes: Note[]): void {
-    this.dialog.open(DialogChangedCollectionNotesComponent, {
-      data: {
-        selectedNotes: selectedNotes
-      }
-    });
   }
 
   showCollections(collectionName: string | undefined) {

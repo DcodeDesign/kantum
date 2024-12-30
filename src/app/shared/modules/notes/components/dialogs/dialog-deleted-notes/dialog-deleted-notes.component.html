@@ -2,10 +2,10 @@
   <h2 mat-dialog-title> Deleted Notes </h2>
   <mat-dialog-content class="mat-typography">
     <p>êtes vous sur de supprimer ces notes :</p>
-    <app-note-checkbox-list [notes]="data.selectedNotes" ></app-note-checkbox-list>
+    <app-note-checkbox-list [notes]="data.selectedNotes" (selectionChange)="selectionChange($event)"></app-note-checkbox-list>
   </mat-dialog-content>
   <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close>No</button>
-    <button mat-button mat-dialog-close>Ok</button>
+    <button mat-button (click)="onClosed()">No</button>
+    <button mat-button (click)="onConfirmed()">Ok</button>
   </mat-dialog-actions>
 </div>

@@ -1,18 +1,20 @@
 import {Injectable} from '@angular/core';
-import {addNote, deleteNote, updateAllNotes, updateNote} from '../stores/note/note.actions';
+import {
+  addNote,
+  archiveNotes,
+  deleteNote,
+  deleteNotes,
+  updateAllNotes,
+  updateNote,
+  updateNotesCollections
+} from '../stores/note/note.actions';
 import {Store} from '@ngrx/store';
 import {Note} from '../interfaces/note.interface';
 import {v4 as uuidv4} from 'uuid';
-import {map, Observable} from 'rxjs';
+import {map, Observable, take} from 'rxjs';
 import {selectAllNotes} from '../stores/note/note.selectors';
-
-import {MatDialog} from '@angular/material/dialog';
 import {DEFAULT_COLLECTIONS} from '../constants/default-collections.constant';
-import {DialogDeletedNotesComponent} from '../components/dialogs/dialog-deleted-notes/dialog-deleted-notes.component';
-import {
-  DialogArchivedNotesComponent
-} from '../components/dialogs/dialog-archived-notes/dialog-archived-notes.component';
-import {DialogAddNoteComponent} from '../components/dialogs/dialog-add-note/dialog-add-note.component';
+import {Collection} from '../interfaces/collection.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -21,8 +23,7 @@ export class NotesService {
   selectedNotes: Note[] = [];
 
   constructor(
-    private store: Store,
-    private dialog: MatDialog
+    private store: Store
   ) { }
 
   getNotesByCollections(collections: string[] = []): Observable<Note[]> {
@@ -51,12 +52,24 @@ export class NotesService {
     this.store.dispatch(updateAllNotes({notes}));
   }
 
+  archivedNotes(notes: Note[]): void {
+    this.store.dispatch(archiveNotes({notesToArchive: notes }));
+  }
+
   saveNote(note: Note) {
     this.store.dispatch(addNote({note: this.mapNote(note)}));
   }
 
   deleteNote(id: string) {
     this.store.dispatch(deleteNote({id}));
+  }
+
+  deleteNotes(notes: Note[]) {
+    this.store.dispatch(deleteNotes({notes}));
+  }
+
+  updateNotesCollections(notes: Note[], collections: Collection[]) {
+    this.store.dispatch(updateNotesCollections({notes, collections}))
   }
 
   selectedNote(noteSelected: { note: Note, isSelected: boolean }) {
@@ -71,40 +84,6 @@ export class NotesService {
     }
 
     return this.selectedNotes;
-  }
-
-  openDeletedNotesDialog(): void {
-    this.dialog.open(DialogDeletedNotesComponent, {
-      data: {
-        selectedNotes: this.selectedNotes
-      }
-    });
-  }
-
-  openArchivedNotesDialog(): void {
-    this.dialog.open(DialogArchivedNotesComponent, {
-      data: {
-        selectedNotes: this.selectedNotes
-      }
-    });
-  }
-
-  openAddNoteDialog(collectionNameSelected: string | undefined): void {
-    const newNote = {
-      id: undefined,
-      title: undefined,
-      content: undefined,
-      createdAt: undefined,
-      updatedAt: undefined,
-      color: undefined,
-      collections: [collectionNameSelected, DEFAULT_COLLECTIONS.ALL]
-    };
-
-    this.dialog.open(DialogAddNoteComponent, {
-      data: {
-        note: newNote
-      }
-    });
   }
 
   private mapNote(note?: any): Note {

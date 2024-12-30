@@ -4,9 +4,10 @@ import {NgxMaterialThemesSwitcherComponent} from './components/theme-switcher/ng
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {
   MatLargeIconButtonDirective,
-  MatMediumIconButtonDirective, MatSmallIconButtonDirective, MatTinyIconButtonDirective
+  MatMediumIconButtonDirective,
+  MatSmallIconButtonDirective,
+  MatTinyIconButtonDirective
 } from './directives/mat-icon-button-sizes.directives';
-import {ThemePreviewComponent} from './components/theme-preview/theme-preview';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,6 @@ import {ThemePreviewComponent} from './components/theme-preview/theme-preview';
     MatMediumIconButtonDirective,
     MatSmallIconButtonDirective,
     MatTinyIconButtonDirective,
-
   ],
   imports: [
     MatSlideToggleModule,
