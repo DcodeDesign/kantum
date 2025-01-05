@@ -73,22 +73,24 @@ export class NotesService {
     this.store.dispatch(updateNotesCollections({notes, collections}))
   }
 
-  selectedNote(noteSelected: { note: Note, isSelected: boolean }) {
-    if (noteSelected?.note && !noteSelected?.isSelected) {
-      this.selectedNotes = [] ;
+  selectedNote(noteSelected: { note: Note; isSelected: boolean }): Note[] {
+    if (!noteSelected?.note) {
       return this.selectedNotes;
     }
 
-    const index = this.selectedNotes.findIndex((selectedNote: Note) => selectedNote?.id === noteSelected?.note?.id);
+    if (!noteSelected.isSelected) {
+      this.selectedNotes = this.selectedNotes.filter((selectedNote) => selectedNote.id !== noteSelected.note.id);
+      return this.selectedNotes;
+    }
 
-    if (index !== -1) {
-      this.selectedNotes.splice(index, 1);
-    } else {
+    const index = this.selectedNotes.findIndex((selectedNote: Note) => selectedNote.id === noteSelected.note.id);
+    if (index === -1) {
       this.selectedNotes.push(noteSelected.note);
     }
 
     return this.selectedNotes;
   }
+
 
   private mapNote(note?: any): Note {
     return {

@@ -45,7 +45,6 @@ export const noteReducer = createReducer(
   on(updateNotesCollections, (state, { notes, collections }) => ({
     ...state,
     notes: state.notes.map(existingNote => {
-      console.log(notes, collections);
       const matchingNote = notes.find(note => note.id === existingNote.id);
       return matchingNote
         ? {

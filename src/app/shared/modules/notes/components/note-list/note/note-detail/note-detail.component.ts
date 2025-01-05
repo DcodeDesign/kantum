@@ -61,9 +61,6 @@ export class NoteDetailComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if(this.note) {
-      this.noteSelected.emit({ note: this.note, isSelected: false });
-    }
     this.destroy$.next();
     this.destroy$.complete();
   }
