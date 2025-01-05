@@ -30,6 +30,7 @@ export class NotesService {
     return this.store.select(selectAllNotes).pipe(
       map(notes =>
         notes.filter(note => {
+          this.selectedNotes = [];
           if (collections.length > 0) {
             const matchesAll = collections.every(collection => note?.collections?.includes(collection));
             const matchesAny = collections.some(collection => note?.collections?.includes(collection));
@@ -73,7 +74,10 @@ export class NotesService {
   }
 
   selectedNote(noteSelected: { note: Note, isSelected: boolean }) {
-    if (!noteSelected?.note) return;
+    if (noteSelected?.note && !noteSelected?.isSelected) {
+      this.selectedNotes = [] ;
+      return this.selectedNotes;
+    }
 
     const index = this.selectedNotes.findIndex((selectedNote: Note) => selectedNote?.id === noteSelected?.note?.id);
 

@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {ChangeDetectorRef, Component} from '@angular/core';
 import {Note} from '../interfaces/note.interface';
 import {NotesService} from '../services/notes.service';
 import {CollectionService} from '../services/collection.service';
@@ -17,12 +17,14 @@ export class NotesComponent {
   constructor(
     public noteService: NotesService,
     public collectionService: CollectionService,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private cdr: ChangeDetectorRef
   ) {
   }
 
   onSelectedNotes(selectedNotes: Note[]) {
     this.noteService.selectedNotes = selectedNotes;
+    this.cdr.detectChanges();
   }
 
   openAddNoteDialog() {

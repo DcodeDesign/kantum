@@ -22,6 +22,7 @@
 
     <mat-card-actions class="note-card-actions">
 
+      {{isChecked}}
       <mat-checkbox color="primary"
                     [checked]="isChecked"
                     (change)="onChecked($event.checked, note)"></mat-checkbox>

@@ -38,7 +38,7 @@ export class NoteDetailComponent implements OnInit, AfterViewInit, OnDestroy {
   private destroy$ = new Subject<void>();
 
   mouseOvered: boolean | undefined;
-  isChecked: boolean | undefined;
+  isChecked = false;
 
   constructor(private noteService: NotesService){ }
 
@@ -54,9 +54,16 @@ export class NoteDetailComponent implements OnInit, AfterViewInit, OnDestroy {
     if(this.textAreaElement?.nativeElement) {
       this.resizeObserver?.observe(this.textAreaElement?.nativeElement)
     }
+
+    if(this.note) {
+      this.noteSelected.emit({ note: this.note, isSelected: this.isChecked });
+    }
   }
 
   ngOnDestroy(): void {
+    if(this.note) {
+      this.noteSelected.emit({ note: this.note, isSelected: false });
+    }
     this.destroy$.next();
     this.destroy$.complete();
   }
