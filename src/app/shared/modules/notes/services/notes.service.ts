@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {
   addNote,
-  archiveNotes,
+  archiveNotes, colorNotes,
   deleteNote,
   deleteNotes,
   updateAllNotes,
@@ -91,6 +91,9 @@ export class NotesService {
     return this.selectedNotes;
   }
 
+  updateColorNotes(notes: Note[], color: string) {
+    this.store.dispatch(colorNotes({notes, color}))
+  }
 
   private mapNote(note?: any): Note {
     return {

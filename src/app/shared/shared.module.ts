@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 
 import {ReactiveFormsModule} from '@angular/forms';
-import {NotesModules} from './modules/notes/notes.modules';
+import {NotesModule} from './modules/notes/notes.module';
 import {MatCheckbox} from '@angular/material/checkbox';
 
 @NgModule({
@@ -10,7 +10,7 @@ import {MatCheckbox} from '@angular/material/checkbox';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    NotesModules,
+    NotesModule,
     MatCheckbox
   ],
   exports: []

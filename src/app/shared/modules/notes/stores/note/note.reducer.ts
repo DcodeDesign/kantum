@@ -6,7 +6,7 @@ import {
   loadNotesSuccess,
   updateAllNotes,
   archiveNotes,
-  deleteNotes, updateNotesCollections
+  deleteNotes, updateNotesCollections, colorNotes
 } from './note.actions';
 import {initialNoteState} from '../../interfaces/note.interface';
 import {DEFAULT_COLLECTIONS} from '../../constants/default-collections.constant';
@@ -31,6 +31,15 @@ export const noteReducer = createReducer(
     const updatedNotes = state.notes.map(note =>
       notesToArchive.find(archivedNote => archivedNote.id === note.id)
         ? { ...note, collections: [DEFAULT_COLLECTIONS.ARCHIVE] }
+        : note
+    );
+
+    return { ...state, notes: updatedNotes };
+  }),
+  on(colorNotes, (state, { notes, color }) => {
+    const updatedNotes = state.notes.map(note =>
+      notes.find(n => n.id === note.id) // Correction ici : comparer avec `note.id`
+        ? { ...note, color }
         : note
     );
 

@@ -1,8 +1,4 @@
-import {isDevMode, NgModule} from '@angular/core';
-import {StoreModule} from '@ngrx/store';
-import {noteReducer} from './stores/note/note.reducer';
-import {metaNoteReducers} from './stores/note/localStorageSyncNote.reducer';
-import {StoreDevtoolsModule} from '@ngrx/store-devtools';
+import {NgModule} from '@angular/core';
 import {MatButton, MatButtonModule} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatCardModule} from '@angular/material/card';
@@ -31,8 +27,6 @@ import {SideNavComponent} from './components/side-nav/side-nav.component';
 import {CollectionsEditionComponent} from './components/collections-edition/collections-edition.component';
 
 import {MatDialogActions, MatDialogClose, MatDialogContent, MatDialogTitle} from '@angular/material/dialog';
-import {collectionReducer} from './stores/collection/collection.reducer';
-import {metaCollectionReducers} from './stores/collection/localStorageSyncCollection.reducer';
 import {MatList, MatListItem} from '@angular/material/list';
 
 import {NotesService} from './services/notes.service';
@@ -55,6 +49,7 @@ import {
   DialogCollectionsEditionComponent
 } from './components/dialogs/dialog-collections-edition/dialog-collections-edition.component';
 import {NoteListComponent} from './components/note-list/note-list.component';
+import {NotesRoutingModule} from './notes-routing.module';
 
 @NgModule({
   declarations: [
@@ -107,6 +102,7 @@ import {NoteListComponent} from './components/note-list/note-list.component';
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
+    NotesRoutingModule,
 
     MatButtonModule,
     MatIconModule,
@@ -148,18 +144,11 @@ import {NoteListComponent} from './components/note-list/note-list.component';
     NgxTileLayoutModules,
     NgxMaterialThemesModules,
     MatList,
-    MatListItem,
-
-    StoreModule.forRoot(
-      {notes: noteReducer, collections: collectionReducer},
-      {metaReducers: [metaNoteReducers, metaCollectionReducers]}
-    ),
-
-    StoreDevtoolsModule.instrument({maxAge: 25, logOnly: !isDevMode()})
+    MatListItem
   ],
   providers: [
     NotesService
   ]
 })
-export class NotesModules {
+export class NotesModule {
 }

@@ -47,7 +47,7 @@ export class CollectionService {
       },
       ...(children.length > 0
         ? [{
-          name: 'My collections',
+          name: 'Collections',
           children,
         }]
         : []),

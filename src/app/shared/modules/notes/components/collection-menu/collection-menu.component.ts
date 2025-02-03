@@ -12,7 +12,7 @@ import {CollectionService} from '../../services/collection.service';
 export class CollectionMenuComponent implements OnInit {
   treeList$: Observable<CollectionMenu[]> | undefined;
 
-  constructor(private collectionService: CollectionService) {}
+  constructor(public collectionService: CollectionService) {}
 
   ngOnInit(): void {
     this.treeList$ = this.collectionService.getTreeList();

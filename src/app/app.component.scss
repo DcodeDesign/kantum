@@ -1,3 +1,22 @@
+@use "../../node_modules/ngx-material-themes/scss/material/themes/variables" as variables;
+
 .spacer {
   flex: 1 1 auto;
 }
+
+.text-gradient {
+  font-weight: bold;
+  color: #7319fa;
+  background-image: -webkit-linear-gradient(45deg, #7319fa, #ff33b4, #ff7e29);
+  background-clip: text;
+  -webkit-background-clip: text;
+  text-fill-color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+body.dark-theme {
+  .mat-divider {
+    border-top-color: variables.$color-white !important;
+  }
+}
+

@@ -26,7 +26,7 @@
   <ng-container *ngIf="selectedNotes.length > 0">
     <mat-divider vertical="true" style="height: 100%; margin: 0 15px"></mat-divider>
 
-    <button mat-icon-button ngx-colors-trigger>
+    <button mat-icon-button ngx-colors-trigger (input)="onChangesColorNotes($event)">
       <mat-icon>palette</mat-icon>
     </button>
 

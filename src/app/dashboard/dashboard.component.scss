@@ -1,0 +1,58 @@
+.dashboard-container {
+  text-align: center;
+  padding: 20px;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); /* Gère les colonnes dynamiquement */
+  grid-auto-rows: minmax(100px, auto); /* Gère la hauteur dynamique */
+  gap: 20px;
+  max-width: 1000px;
+  margin: auto;
+}
+
+mat-card {
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Aligner le contenu */
+  padding: 16px;
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  .icon-container {
+    padding: 0;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .big-icon {
+      font-size: 62px;
+      width: 62px;
+      height: 62px;
+
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+
+      background-image: linear-gradient(45deg, #7319fa, #ff33b4, #ff7e29);
+    }
+
+    .text-gradient {
+      font-size: 64px;
+      line-height: 64px;
+      font-weight: 900;
+      font-family: Roboto, "Helvetica Neue", sans-serif;
+      color: #7319fa;
+      background-image: -webkit-linear-gradient(45deg, #7319fa, #ff33b4, #ff7e29);
+      background-clip: text;
+      -webkit-background-clip: text;
+      text-fill-color: transparent;
+      -webkit-text-fill-color: transparent;
+    }
+  }
+}

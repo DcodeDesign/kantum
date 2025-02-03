@@ -18,6 +18,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   @Output() archiveNotes = new EventEmitter();
   @Output() deleteNotes = new EventEmitter();
   @Output() changesNoteCollection= new EventEmitter();
+  @Output() changesColorNotes= new EventEmitter();
   @Output() addNote: EventEmitter<void> = new EventEmitter();
 
   searchForm = new FormControl(null);
@@ -55,5 +56,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
   onChangesNoteCollection() {
     this.changesNoteCollection.emit();
+  }
+
+  onChangesColorNotes(color: string) {
+    this.changesColorNotes.emit(color);
   }
 }

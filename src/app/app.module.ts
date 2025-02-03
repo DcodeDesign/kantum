@@ -1,4 +1,4 @@
-import {isDevMode, NgModule} from '@angular/core';
+import {isDevMode, LOCALE_ID, NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -12,13 +12,24 @@ import {MatIcon} from '@angular/material/icon';
 import {MatButton, MatIconButton} from '@angular/material/button';
 
 import { ServiceWorkerModule } from '@angular/service-worker';
-import {NotesModules} from './shared/modules/notes/notes.modules';
+import {NotesModule} from './shared/modules/notes/notes.module';
 
 import {NgxMaterialThemesModules, ThemePreviewComponent} from 'ngx-material-themes';
 import {Breakpoint, BREAKPOINTS, NgxResponsiveColumnsModules} from 'ngx-responsive-columns';
 import {NgxTextColorContrastModules} from 'ngx-text-color-contrast';
 import {NgxTileLayoutModules} from 'ngx-tile-layout';
 import {MatDivider} from '@angular/material/divider';
+import {StoreModule} from '@ngrx/store';
+import {noteReducer} from './shared/modules/notes/stores/note/note.reducer';
+import {collectionReducer} from './shared/modules/notes/stores/collection/collection.reducer';
+import {metaNoteReducers} from './shared/modules/notes/stores/note/localStorageSyncNote.reducer';
+import {metaCollectionReducers} from './shared/modules/notes/stores/collection/localStorageSyncCollection.reducer';
+import {StoreDevtoolsModule} from '@ngrx/store-devtools';
+
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/fr';
+
+registerLocaleData(localeFr, 'fr'); // Enregistrement de la locale française
 
 const customBreakpoints: Breakpoint[] = [
   { width: 1536, cols: 6 },
@@ -48,7 +59,7 @@ const customBreakpoints: Breakpoint[] = [
       registrationStrategy: 'registerWhenStable:30000'
     }),
 
-    NotesModules,
+    NotesModule,
 
     NgxMaterialThemesModules,
     NgxResponsiveColumnsModules,
@@ -57,10 +68,18 @@ const customBreakpoints: Breakpoint[] = [
     ThemePreviewComponent,
 
     MatDivider,
+
+    StoreModule.forRoot(
+      {notes: noteReducer, collections: collectionReducer},
+      {metaReducers: [metaNoteReducers, metaCollectionReducers]}
+    ),
+
+    StoreDevtoolsModule.instrument({maxAge: 25, logOnly: !isDevMode()})
   ],
   providers: [
     provideAnimationsAsync(),
     { provide: BREAKPOINTS, useValue: customBreakpoints },
+    { provide: LOCALE_ID, useValue: 'fr' }
   ],
   bootstrap: [AppComponent]
 })

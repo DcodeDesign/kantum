@@ -1,14 +1,15 @@
 <mat-toolbar class="mat-elevation-z0" style="background-color:var(--mat-app-background-color); position: sticky;top: 0;z-index: 999">
   <button mat-icon-button
+          [routerLink]="['/']"
           class="example-icon"
           aria-label="Example icon-button with menu icon">
     <mat-icon>apps</mat-icon>
   </button>
-  <span> {{ title }} </span>
+  <span class="text-gradient"> {{ title }} </span>
   <span class="spacer"></span>
   <ngx-theme-switcher></ngx-theme-switcher>
 </mat-toolbar>
 
 <mat-divider></mat-divider>
 
-<app-notes></app-notes>
+<router-outlet></router-outlet>

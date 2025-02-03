@@ -4,6 +4,7 @@ import {NotesService} from '../services/notes.service';
 import {CollectionService} from '../services/collection.service';
 import {DialogService} from '../services/dialog.service';
 import {Collection} from '../interfaces/collection.interface';
+import {colorNotes} from '../stores/note/note.actions';
 
 @Component({
   selector: 'app-notes',
@@ -69,5 +70,9 @@ export class NotesComponent {
 
   onToggleSideNav() {
     this.toggleSideNav = !this.toggleSideNav;
+  }
+
+  onChangesColorNotes(color: string) {
+    this.noteService.updateColorNotes(this.noteService.selectedNotes, color);
   }
 }

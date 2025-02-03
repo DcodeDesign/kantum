@@ -10,4 +10,5 @@ export const deleteNotes = createAction('[Note] Delete Notes', props<{ notes: No
 export const loadNotes = createAction('[Note] Load Notes');
 export const loadNotesSuccess = createAction('[Note] Load Notes Success', props<{ notes: Note[] }>());
 export const archiveNotes = createAction('[Notes] Archive Notes', props<{ notesToArchive: Note[] }>());
+export const colorNotes = createAction('[Notes] Color Notes', props<{ notes: Note[], color: string }>());
 export const updateNotesCollections = createAction('[Notes] Update Notes Collections', props<{ notes: Note[], collections: Collection[] }>());
