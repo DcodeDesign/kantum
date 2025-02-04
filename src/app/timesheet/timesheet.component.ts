@@ -1,9 +1,12 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {startOfMonth, endOfMonth, eachDayOfInterval, subMonths, addMonths, subDays, addDays} from 'date-fns';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import * as XLSX from 'xlsx';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+import {TaskModalComponent} from './components/task-modal/task-modal.component';
+import {MatDialog} from '@angular/material/dialog';
+import {TimesheetDialogService} from './timesheet-dialog.service';
 
 @Component({
   selector: 'app-timesheet',
@@ -22,7 +25,7 @@ export class TimesheetComponent implements OnInit {
   displayedColumns: string[] = [];
   daysInMonth: Date[] = [];
 
-  vacancesScolairesBelgique: any = {
+  SCHOOL_VACATIONS_BE: any = {
     2024: [
       {
         libelle: "Rentrée scolaire",
@@ -111,17 +114,21 @@ export class TimesheetComponent implements OnInit {
 
   tasksByDay: { [key: string]: any[] } = {}; // Pour stocker les tâches par jour
   project: string = '';
-  tache: string = '';
+  task: string = '';
   description: string = '';
   salesOrderItem: string = '';
-  heures: number = 0;
+  hours: number = 0;
 
   dataSource = ELEMENT_DATA;
-  columnsToDisplay = ['name', 'weight', 'symbol', 'position'];
-  columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
   expandedElement: PeriodicElement | null | undefined;
+  selectedDays: Date[] = [];
+  columnsToDisplay = ['date', 'project', 'task', 'description', 'salesOrderItem', 'hours'];
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private cdr: ChangeDetectorRef,
+    private timesheetDialogService: TimesheetDialogService
+  ) {
     this.updateDaysInMonth();
 
     setInterval(() => {
@@ -133,7 +140,40 @@ export class TimesheetComponent implements OnInit {
     this.loadHolidays();
 
     this.selectedDay = new Date();
+
+    this.updateDataSource();
   }
+
+  updateDataSource() {
+    this.dataSource = Object.entries(this.tasksByDay).flatMap(([date, tasks]) =>
+      tasks.map(task => ({ date, ...task }))
+    );
+  }
+
+  openTaskModal(): void {
+    const dialogRef = this.timesheetDialogService.openTaskModal();
+
+    dialogRef.afterClosed().subscribe((newTasks: any[]) => {
+      if (newTasks && newTasks.length > 0) {
+        this.addMultipleTasksToDay(newTasks);
+      }
+    });
+  }
+
+  addMultipleTasksToDay(newTasks: any[]): void {
+    this.selectedDays.forEach(day => {
+      const dateKey = day.toDateString();
+
+      if (!this.tasksByDay[dateKey]) {
+        this.tasksByDay[dateKey] = [];
+      }
+
+      this.tasksByDay[dateKey].push(...newTasks);
+    });
+
+    this.updateDataSource();
+  }
+
 
   getHolidays(year: number, country: string ): Observable<any> {
     return this.http.get<any>(this.apiUrl + '/' + year + '/' + country);
@@ -165,12 +205,14 @@ export class TimesheetComponent implements OnInit {
     this.updateDaysInMonth();
   }
 
-  previousDay() {
-    this.selectedDay = subDays(this.selectedDay, 1);
+  previousDay(day: any) {
+    this.selectedDays = [subDays(day, 1)];
+    this.cdr.markForCheck();
   }
 
-  nextDay() {
-    this.selectedDay = addDays(this.selectedDay, 1);
+  nextDay(day: any) {
+    this.selectedDays = [addDays(day, 1)];
+    this.cdr.markForCheck();
   }
 
   isWeekend(day: Date): boolean {
@@ -186,7 +228,7 @@ export class TimesheetComponent implements OnInit {
 
   isSchoolHoliday(day: Date): boolean {
     const year = day.getFullYear();
-    const holidaysForYear = this.vacancesScolairesBelgique[year];
+    const holidaysForYear = this.SCHOOL_VACATIONS_BE[year];
 
     if (!holidaysForYear) return false;
 
@@ -219,8 +261,18 @@ export class TimesheetComponent implements OnInit {
     this.selectedDay = day;
   }
 
+  selectDays(day: Date): void {
+    const index = this.selectedDays.findIndex(d => d.getTime() === day.getTime());
+
+    if (index !== -1) {
+      this.selectedDays.splice(index, 1);
+    } else {
+      this.selectedDays.push(day);
+    }
+  }
+
   isSelected(day: Date): boolean {
-    return this.selectedDay?.toDateString() === day.toDateString();
+    return this.selectedDays.some(selected => selected.getTime() === day.getTime());;
   }
 
   addTask(): void {
@@ -232,18 +284,18 @@ export class TimesheetComponent implements OnInit {
     }
 
     this.tasksByDay[dateKey].push({
-      projet: this.project,
-      tache: this.tache,
+      project: this.project,
+      task: this.task,
       description: this.description,
       salesOrderItem: this.salesOrderItem,
-      heures: this.heures
+      hours: this.hours
     });
 
     this.project = '';
-    this.tache = '';
+    this.task = '';
     this.description = '';
     this.salesOrderItem = '';
-    this.heures = 0;
+    this.hours = 0;
   }
 
   exportToXLSX(): void {
@@ -257,11 +309,11 @@ export class TimesheetComponent implements OnInit {
         const date = new Date(dateKey);
         data.push([
           date,
-          task.projet,
-          task.tache,
+          task.project,
+          task.task,
           task.description,
           task.salesOrderItem,
-          task.heures
+          task.hours
         ]);
       });
     }

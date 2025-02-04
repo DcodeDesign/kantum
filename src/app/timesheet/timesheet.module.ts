@@ -23,15 +23,21 @@ import {MatToolbarRow} from '@angular/material/toolbar';
 import {NgxColorsModule} from 'ngx-colors';
 import {MatCard, MatCardContent, MatCardTitle} from '@angular/material/card';
 import {MatCheckbox} from '@angular/material/checkbox';
+import { TaskModalComponent } from './components/task-modal/task-modal.component';
+import {MatDialogActions, MatDialogContent, MatDialogModule, MatDialogTitle} from '@angular/material/dialog';
+import {MatList, MatListItem} from '@angular/material/list';
+import {MatTabsModule} from '@angular/material/tabs';
 
 
 @NgModule({
   declarations: [
-    TimesheetComponent
+    TimesheetComponent,
+    TaskModalComponent
   ],
   imports: [
     CommonModule,
     TimesheetRoutingModule,
+    MatTabsModule,
     HttpClientModule,
     MatIconButton,
     MatIcon,
@@ -57,7 +63,13 @@ import {MatCheckbox} from '@angular/material/checkbox';
     MatCard,
     MatCardTitle,
     MatCardContent,
-    MatCheckbox
+    MatCheckbox,
+    MatDialogActions,
+    MatDialogContent,
+    MatDialogTitle,
+    MatList,
+    MatListItem,
+    MatDialogModule,
   ]
 })
 export class TimesheetModule { }

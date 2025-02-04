@@ -1,0 +1,45 @@
+.dialog-container {
+  background: var(--mat-app-background-color);
+  border-radius: 15px;
+}
+.dialog-container {
+  max-width: 90vw;
+  max-height: 90vh;
+  overflow: auto;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.form-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* 2 colonnes pour les grands écrans */
+  grid-gap: 16px;
+}
+
+.form-field {
+  width: 100%;
+}
+
+.description-field {
+  grid-column: span 2; /* Étend ce champ sur deux colonnes */
+}
+
+@media (max-width: 600px) {
+  .form-fields {
+    grid-template-columns: 1fr; /* Une seule colonne pour les petits écrans */
+  }
+
+  .description-field {
+    grid-column: span 1; /* Retourne à une colonne pour les petits écrans */
+  }
+}
+
+button {
+  margin-top: 16px;
+}
+
+table {
+  width: 100%;
+  background: transparent;
+}
+
