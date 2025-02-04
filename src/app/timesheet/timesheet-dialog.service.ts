@@ -5,8 +5,7 @@ import {MatDialog} from '@angular/material/dialog';
 @Injectable({
   providedIn: 'root'
 })
-export class
-{
+export class TimesheetDialogService {
 
   constructor(
     private dialog: MatDialog
