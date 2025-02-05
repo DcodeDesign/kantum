@@ -54,7 +54,6 @@ export class TaskModalComponent implements OnInit {
         hours: this.hours,
       };
       this.tasks.push(newTask);
-      this.resetFields();
       this.table?.renderRows();
 
     }
@@ -70,7 +69,6 @@ export class TaskModalComponent implements OnInit {
         salesOrderItem: this.salesOrderItem,
         hours: this.hours,
       };
-      console.log(this.taskTemplates, newTemplate);
       this.taskTemplates = [...this.taskTemplates, newTemplate];
       this.store.dispatch(updateAllTaskTemplateList({taskTemplateList: this.taskTemplates }));
       this.tableTemplate?.renderRows();

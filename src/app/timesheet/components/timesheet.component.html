@@ -15,7 +15,7 @@
 
   <mat-form-field appearance="outline" subscriptSizing="dynamic" class="customize field-search w-100">
     <mat-label>search...</mat-label>
-    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+    <input matInput (keyup)="applyFilter($event)">
   </mat-form-field>
 
 </mat-toolbar-row>
@@ -115,10 +115,12 @@
                               subscriptSizing="dynamic"
                               appearance="fill">
                 <input matInput
-                       type="{{ column === 'hours' ? 'number' : 'text' }}"
+                       [attr.type]="column === 'hours' ? 'number' : 'text'"
                        (input)="changeRowValue(element, column, $event)"
                        [ngModel]="element[column]"
                        (keydown.enter)="saveRow(element)" />
+
+                <span class="fs-6" *ngIf="column !== 'hours'"> {{ element[column] | decimalConvertToHour }} </span>
               </mat-form-field>
               <button *ngIf="column === 'actions'" mat-icon-button (click)="saveRow(element)">
                 <mat-icon>check</mat-icon>
