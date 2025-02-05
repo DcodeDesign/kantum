@@ -9,7 +9,7 @@ import { SharedModule } from './shared/shared.module';
 
 import {MatToolbar} from '@angular/material/toolbar';
 import {MatIcon} from '@angular/material/icon';
-import {MatButton, MatIconButton} from '@angular/material/button';
+import {MatIconButton} from '@angular/material/button';
 
 import { ServiceWorkerModule } from '@angular/service-worker';
 import {NotesModule} from './shared/modules/notes/notes.module';
@@ -28,8 +28,14 @@ import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
+import {tasksListReducer} from './timesheet/stores/task-list/tasks-list.reducer';
+import {metaTasksReducers} from './timesheet/stores/task-list/localStorageSyncTasks.reducer';
+import {
+  metaTaskTemplateListReducers
+} from './timesheet/stores/task-template-list/localStorageSyncTaskTemplateList.reducer';
+import {taskTemplateListReducer} from './timesheet/stores/task-template-list/task-template-list.reducer';
 
-registerLocaleData(localeFr, 'fr'); // Enregistrement de la locale française
+registerLocaleData(localeFr, 'fr');
 
 const customBreakpoints: Breakpoint[] = [
   { width: 1536, cols: 6 },
@@ -70,8 +76,19 @@ const customBreakpoints: Breakpoint[] = [
     MatDivider,
 
     StoreModule.forRoot(
-      {notes: noteReducer, collections: collectionReducer},
-      {metaReducers: [metaNoteReducers, metaCollectionReducers]}
+      {
+        notes: noteReducer,
+        collections: collectionReducer,
+        tasks: tasksListReducer,
+        taskTemplateList: taskTemplateListReducer
+      },
+      {
+        metaReducers: [
+          metaNoteReducers,
+          metaCollectionReducers,
+          metaTasksReducers,
+          metaTaskTemplateListReducers
+        ]}
     ),
 
     StoreDevtoolsModule.instrument({maxAge: 25, logOnly: !isDevMode()})

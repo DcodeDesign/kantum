@@ -3,7 +3,8 @@
   border-radius: 15px;
 }
 .dialog-container {
-  max-width: 90vw;
+  max-width: 90%;
+  width: 100%;
   max-height: 90vh;
   overflow: auto;
   margin: 0 auto;
@@ -12,7 +13,7 @@
 
 .form-fields {
   display: grid;
-  grid-template-columns: 1fr 1fr; /* 2 colonnes pour les grands écrans */
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
   grid-gap: 16px;
 }
 
@@ -34,12 +35,19 @@
   }
 }
 
-button {
-  margin-top: 16px;
+.card-transparent {
+  background: transparent;
+  margin-top: 15px;
+  padding: 10px;
+  overflow: auto;
 }
 
 table {
   width: 100%;
   background: transparent;
+
+  td {
+    padding: 8px;
+  }
 }
 

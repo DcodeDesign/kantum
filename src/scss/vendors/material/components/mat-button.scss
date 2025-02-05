@@ -1,3 +1,14 @@
 .mat-mdc-button .mdc-button__label {
   text-align: left;
 }
+
+body.dark-theme .mdc-button {
+  --color-primary-darker: hsl(from var(--mat-app-background-color)  h s  calc(l - 3));
+  background-color: var(--color-primary-darker) !important;
+
+}
+
+body.light-theme .mdc-button {
+  background-color: var(--mat-app-background-color)  !important;
+}
+

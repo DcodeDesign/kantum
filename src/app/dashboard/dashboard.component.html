@@ -1,6 +1,8 @@
 <div class="dashboard-container">
   <div class="dashboard-grid">
-    <mat-card *ngFor="let item of dashboardLinks" (click)="navigateTo(item.route)" matTooltip="{{ item.title }} - {{ item.description }}">
+    <mat-card *ngFor="let item of dashboardLinks"
+              (click)="navigateTo(item.route)"
+              matTooltip="{{ item.title }} - {{ item.description }}">
       <mat-card-header class="icon-container">
         <!-- <span class="text-gradient"> {{ item.textIcon }} </span> -->
         <mat-icon class="big-icon">{{ item.icon }}</mat-icon>

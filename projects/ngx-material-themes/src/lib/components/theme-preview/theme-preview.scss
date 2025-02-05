@@ -16,7 +16,7 @@ section {
 .search-input-container {
   padding: 8px;
   position: sticky;
-  top: 0px;
+  top: 0;
   background-color: var(--mat-app-background-color);
   z-index: 10;
   border-radius: var(--mdc-elevated-card-container-shape);

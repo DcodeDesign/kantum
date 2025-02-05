@@ -31,6 +31,7 @@
     "@ngrx/store-devtools": "18.1.1",
     "@ngx-translate/core": "^16.0.3",
     "angular-http-server": "1.12.0",
+    "bootstrap": "^5.3.3",
     "date-fns": "^4.1.0",
     "http-server": "14.1.1",
     "lodash": "4.17.21",
@@ -41,6 +42,7 @@
     "ngx-text-color-contrast": "^0.0.5",
     "ngx-tile-layout": "^0.0.6",
     "rxjs": "~7.8.0",
+    "short-uuid": "^5.2.0",
     "tslib": "2.3.0",
     "xlsx": "^0.18.5",
     "zone.js": "~0.14.10"

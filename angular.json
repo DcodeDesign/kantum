@@ -44,6 +44,11 @@
                 "input": "src/scss/vendors/material/index.scss",
                 "bundleName": "theme",
                 "inject": true
+              },
+              {
+                "input": "src/scss/vendors/bootstrap/index.scss",
+                "bundleName": "bootstrap",
+                "inject": true
               }
             ],
             "scripts": []
@@ -109,6 +114,11 @@
               {
                 "input": "src/scss/vendors/material/index.scss",
                 "bundleName": "theme",
+                "inject": true
+              },
+              {
+                "input": "src/scss/vendors/bootstrap/index.scss",
+                "bundleName": "bootstrap",
                 "inject": true
               }
             ],

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {TaskModalComponent} from './components/task-modal/task-modal.component';
+import {TaskModalComponent} from '../components/task-modal/task-modal.component';
 import {MatDialog} from '@angular/material/dialog';
 
 @Injectable({
@@ -13,8 +13,9 @@ export class TimesheetDialogService {
 
   openTaskModal() {
     return this.dialog.open(TaskModalComponent, {
-      panelClass: 'full-width-dialog',
-      data: {}
+      maxWidth: '100vw',
+      width: '100%',
+      panelClass: 'full-screen-modal'
     });
   }
 
