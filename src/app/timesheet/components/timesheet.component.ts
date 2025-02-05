@@ -9,7 +9,6 @@ import {DATE_NAGER_URL, SCHOOL_VACATIONS_BE} from '../contants/timesheet.constan
 import * as uudi from 'short-uuid';
 import {MatTable, MatTableDataSource} from '@angular/material/table';
 import {ITask} from '../interfaces/task.interface';
-import {selectAllNotes} from '../../shared/modules/notes/stores/note/note.selectors';
 import {Store} from '@ngrx/store';
 import {selectAllTasks} from '../stores/task-list/task-list.selectors';
 import {updateAllTasks} from '../stores/task-list/task-list.actions';
@@ -60,6 +59,7 @@ export class TimesheetComponent implements OnInit {
   editedRow: any = null;
   originalData: any = null;
   private updateDataSourceData: ITask[] = [];
+  private cloneDataSourceData: ITask[] = [];
 
   constructor(
     private http: HttpClient,
@@ -75,10 +75,12 @@ export class TimesheetComponent implements OnInit {
 
     const date = new Date();
     date.setHours(0, 0, 0, 0);
-    this.selectDays(date)
 
     this.store.select(selectAllTasks).subscribe(tasks => {
       this.dataSource.data = [...tasks];
+      this.cloneDataSourceData = [...this.dataSource.data]
+
+      this.selectDays(date);
     })
 
   }
@@ -116,6 +118,7 @@ export class TimesheetComponent implements OnInit {
   }
 
   updateDataSource() {
+    this.cloneDataSourceData = this.dataSource.data;
     this.store.dispatch(updateAllTasks({ tasks: this.dataSource.data }));
   }
 
@@ -233,11 +236,17 @@ export class TimesheetComponent implements OnInit {
       this.selectedDays.push(day);
     }
 
-    this.dataSource.data.filter(task =>
-      this.selectedDays.some(selectedDate =>
-        new Date(task.date).toDateString() === selectedDate.toDateString()
-      )
-    );
+    if(this.selectedDays.length !== 0) {
+      this.dataSource.data = this.cloneDataSourceData.filter(task =>
+        this.selectedDays.some(selectedDate =>
+          new Date(task.date).toDateString() === selectedDate.toDateString()
+        )
+      );
+    } else {
+      this.dataSource.data = this.cloneDataSourceData;
+    }
+
+    this.tableTask.renderRows();
   }
 
   isSelected(day: Date): boolean {

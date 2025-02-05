@@ -26,6 +26,7 @@ export class CreateTaskModalComponent implements OnInit {
   tasks: any[] = [];
   taskTemplates: any[] = [];
   displayedColumns: string[] = ['project', 'task', 'description', 'hours', 'actions'];
+  displayedColumnsFooter: string[] = ['project', 'task', 'description', 'hours', 'actions'];
 
   constructor(
     public dialogRef: MatDialogRef<CreateTaskModalComponent>,
@@ -104,4 +105,7 @@ export class CreateTaskModalComponent implements OnInit {
     this.dialogRef.close(this.tasks);
   }
 
+  getTotalHours() {
+    return this.tasks?.reduce((sum, task) => sum + Number(task.hours), 0);
+  }
 }

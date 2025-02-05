@@ -61,7 +61,7 @@
 
 <div class="tasks-container">
   <mat-card appearance="outlined" style="background-color: transparent">
-    <div class="task-content" *ngIf="selectedDays.length > 0">
+    <div class="task-content">
       <div>
         <div class="calendar-month-navigation">
           <button *ngIf="selectedDays.length === 1" mat-icon-button (click)="previousDay(selectedDays[0])" aria-label="Jour précédent">

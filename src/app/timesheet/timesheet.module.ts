@@ -8,7 +8,7 @@ import {MatIcon} from '@angular/material/icon';
 import {
   MatCell,
   MatCellDef,
-  MatColumnDef,
+  MatColumnDef, MatFooterCell, MatFooterCellDef, MatFooterRow, MatFooterRowDef,
   MatHeaderCell, MatHeaderCellDef,
   MatHeaderRow, MatHeaderRowDef,
   MatRow, MatRowDef,
@@ -81,7 +81,11 @@ import {MatExpansionModule} from '@angular/material/expansion';
     MatList,
     MatListItem,
     MatDialogModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatFooterCell,
+    MatFooterCellDef,
+    MatFooterRow,
+    MatFooterRowDef
   ]
 })
 export class TimesheetModule { }
