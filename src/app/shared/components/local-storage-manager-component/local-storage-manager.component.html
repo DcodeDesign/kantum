@@ -1,0 +1,13 @@
+<div class="container d-flex">
+  <button mat-raised-button color="primary" (click)="onBackup()">
+    <mat-icon>save</mat-icon> Sauvegarder
+  </button>
+
+  <span class="mx-1"></span>
+
+  <input #fileInput type="file" (change)="onRestore($event)" accept=".json" hidden>
+
+  <button mat-raised-button color="accent" (click)="triggerFileInput(fileInput)">
+    <mat-icon>restore</mat-icon> Restaurer
+  </button>
+</div>

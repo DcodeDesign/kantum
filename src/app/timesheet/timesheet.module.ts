@@ -23,19 +23,24 @@ import {MatToolbarRow} from '@angular/material/toolbar';
 import {NgxColorsModule} from 'ngx-colors';
 import {MatCard, MatCardContent, MatCardTitle} from '@angular/material/card';
 import {MatCheckbox} from '@angular/material/checkbox';
-import { TaskModalComponent } from './components/task-modal/task-modal.component';
+import { CreateTaskModalComponent } from './components/create-task-modal/create-task-modal.component';
 import {MatDialogActions, MatDialogContent, MatDialogModule, MatDialogTitle} from '@angular/material/dialog';
 import {MatList, MatListItem} from '@angular/material/list';
 import {MatTabsModule} from '@angular/material/tabs';
 import {FilterByDatePipe} from './pipes/filter-by-date.pipe';
 import { TotalTimeTasksComponent } from './components/total-time-task/total-time-tasks.component';
 import { DecimalConvertToHourPipe } from './pipes/decimal-convert-to-hour.pipe';
+import {
+  CreateTaskTemplateModalComponent
+} from './components/create-task-template-modal/create-task-template-modal.component';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 
 @NgModule({
   declarations: [
     TimesheetComponent,
-    TaskModalComponent,
+    CreateTaskModalComponent,
+    CreateTaskTemplateModalComponent,
     FilterByDatePipe,
     TotalTimeTasksComponent,
     DecimalConvertToHourPipe
@@ -76,6 +81,7 @@ import { DecimalConvertToHourPipe } from './pipes/decimal-convert-to-hour.pipe';
     MatList,
     MatListItem,
     MatDialogModule,
+    MatExpansionModule
   ]
 })
 export class TimesheetModule { }

@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit, ViewChild} from '@angular/core';
+import {Component, Inject, OnInit, signal, ViewChild} from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import {MatTable} from '@angular/material/table';
 import * as uuid from 'short-uuid';
@@ -8,15 +8,16 @@ import {selectAllNotes} from '../../../shared/modules/notes/stores/note/note.sel
 import {selectAllTaskTemplateList} from '../../stores/task-template-list/task-template-list.selectors';
 
 @Component({
-  selector: 'app-task-modal',
-  templateUrl: './task-modal.component.html',
-  styleUrls: ['./task-modal.component.scss']
+  selector: 'app-create-task-modal',
+  templateUrl: './create-task-modal.component.html',
+  styleUrls: ['./create-task-modal.component.scss']
 })
-export class TaskModalComponent implements OnInit {
+export class CreateTaskModalComponent implements OnInit {
   // @ts-ignore
   @ViewChild('taskList') table: MatTable<any>;
   // @ts-ignore
   @ViewChild('taskTemplate') tableTemplate: MatTable<any[]>;
+
   project: string = '';
   task: string = '';
   description: string = '';
@@ -27,7 +28,7 @@ export class TaskModalComponent implements OnInit {
   displayedColumns: string[] = ['project', 'task', 'description', 'hours', 'actions'];
 
   constructor(
-    public dialogRef: MatDialogRef<TaskModalComponent>,
+    public dialogRef: MatDialogRef<CreateTaskModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private store: Store
   ) {}

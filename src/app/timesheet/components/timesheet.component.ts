@@ -129,6 +129,10 @@ export class TimesheetComponent implements OnInit {
     });
   }
 
+  openTaskTemplateModal(): void {
+    this.timesheetDialogService.openTaskTemplateModal();
+  }
+
   addMultipleTasksToDay(newTasks: any[]): void {
     this.tasks = [];
     this.selectedDays.forEach(day => {

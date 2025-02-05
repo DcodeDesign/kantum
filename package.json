@@ -6,7 +6,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "http-server": "http-server ./dist/kantum/browser -p 8099",
+    "http-server": "http-server ./dist/kantum/browser -p 8000",
     "build-serve": "npm run build && npm run http-server",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"

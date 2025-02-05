@@ -1,0 +1,8 @@
+body.dark-theme .mat-expansion-panel {
+  --color-primary-darker: hsl(from var(--mat-app-background-color)  h s  calc(l - 3));
+  background-color: var(--color-primary-darker);
+}
+
+body.light-theme .mat-expansion-panel {
+  background-color: var(--mat-app-background-color);
+}

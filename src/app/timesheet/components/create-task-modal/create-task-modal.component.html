@@ -1,0 +1,168 @@
+<div class="dialog-container">
+  <h5 mat-dialog-title> Ajouter des tâches </h5>
+  <div mat-dialog-content>
+    <mat-accordion multi>
+      <mat-expansion-panel expanded="true">
+        <mat-expansion-panel-header>
+          <mat-panel-title> Ajouter une tâche </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div>
+          <div class="d-flex flex-row justify-content-end">
+            <div class="d-flex">
+              <div class="mx-1"></div>
+              <button mat-button (click)="resetFields()">Vider les champs</button>
+              <div class="mx-1"></div>
+              <button mat-button (click)="saveAsTemplate()">Enregistrer comme modèle</button>
+            </div>
+          </div>
+
+          <div class="my-2"></div>
+
+          <div class="form-fields">
+            <mat-form-field subscriptSizing="dynamic"  appearance="fill" class="form-field">
+              <mat-label>Projet</mat-label>
+              <input matInput [(ngModel)]="project"/>
+            </mat-form-field>
+
+            <mat-form-field subscriptSizing="dynamic"  appearance="fill"  class="form-field">
+              <mat-label>Tâche</mat-label>
+              <input matInput [(ngModel)]="task"/>
+            </mat-form-field>
+
+            <mat-form-field subscriptSizing="dynamic"  appearance="fill"  class="form-field description-field">
+              <mat-label>Description</mat-label>
+              <input matInput [(ngModel)]="description"/>
+            </mat-form-field>
+
+            <mat-form-field subscriptSizing="dynamic"  appearance="fill"  class="form-field">
+              <mat-label>Sales Order Item</mat-label>
+              <input matInput [(ngModel)]="salesOrderItem"/>
+            </mat-form-field>
+
+            <mat-form-field subscriptSizing="dynamic"  appearance="fill"  class="form-field">
+              <mat-label>Heures</mat-label>
+              <input matInput type="number" [(ngModel)]="hours"/>
+              <span class="fs-6" *ngIf="hours"> {{ hours | decimalConvertToHour}}</span>
+            </mat-form-field>
+          </div>
+
+          <div class="my-2"></div>
+
+          <div class="d-flex flex-row justify-content-end">
+            <div class="d-flex">
+              <button mat-button (click)="addTask()">Ajouter la tâche</button>
+            </div>
+          </div>
+        </div>
+      </mat-expansion-panel>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title> Liste des modèles </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div>
+          <br>
+          <table mat-table #taskTemplate [dataSource]="taskTemplates">
+            <ng-container matColumnDef="project">
+              <th mat-header-cell *matHeaderCellDef> Projet</th>
+              <td mat-cell *matCellDef="let template">
+                <mat-form-field subscriptSizing="dynamic"  appearance="fill" class="form-field">
+                  <input matInput [(ngModel)]="template.project">
+                </mat-form-field>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="task">
+              <th mat-header-cell *matHeaderCellDef> Tâche</th>
+              <td mat-cell *matCellDef="let template">
+                <mat-form-field subscriptSizing="dynamic"  appearance="fill" class="form-field" >
+                  <input matInput [(ngModel)]="template.task">
+                </mat-form-field>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="description">
+              <th mat-header-cell *matHeaderCellDef> Description</th>
+              <td mat-cell *matCellDef="let template">
+                <mat-form-field subscriptSizing="dynamic"  appearance="fill" class="form-field">
+                  <input matInput [(ngModel)]="template.description">
+                </mat-form-field>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="hours">
+              <th mat-header-cell *matHeaderCellDef> Heures</th>
+              <td mat-cell *matCellDef="let template">
+                <mat-form-field subscriptSizing="dynamic"  appearance="fill" class="form-field">
+                  <input matInput type="number" [(ngModel)]="template.hours">
+                  <span class="fs-6"> {{ template.hours | decimalConvertToHour }} </span>
+                </mat-form-field>
+              </td>
+            </ng-container>
+
+
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef> Actions</th>
+              <td mat-cell *matCellDef="let template" class="cell-button">
+                <button mat-icon-button (click)="loadTemplate(template)">
+                  <mat-icon>add</mat-icon>
+                </button>
+                <span class="mx-1"></span>
+                <button mat-icon-button (click)="deleteTemplate(template.id)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+
+    <mat-card appearance="outlined"
+              class="card-transparent"
+              *ngIf="tasks.length > 0">
+      <h6> Liste des tâches à ajoutés</h6>
+      <mat-divider></mat-divider>
+      <br>
+      <table #taskList mat-table [dataSource]="tasks">
+        <ng-container matColumnDef="project">
+          <th mat-header-cell *matHeaderCellDef> Projet </th>
+          <td mat-cell *matCellDef="let task"> {{ task.project }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="task">
+          <th mat-header-cell *matHeaderCellDef> Tâche </th>
+          <td mat-cell *matCellDef="let task"> {{ task.task }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef> Description </th>
+          <td mat-cell *matCellDef="let task"> {{ task.description }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="hours">
+          <th mat-header-cell *matHeaderCellDef> Heures </th>
+          <td mat-cell *matCellDef="let task"> {{ task.hours | decimalConvertToHour }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef> Actions </th>
+          <td mat-cell *matCellDef="let task">
+            <button mat-icon-button (click)="deleteTask(task)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </mat-card>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Annuler</button>
+    <button mat-button (click)="confirmTasks()">Confirmer</button>
+  </div>
+</div>

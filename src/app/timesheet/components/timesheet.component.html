@@ -11,12 +11,16 @@
     </button>
   </div>
 
-  <span class="spacer"></span>
-
   <mat-form-field appearance="outline" subscriptSizing="dynamic" class="customize field-search w-100">
     <mat-label>search...</mat-label>
     <input matInput (keyup)="applyFilter($event)">
   </mat-form-field>
+
+  <span class="spacer"></span>
+
+  <span class="mx-2"></span>
+
+  <button mat-raised-button style="width:220px;" (click)="openTaskTemplateModal()">Gestion des modèles</button>
 
 </mat-toolbar-row>
 
