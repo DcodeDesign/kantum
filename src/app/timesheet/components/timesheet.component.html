@@ -92,9 +92,17 @@
 
     <div class="tasks-list" *ngIf="(dataSource.data | filterByDate: selectedDays).length > 0">
 
-      <table #tasks mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8">
+      <table #tasks
+             mat-table
+             matSort
+             multiTemplateDataRows
+             matSortDirection="asc"
+             matSortActive="date"
+             matSortDisableClear
+             [dataSource]="dataSource"
+             class="mat-elevation-z8">
         <ng-container *ngFor="let column of columnsToDisplay; let index = index" [matColumnDef]="column">
-          <th mat-header-cell *matHeaderCellDef> {{ columnLabels[column] || column }} </th>
+          <th mat-header-cell  mat-sort-header *matHeaderCellDef> {{ columnLabels[column] || column }} </th>
           <td mat-cell *matCellDef="let element" class="editable-cell">
             <ng-container *ngIf="editedRow !== element; else editMode">
               <span [ngSwitch]="column">

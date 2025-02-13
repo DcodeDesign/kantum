@@ -12,6 +12,7 @@ import {ITask} from '../interfaces/task.interface';
 import {Store} from '@ngrx/store';
 import {selectAllTasks} from '../stores/task-list/task-list.selectors';
 import {updateAllTasks} from '../stores/task-list/task-list.actions';
+import {MatSort, Sort} from '@angular/material/sort';
 
 @Component({
   selector: 'app-timesheet',
@@ -28,6 +29,8 @@ import {updateAllTasks} from '../stores/task-list/task-list.actions';
 export class TimesheetComponent implements OnInit {
   // @ts-ignore
   @ViewChild('tasks') tableTask: MatTable<ITask[]>;
+  // @ts-ignore
+  @ViewChild(MatSort) sort: MatSort;
 
   displayedMonth = new Date();
   displayedColumns: string[] = [];
@@ -75,12 +78,11 @@ export class TimesheetComponent implements OnInit {
 
     const date = new Date();
     date.setHours(0, 0, 0, 0);
+    this.selectDays(date);
 
     this.store.select(selectAllTasks).subscribe(tasks => {
       this.dataSource.data = [...tasks];
       this.cloneDataSourceData = [...this.dataSource.data]
-
-      this.selectDays(date);
     })
 
   }
@@ -120,6 +122,7 @@ export class TimesheetComponent implements OnInit {
   updateDataSource() {
     this.cloneDataSourceData = this.dataSource.data;
     this.store.dispatch(updateAllTasks({ tasks: this.dataSource.data }));
+    this.tableTask?.renderRows();
   }
 
   openTaskModal(): void {
@@ -246,7 +249,7 @@ export class TimesheetComponent implements OnInit {
       this.dataSource.data = this.cloneDataSourceData;
     }
 
-    this.tableTask.renderRows();
+    this.tableTask?.renderRows();
   }
 
   isSelected(day: Date): boolean {
@@ -277,5 +280,9 @@ export class TimesheetComponent implements OnInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
   }
 }

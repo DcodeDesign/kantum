@@ -27,6 +27,7 @@ export class CreateTaskModalComponent implements OnInit {
   taskTemplates: any[] = [];
   displayedColumns: string[] = ['project', 'task', 'description', 'hours', 'actions'];
   displayedColumnsFooter: string[] = ['project', 'task', 'description', 'hours', 'actions'];
+  taskTemplatesTemp: any[] = [];
 
   constructor(
     public dialogRef: MatDialogRef<CreateTaskModalComponent>,
@@ -36,8 +37,7 @@ export class CreateTaskModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.select(selectAllTaskTemplateList).subscribe(templates => {
-      console.log(templates)
-      this.taskTemplates = templates;
+      this.taskTemplates = this.taskTemplatesTemp = templates;
     })
   }
 
@@ -72,6 +72,7 @@ export class CreateTaskModalComponent implements OnInit {
         hours: this.hours,
       };
       this.taskTemplates = [...this.taskTemplates, newTemplate];
+      this.taskTemplatesTemp = [...this.taskTemplates, newTemplate];
       this.store.dispatch(updateAllTaskTemplateList({taskTemplateList: this.taskTemplates }));
       this.tableTemplate?.renderRows();
     }
@@ -84,7 +85,8 @@ export class CreateTaskModalComponent implements OnInit {
   }
 
   loadTemplate(template: any): void {
-    this.tasks.push({ ...template, id: uuid.generate() });
+    const filterTask = this.taskTemplatesTemp.find(temp => temp.id === template.id);
+    this.tasks.push({ ...filterTask, id: uuid.generate() });
     this.table?.renderRows();
   }
 
@@ -107,5 +109,11 @@ export class CreateTaskModalComponent implements OnInit {
 
   getTotalHours() {
     return this.tasks?.reduce((sum, task) => sum + Number(task.hours), 0);
+  }
+
+  updateTemplate(template: any, key: string, value: Event) {
+    this.taskTemplatesTemp = this.taskTemplatesTemp.map(temp =>
+      temp.id === template.id ? { ...temp, [key]: value } : temp
+    );
   }
 }

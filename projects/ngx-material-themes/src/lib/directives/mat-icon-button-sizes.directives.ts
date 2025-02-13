@@ -1,7 +1,7 @@
 import { Directive, ElementRef } from '@angular/core';
 
 @Directive({
-  selector: 'button[mat-large-icon-button]',
+  selector: 'mat-button[mat-large-icon-button]',
 })
 export class MatLargeIconButtonDirective {
   constructor(private elementRef: ElementRef) {
