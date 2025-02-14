@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {startOfMonth, endOfMonth, eachDayOfInterval, subMonths, addMonths, subDays, addDays} from 'date-fns';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
@@ -26,7 +26,7 @@ import {MatSort, Sort} from '@angular/material/sort';
     ]),
   ],
 })
-export class TimesheetComponent implements OnInit {
+export class TimesheetComponent implements OnInit, AfterViewInit {
   // @ts-ignore
   @ViewChild('tasks') tableTask: MatTable<ITask[]>;
   // @ts-ignore
@@ -38,7 +38,7 @@ export class TimesheetComponent implements OnInit {
 
   holidays: any;
 
-  tasks: any[] = []; // Pour stocker les tâches par jour
+  tasks: any[] = [];
   project: string = '';
   task: string = '';
   description: string = '';
@@ -63,6 +63,7 @@ export class TimesheetComponent implements OnInit {
   originalData: any = null;
   private updateDataSourceData: ITask[] = [];
   private cloneDataSourceData: ITask[] = [];
+  private firstExecution = true;
 
   constructor(
     private http: HttpClient,
@@ -78,13 +79,16 @@ export class TimesheetComponent implements OnInit {
 
     const date = new Date();
     date.setHours(0, 0, 0, 0);
-    this.selectDays(date);
 
     this.store.select(selectAllTasks).subscribe(tasks => {
       this.dataSource.data = [...tasks];
-      this.cloneDataSourceData = [...this.dataSource.data]
-    })
+      this.cloneDataSourceData = [...this.dataSource.data];
 
+      if(this.firstExecution) {
+        this.selectDays(date);
+        this.firstExecution = false;
+      }
+    })
   }
 
   editRow(row: any) {
@@ -100,7 +104,7 @@ export class TimesheetComponent implements OnInit {
   }
 
   changeRowValue(row: ITask, column: string, $event: Event) {
-    this.updateDataSourceData = this.dataSource.data.map(item => {
+    this.updateDataSourceData = this.cloneDataSourceData.map(item => {
       if(item.id === row.id) {
         return { ...item, [column]:($event.target as HTMLInputElement).value}
       }
@@ -122,6 +126,10 @@ export class TimesheetComponent implements OnInit {
   updateDataSource() {
     this.cloneDataSourceData = this.dataSource.data;
     this.store.dispatch(updateAllTasks({ tasks: this.dataSource.data }));
+
+    console.log(this.selectedDays)
+
+
     this.tableTask?.renderRows();
   }
 

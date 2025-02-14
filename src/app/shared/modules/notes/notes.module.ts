@@ -10,8 +10,6 @@ import {CdkTextareaAutosize} from '@angular/cdk/text-field';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {NgxTextColorContrastModules} from 'ngx-text-color-contrast';
-import {NgxTileLayoutModules} from 'ngx-tile-layout';
 import {NgxMaterialThemesModules} from 'ngx-material-themes';
 import {MatToolbarRow} from '@angular/material/toolbar';
 import {MatDrawer, MatDrawerContainer} from '@angular/material/sidenav';
@@ -50,6 +48,10 @@ import {
 } from './components/dialogs/dialog-collections-edition/dialog-collections-edition.component';
 import {NoteListComponent} from './components/note-list/note-list.component';
 import {NotesRoutingModule} from './notes-routing.module';
+import {
+  NgxTextColorContrastModules
+} from '../../../../../projects/ngx-text-color-contrast/src/lib/ngx-text-color-contrast.modules';
+import {NgxTileLayoutModules} from '../../../../../projects/ngx-tile-layout/src/lib/ngx-tile-layout.modules';
 
 @NgModule({
   declarations: [

@@ -14,10 +14,7 @@ import {MatIconButton} from '@angular/material/button';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import {NotesModule} from './shared/modules/notes/notes.module';
 
-import {NgxMaterialThemesModules, ThemePreviewComponent} from 'ngx-material-themes';
-import {Breakpoint, BREAKPOINTS, NgxResponsiveColumnsModules} from 'ngx-responsive-columns';
-import {NgxTextColorContrastModules} from 'ngx-text-color-contrast';
-import {NgxTileLayoutModules} from 'ngx-tile-layout';
+
 import {MatDivider} from '@angular/material/divider';
 import {StoreModule} from '@ngrx/store';
 import {noteReducer} from './shared/modules/notes/stores/note/note.reducer';
@@ -34,6 +31,16 @@ import {
   metaTaskTemplateListReducers
 } from './timesheet/stores/task-template-list/localStorageSyncTaskTemplateList.reducer';
 import {taskTemplateListReducer} from './timesheet/stores/task-template-list/task-template-list.reducer';
+
+import {NgxMaterialThemesModules, ThemePreviewComponent} from 'ngx-material-themes';
+import {NgxTileLayoutModules} from '../../projects/ngx-tile-layout/src/lib/ngx-tile-layout.modules';
+import {Breakpoint, BREAKPOINTS} from '../../projects/ngx-responsive-columns/src/lib/services/breakpoint.token';
+import {
+  NgxResponsiveColumnsModules
+} from '../../projects/ngx-responsive-columns/src/lib/ngx-responsive-columns.modules';
+import {
+  NgxTextColorContrastModules
+} from '../../projects/ngx-text-color-contrast/src/lib/ngx-text-color-contrast.modules';
 
 registerLocaleData(localeFr, 'fr');
 

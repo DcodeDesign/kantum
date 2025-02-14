@@ -10,14 +10,18 @@ import {
   ViewChild
 } from '@angular/core';
 import {map, Subject, takeUntil} from 'rxjs';
-import {NgxTileLayoutComponent} from 'ngx-tile-layout';
+
 import {MatDrawer} from '@angular/material/sidenav';
 import {Note} from '../../interfaces/note.interface';
 import {NotesService} from '../../services/notes.service';
-import {NgxResponsiveColumnsService} from 'ngx-responsive-columns';
+
 import {DEFAULT_COLLECTIONS} from '../../constants/default-collections.constant';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import { NOTE_MODE } from '../../enums/note-mode.enum';
+import {
+  NgxResponsiveColumnsService
+} from '../../../../../../../projects/ngx-responsive-columns/src/lib/services/ngx-responsive-columns.service';
+import {NgxTileLayoutComponent} from '../../../../../../../projects/ngx-tile-layout/src/lib/ngx-tile-layout.component';
 
 
 @Component({

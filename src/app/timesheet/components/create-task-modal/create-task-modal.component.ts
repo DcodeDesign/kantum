@@ -26,7 +26,6 @@ export class CreateTaskModalComponent implements OnInit {
   tasks: any[] = [];
   taskTemplates: any[] = [];
   displayedColumns: string[] = ['project', 'task', 'description', 'hours', 'actions'];
-  displayedColumnsFooter: string[] = ['project', 'task', 'description', 'hours', 'actions'];
   taskTemplatesTemp: any[] = [];
 
   constructor(
