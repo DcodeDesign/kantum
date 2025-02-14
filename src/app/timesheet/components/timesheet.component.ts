@@ -126,10 +126,6 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
   updateDataSource() {
     this.cloneDataSourceData = this.dataSource.data;
     this.store.dispatch(updateAllTasks({ tasks: this.dataSource.data }));
-
-    console.log(this.selectedDays)
-
-
     this.tableTask?.renderRows();
   }
 
