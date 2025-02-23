@@ -1,0 +1,121 @@
+mat-table {
+  height: calc(100vh - 300px);
+  margin-top: 20px;
+  overflow: auto;
+  background: transparent;
+}
+
+table {
+  width: 100%;
+}
+
+.example-detail-row {
+  height: auto!important;
+  min-height: auto!important;
+}
+
+.example-element-row:not(.example-expanded-row):hover {
+  // background: whitesmoke;
+}
+
+.example-element-row:not(.example-expanded-row):active {
+  // background: #efefef;
+  height: auto!important;
+  min-height: auto!important;
+}
+
+.example-element-row td {
+  border-bottom-width: 0;
+}
+
+.example-element-detail {
+  overflow: hidden;
+  display: flex;
+}
+
+.example-element-diagram {
+  min-width: 80px;
+  border: 2px solid black;
+  padding: 8px;
+  font-weight: lighter;
+  margin: 8px 0;
+  height: 104px;
+}
+
+.example-element-symbol {
+  font-weight: bold;
+  font-size: 40px;
+  line-height: normal;
+}
+
+.example-element-description {
+  padding: 16px;
+}
+
+.example-element-description-attribution {
+  opacity: 0.5;
+}
+
+.card-container {
+  overflow: hidden;
+  background: transparent;
+  margin: 10px;
+  padding: 0;
+}
+
+mat-paginator {
+  background: transparent;
+  overflow: auto;
+}
+
+.totals-container {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.total-card {
+  width: 32%;
+  text-align: center;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: bold;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+
+  mat-card-title {
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  mat-card-content {
+    font-size: 22px;
+    font-weight: bold;
+    display: block;
+    padding-top: 8px;
+  }
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+.positive {
+  // background: #e3fcef;
+  color: #2e7d32;
+}
+
+.negative {
+  // background: #fdecea;
+  color: #c62828;
+}
+
+.general {
+  // background: #e3f2fd;
+  color: #1565c0;
+}
+

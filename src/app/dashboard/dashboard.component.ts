@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {Router} from '@angular/router';
+import {NAVIGATION_ROUTES} from '../navigation-routes.constants';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,10 +8,7 @@ import {Router} from '@angular/router';
   styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent {
-  dashboardLinks = [
-    { title: 'Notes', description: 'Prise de notes', textIcon :"N" ,icon: 'history_edu', route: 'notes' },
-    { title: 'Timesheets', description: 'Gestion de timesheet', textIcon :"T" ,icon: 'hourglass_empty', route: 'timesheet' },
-  ];
+  dashboardLinks = NAVIGATION_ROUTES;
 
   constructor(private router: Router) {}
 

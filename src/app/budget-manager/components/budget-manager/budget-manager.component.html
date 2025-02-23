@@ -1,0 +1,118 @@
+<div>
+
+  <mat-toolbar-row class="toolbar">
+
+    <div class="d-flex align-content-center justify-content-center">
+      <mat-form-field class="example-form-field" appearance="outline" subscriptSizing="dynamic">
+        <mat-date-range-input [rangePicker]="rangePicker">
+          <input matStartDate placeholder="Start date" [(ngModel)]="startDate">
+          <input matEndDate placeholder="End date" [(ngModel)]="endDate">
+        </mat-date-range-input>
+
+        <mat-datepicker-toggle matSuffix [for]="rangePicker"></mat-datepicker-toggle>
+        <mat-date-range-picker #rangePicker>
+          <mat-date-range-picker-actions>
+            <button mat-button matDateRangePickerCancel>Cancel</button>
+            <button mat-raised-button color="primary" matDateRangePickerApply (click)="filterByDateRange()">Apply</button>
+          </mat-date-range-picker-actions>
+        </mat-date-range-picker>
+      </mat-form-field>
+
+      <span class="mx-2"></span>
+
+      <mat-form-field class="example-form-field" appearance="outline" subscriptSizing="dynamic">
+        <mat-select placeholder="Filtrer par Montant" [(value)]="selectedFilter" (selectionChange)="onFilterChange()">
+          <mat-option value="positif">Afficher seulement les entrées</mat-option>
+          <mat-option value="négatif">Afficher seulement les sorties</mat-option>
+          <mat-option value="reset">Tout voir</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+    </div>
+
+    <span class="spacer"></span>
+
+    <button mat-raised-button color="primary" (click)="fileInput.click()">Importer un fichier</button>
+    <input #fileInput type="file" (change)="onFileChange($event)" accept=".csv" style="display: none;" />
+
+  </mat-toolbar-row>
+
+  <mat-divider></mat-divider>
+
+  <!-- Affichage des données CSV -->
+  <div>
+
+    <div class="totals-container">
+      <mat-card class="total-card positive" appearance="outlined">
+        <mat-card-title>Entrées: {{ totals?.totalEntrees | number:'1.2-2' }} €</mat-card-title>
+      </mat-card>
+
+      <mat-card class="total-card negative" appearance="outlined">
+        <mat-card-title>Sorties: {{ totals?.totalSorties | number:'1.2-2' }} €</mat-card-title>
+      </mat-card>
+
+      <mat-card class="total-card general" appearance="outlined">
+        <mat-card-title>Reste: {{ totals?.totalGeneral | number:'1.2-2' }} €</mat-card-title>
+      </mat-card>
+    </div>
+
+    <!-- Conteneur pour le scroll horizontal -->
+    <mat-card class="card-container" appearance="outlined">
+      <div class="table-container">
+        <mat-table matSort
+                   matSortDirection="asc"
+                   matSortActive="Date valeur"
+                   matSortDisableClear
+                   multiTemplateDataRows
+                   [dataSource]="dataSource">
+
+          <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column">
+            <mat-header-cell mat-sort-header *matHeaderCellDef>{{ column }}</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{ element[column] }}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="expand">
+            <mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              <button mat-icon-button aria-label="expand row" (click)="(expandedElement = expandedElement === element ? null : element); $event.stopPropagation()">
+                <mat-icon *ngIf="expandedElement !== element">keyboard_arrow_down</mat-icon>
+                <mat-icon *ngIf="expandedElement === element">keyboard_arrow_up</mat-icon>
+              </button>
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="expandedDetail">
+            <mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplayWithExpand.length">
+              <div class="example-element-detail"
+                   [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                <div class="example-element-description">
+
+                  <p *ngFor="let col of excludedColumns">
+                    <strong>{{ col }}: </strong> {{ element[col] !== "" ?  element[col] : '...' }}
+                  </p>
+
+                </div>
+              </div>
+            </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand"></mat-header-row>
+          <mat-row *matRowDef="let element; columns: columnsToDisplayWithExpand;"
+              class="example-element-row"
+              [class.example-expanded-row]="expandedElement === element"
+              (click)="expandedElement = expandedElement === element ? null : element">
+          </mat-row>
+          <mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></mat-row>
+        </mat-table>
+      </div>
+
+      <!-- Pagination -->
+      <mat-paginator [length]="csvData.length"
+                     [pageSize]="this.pageSize"
+                     [pageSizeOptions]="[5, 10, 25, 100]"
+                     (page)="onPageChange($event)">
+      </mat-paginator>
+    </mat-card>
+
+  </div>
+</div>
