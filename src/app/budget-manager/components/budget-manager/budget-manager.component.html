@@ -62,13 +62,20 @@
         <mat-table matSort
                    matSortDirection="asc"
                    matSortActive="Date valeur"
-                   matSortDisableClear
+
                    multiTemplateDataRows
                    [dataSource]="dataSource">
 
           <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column">
             <mat-header-cell mat-sort-header *matHeaderCellDef>{{ column }}</mat-header-cell>
-            <mat-cell *matCellDef="let element">{{ element[column] }}</mat-cell>
+
+            <mat-cell *matCellDef="let element"
+                      [ngClass]="{
+            'positive-amount': column === 'Montant' && element[column] > 0,
+            'negative-amount': column === 'Montant' && element[column] < 0
+          }">
+              {{ column === "Date valeur" ? (element[column] | date: 'dd-MM-yyyy') : element[column]}}
+            </mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="expand">
@@ -108,9 +115,8 @@
 
       <!-- Pagination -->
       <mat-paginator [length]="csvData.length"
-                     [pageSize]="this.pageSize"
-                     [pageSizeOptions]="[5, 10, 25, 100]"
-                     (page)="onPageChange($event)">
+                     [pageSize]="pageSize"
+                     [pageSizeOptions]="[5, 10, 25, 100]">
       </mat-paginator>
     </mat-card>
 

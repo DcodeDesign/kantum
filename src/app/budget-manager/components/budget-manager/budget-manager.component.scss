@@ -104,12 +104,12 @@ mat-paginator {
   }
 }
 
-.positive {
+.positive, .positive-amount {
   // background: #e3fcef;
   color: #2e7d32;
 }
 
-.negative {
+.negative, .negative-amount {
   // background: #fdecea;
   color: #c62828;
 }
