@@ -96,7 +96,7 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
     this.editedRow = row;
   }
 
-  saveRow(element: any) {
+  saveRow(element: ITask) {
     this.editedRow = null;
     this.dataSource.data = this.updateDataSourceData;
 
@@ -104,13 +104,15 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
   }
 
   changeRowValue(row: ITask, column: string, $event: Event) {
-    this.updateDataSourceData = this.cloneDataSourceData.map(item => {
+    this.updateDataSourceData = this.dataSource.data.map(item => {
       if(item.id === row.id) {
         return { ...item, [column]:($event.target as HTMLInputElement).value}
       }
 
       return item;
     })
+
+    console.log(this.updateDataSourceData);
   }
 
   cancelEdit() {

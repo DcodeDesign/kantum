@@ -40,10 +40,8 @@ export class BudgetManagerComponent implements AfterViewInit {
   columnsToDisplayWithExpand: string[] = [];
   totals: { totalEntrees: number; totalSorties: number; totalGeneral: number; } | undefined;
   selectedFilter: 'positif' | 'négatif' | 'reset' = 'reset';
-  pageSize = 10;
-  startIndex: number | undefined;
-  endIndex: number | undefined;
-
+  pageSizeOptions=[5, 10, 25, 50, 100];
+  pageSize = this.pageSizeOptions[3];
 
   onFileChange(event: any): void {
     const file = event.target.files[0];
@@ -73,7 +71,7 @@ export class BudgetManagerComponent implements AfterViewInit {
             const dateValeur = DateTime.fromFormat(row["Date valeur"], "dd-MM-yy", { locale: "fr" });
 
             if (dateValeur.isValid) {
-              row["Date valeur"] = dateValeur.toJSDate(); // Convertit en objet Date natif
+              row["Date valeur"] = dateValeur.toJSDate();
             } else {
               console.warn(`Date invalide: ${row["Date valeur"]}`);
               row["Date valeur"] = null;
@@ -258,7 +256,6 @@ export class BudgetManagerComponent implements AfterViewInit {
       return;
     }
 
-    // Conversion des dates de début et fin avec Luxon
     const start = DateTime.fromJSDate(this.startDate).startOf("day");
     const end = DateTime.fromJSDate(this.endDate).endOf("day");
 
@@ -268,6 +265,11 @@ export class BudgetManagerComponent implements AfterViewInit {
       return rowDate.toMillis() >= start.toMillis() && rowDate.toMillis() <= end.toMillis();
     });
 
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
 }

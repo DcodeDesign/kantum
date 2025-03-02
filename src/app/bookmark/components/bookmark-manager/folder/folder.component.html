@@ -1,0 +1,11 @@
+<li>
+  <span (click)="toggleFolder()">{{ folder.name }}</span>
+  <ul *ngIf="folder.expanded">
+    <li *ngFor="let bookmark of folder.bookmarks">
+      <a [href]="bookmark.url" target="_blank">{{ bookmark.name }}</a>
+    </li>
+    <ng-container *ngFor="let subfolder of folder.subfolders">
+      <app-folder [folder]="subfolder"></app-folder>
+    </ng-container>
+  </ul>
+</li>

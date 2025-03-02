@@ -1,0 +1,10 @@
+<h1 mat-dialog-title>Nom du dossier</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <input matInput [(ngModel)]="folderName" placeholder="Nom">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="dialogRef.close()">Annuler</button>
+  <button mat-raised-button color="primary" (click)="dialogRef.close(folderName)">Ajouter</button>
+</div>

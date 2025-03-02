@@ -1,0 +1,105 @@
+<mat-toolbar-row class="toolbar">
+
+  <mat-form-field appearance="outline" subscriptSizing="dynamic" class="customize field-search w-100">
+    <mat-label>search...</mat-label>
+    <input matInput>
+  </mat-form-field>
+
+  <span class="spacer"></span>
+
+  <span class="mx-2"></span>
+
+  <button mat-raised-button style="width:220px;">Ajouter un favoris</button>
+
+</mat-toolbar-row>
+
+<mat-divider></mat-divider>
+
+<!-- <div class="container">
+  <h1>Bookmark Manager</h1>
+  <button mat-raised-button color="primary" (click)="openFolderDialog()">Ajouter un dossier</button>
+  <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+    <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodeToggle>
+      <div class="mat-tree-node">
+        <button mat-icon-button matTreeNodeToggle>
+          <mat-icon>{{ treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right' }}</mat-icon>
+        </button>
+        {{ node.name }}
+        <button mat-button (click)="openBookmarkForm(node, null)">+ Bookmark</button>
+        <button mat-button (click)="openSubFolderDialog(node)">+ Sous-dossier</button>
+      </div>
+      <div [class.example-tree-invisible]="!treeControl.isExpanded(node)" role="group">
+        <ng-container matTreeNodeOutlet></ng-container>
+      </div>
+    </mat-nested-tree-node>
+    <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+      <button mat-icon-button disabled></button>
+      {{ node.name }}
+      <button mat-button (click)="openBookmarkForm(node, node)">Modifier</button>
+    </mat-tree-node>
+  </mat-tree>
+
+</div>
+
+<div *ngIf="bookmarkFormVisible" class="bookmark-form">
+  <h2>{{ editingBookmark ? 'Modifier' : 'Ajouter' }} un bookmark</h2>
+  <form [formGroup]="bookmarkForm">
+    <mat-form-field>
+      <mat-label>Nom</mat-label>
+      <input matInput formControlName="name">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>URL</mat-label>
+      <input matInput formControlName="url">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Username</mat-label>
+      <input matInput formControlName="username">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Password</mat-label>
+      <input matInput type="password" formControlName="password">
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="saveBookmark()">Enregistrer</button>
+    <button mat-button (click)="bookmarkFormVisible = false">Annuler</button>
+  </form>
+</div> -->
+
+<mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="example-tree px-3 py-2">
+  <!-- This is the tree node template for leaf nodes -->
+  <!-- There is inline padding applied to this node using styles.
+    This padding value depends on the mat-icon-button width. -->
+  <mat-tree-node *matTreeNodeDef="let node" class="py-2">
+    <mat-icon class="px-2" fontIcon="link"></mat-icon>
+    {{node.name}} <br>
+    http:hlkgkg.com
+  </mat-tree-node>
+  <!-- This is the tree node template for expandable nodes -->
+  <mat-nested-tree-node
+    *matTreeNodeDef="let node; when: hasChild"
+    matTreeNodeToggle [cdkTreeNodeTypeaheadLabel]="node.name">
+    <div class="mat-tree-node d-flex ">
+      <button mat-icon-button matTreeNodeToggle
+              [attr.aria-label]="'Toggle ' + node.name">
+        <mat-icon class="mat-icon-rtl-mirror">
+          {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+        </mat-icon>
+      </button>
+      <mat-icon class="px-2" fontIcon="folder"></mat-icon> {{node.name}}
+
+
+      <button mat-icon-button
+              [attr.aria-label]="'Toggle ' + node.name">
+        <mat-icon class="mat-icon-rtl-mirror">
+          edit
+        </mat-icon>
+      </button>
+    </div>
+    <!-- There is inline padding applied to this div using styles.
+        This padding value depends on the mat-icon-button width.  -->
+    <div [class.example-tree-invisible]="!treeControl.isExpanded(node)"
+         role="group">
+      <ng-container matTreeNodeOutlet></ng-container>
+    </div>
+  </mat-nested-tree-node>
+</mat-tree>

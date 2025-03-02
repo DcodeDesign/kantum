@@ -2,7 +2,7 @@
 
   <mat-toolbar-row class="toolbar">
 
-    <div class="d-flex align-content-center justify-content-center">
+    <div class="d-flex align-content-center justify-content-center w-100">
       <mat-form-field class="example-form-field" appearance="outline" subscriptSizing="dynamic">
         <mat-date-range-input [rangePicker]="rangePicker">
           <input matStartDate placeholder="Start date" [(ngModel)]="startDate">
@@ -28,9 +28,15 @@
         </mat-select>
       </mat-form-field>
 
+      <span class="mx-2"></span>
+
+      <mat-form-field class="w-100" appearance="outline" subscriptSizing="dynamic">
+        <input matInput (keyup)="applyFilter($event)" placeholder="Recherche..." #input>
+      </mat-form-field>
+
     </div>
 
-    <span class="spacer"></span>
+    <span class="spacer mx-2"></span>
 
     <button mat-raised-button color="primary" (click)="fileInput.click()">Importer un fichier</button>
     <input #fileInput type="file" (change)="onFileChange($event)" accept=".csv" style="display: none;" />
@@ -39,7 +45,6 @@
 
   <mat-divider></mat-divider>
 
-  <!-- Affichage des données CSV -->
   <div>
 
     <div class="totals-container">
