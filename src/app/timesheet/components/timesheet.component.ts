@@ -1,5 +1,5 @@
 import {AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
-import {startOfMonth, endOfMonth, eachDayOfInterval, subMonths, addMonths, subDays, addDays} from 'date-fns';
+import {addDays, addMonths, eachDayOfInterval, endOfMonth, startOfMonth, subDays, subMonths} from 'date-fns';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import * as XLSX from 'xlsx';
@@ -12,7 +12,7 @@ import {ITask} from '../interfaces/task.interface';
 import {Store} from '@ngrx/store';
 import {selectAllTasks} from '../stores/task-list/task-list.selectors';
 import {updateAllTasks} from '../stores/task-list/task-list.actions';
-import {MatSort, Sort} from '@angular/material/sort';
+import {MatSort} from '@angular/material/sort';
 
 @Component({
   selector: 'app-timesheet',
@@ -31,6 +31,8 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
   @ViewChild('tasks') tableTask: MatTable<ITask[]>;
   // @ts-ignore
   @ViewChild(MatSort) sort: MatSort;
+
+  allSelected: boolean = false;
 
   displayedMonth = new Date();
   displayedColumns: string[] = [];
@@ -98,7 +100,10 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
 
   saveRow(element: ITask) {
     this.editedRow = null;
-    this.dataSource.data = this.updateDataSourceData;
+
+    if(this.updateDataSourceData.length > 0) {
+      this.dataSource.data = this.updateDataSourceData;
+    }
 
     this.updateDataSource();
   }
@@ -111,8 +116,7 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
 
       return item;
     })
-
-    console.log(this.updateDataSourceData);
+    console.log(this.updateDataSourceData)
   }
 
   cancelEdit() {
@@ -126,7 +130,6 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
   }
 
   updateDataSource() {
-    this.cloneDataSourceData = this.dataSource.data;
     this.store.dispatch(updateAllTasks({ tasks: this.dataSource.data }));
     this.tableTask?.renderRows();
   }
@@ -178,11 +181,13 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
   }
 
   previousMonth() {
+    this.selectedDays = [];
     this.displayedMonth = subMonths(this.displayedMonth, 1);
     this.updateDaysInMonth();
   }
 
   nextMonth() {
+    this.selectedDays = [];
     this.displayedMonth = addMonths(this.displayedMonth, 1);
     this.updateDaysInMonth();
   }
@@ -246,11 +251,15 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
     }
 
     if(this.selectedDays.length !== 0) {
-      this.dataSource.data = this.cloneDataSourceData.filter(task =>
-        this.selectedDays.some(selectedDate =>
-          new Date(task.date).toDateString() === selectedDate.toDateString()
-        )
-      );
+      this.dataSource.filterPredicate = (task: ITask, filter: string) => {
+        return this.selectedDays.length !== 0
+          ? this.selectedDays.some(selectedDate => {
+              return task.date.getTime() === selectedDate.getTime()
+          })
+          : true;
+      }
+
+      this.dataSource.filter = 'filter';
     } else {
       this.dataSource.data = this.cloneDataSourceData;
     }
@@ -284,11 +293,49 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
   }
 
   applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.dataSource.filter = (event.target as HTMLInputElement).value;
+    this.dataSource.filterPredicate = ((data: any, filter: string) => {
+      let searchTerm = filter;
+      let dataToReturn = true;
+      for(let col in data) {
+        let colToReturn = !searchTerm || data[col].toString().toLowerCase().includes(searchTerm)
+        dataToReturn = dataToReturn && colToReturn;
+      }
+      return dataToReturn;
+    }) as (data: any, filter: string) => boolean;
+
   }
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
+  }
+
+  selectAllDays(checked: boolean): void {
+    this.allSelected = checked;
+    if(this.allSelected) {
+      this.daysInMonth.forEach(date => {
+        if(!this.isWeekend(date)) {
+          this.selectDays(date)
+        }
+      });
+    } else {
+        this.selectedDays = [];
+    }
+  }
+
+  getTooltipText(day: Date): string {
+    let tooltipParts: string[] = [];
+
+    if (this.isHoliday(day)) {
+      tooltipParts.push('Jour férié');
+    }
+    if (this.isWeekend(day)) {
+      tooltipParts.push('Week-end');
+    }
+    if (this.isSchoolHoliday(day)) {
+      tooltipParts.push('Congé scolaire');
+    }
+
+    return tooltipParts.length > 0 ? tooltipParts.join(' - ') : ''; // Séparateur clair
   }
 }

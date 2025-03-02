@@ -11,16 +11,24 @@
     </button>
   </div>
 
-  <mat-form-field appearance="outline" subscriptSizing="dynamic" class="customize field-search w-100">
+  <!-- <mat-form-field appearance="outline" subscriptSizing="dynamic" class="customize field-search w-100">
     <mat-label>search...</mat-label>
     <input matInput (keyup)="applyFilter($event)">
-  </mat-form-field>
+  </mat-form-field> -->
 
   <span class="spacer"></span>
 
   <span class="mx-2"></span>
 
-  <button mat-raised-button style="width:220px;" (click)="openTaskTemplateModal()">Gestion des modèles</button>
+  <mat-slide-toggle
+    [(ngModel)]="allSelected"
+    (change)="selectAllDays($event.checked)">
+    Sélectionner tous les jours ouvrés
+  </mat-slide-toggle>
+
+  <span class="mx-2"></span>
+
+  <button mat-raised-button style="width:260px;" (click)="openTaskTemplateModal()">Gestion des modèles</button>
 
 </mat-toolbar-row>
 
@@ -41,15 +49,17 @@
     <tr>
       <td *ngFor="let day of daysInMonth"
           [class.no-border]="!isSelected(day)"
+          [matTooltip]="getTooltipText(day)"
           [ngClass]="{'weekend': isWeekend(day), 'holiday': isHoliday(day) && !isWeekend(day)}">
         <div>{{ day | date: 'd' }}</div>
-        <div>{{ day | date: 'EEE' }}</div>
+        <div>{{ day | date: 'EEE' }} </div>
       </td>
     </tr>
     <tr>
       <td *ngFor="let day of daysInMonth"
           [class.no-border]="!isSelected(day)"
-          [ngClass]="{'school-holiday': isSchoolHoliday(day)}">
+          [matTooltip]="getTooltipText(day)"
+          [ngClass]="{'school-holiday': isSchoolHoliday(day), 'weekend': isWeekend(day)}">
         <app-total-time-task [tasks]="dataSource.data" [date]="day"></app-total-time-task>
       </td>
     </tr>
@@ -59,10 +69,19 @@
 </mat-card>
 </div>
 
+<div #tooltipContent style="display: none;">
+  <b>Sélectionne tous les jours</b> sauf samedi et dimanche.
+</div>
+
 <div class="tasks-container">
   <mat-card appearance="outlined" style="background-color: transparent">
     <div class="task-content">
-      <div>
+      <mat-form-field appearance="outline" subscriptSizing="dynamic" class="customize field-search w-50">
+        <mat-label>search...</mat-label>
+        <input matInput (keyup)="applyFilter($event)">
+      </mat-form-field>
+
+      <div class="w-50">
         <div class="calendar-month-navigation">
           <button *ngIf="selectedDays.length === 1" mat-icon-button (click)="previousDay(selectedDays[0])" aria-label="Jour précédent">
             <mat-icon>arrow_left</mat-icon>
@@ -81,7 +100,7 @@
         </div>
       </div>
 
-      <div  class="button-container">
+      <div class="button-container w-50">
         <button mat-raised-button *ngIf="dataSource.data.length > 0" color="secondary" (click)="exportToXLSX()">Exporter en CSV</button>
         <span class="mx-1"></span>
         <button mat-raised-button *ngIf="selectedDays.length > 0" (click)="openTaskModal()">Ajouter une tâche</button>
@@ -124,6 +143,7 @@
               </span>
 
               <mat-form-field *ngIf="column !== 'date' && column !== 'actions'"
+                              class="form-field"
                               subscriptSizing="dynamic"
                               appearance="fill">
                 <input matInput
@@ -132,7 +152,7 @@
                        [ngModel]="element[column]"
                        (keydown.enter)="saveRow(element)" />
 
-                <span class="fs-6" *ngIf="column !== 'hours'"> {{ element[column] | decimalConvertToHour }} </span>
+                <div class="fs-6" *ngIf="column === 'hours'"> {{ element[column] | decimalConvertToHour }} </div>
               </mat-form-field>
               <button *ngIf="column === 'actions'" mat-icon-button (click)="saveRow(element)">
                 <mat-icon>check</mat-icon>

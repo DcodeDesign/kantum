@@ -59,9 +59,9 @@
         <mat-expansion-panel-header>
           <mat-panel-title> Liste des modèles </mat-panel-title>
         </mat-expansion-panel-header>
-        <div>
+        <div class="overflow-auto">
           <br>
-          <table mat-table #taskTemplate [dataSource]="taskTemplates">
+          <table mat-table #taskTemplate [dataSource]="taskTemplates" class="w-100">
             <ng-container matColumnDef="project">
               <th mat-header-cell *matHeaderCellDef> Projet</th>
               <td mat-cell *matCellDef="let template">
@@ -87,7 +87,7 @@
             <ng-container matColumnDef="description">
               <th mat-header-cell *matHeaderCellDef> Description</th>
               <td mat-cell *matCellDef="let template">
-                <mat-form-field subscriptSizing="dynamic" appearance="fill" class="form-field">
+                <mat-form-field subscriptSizing="dynamic" appearance="fill" class="form-field description-field">
                   <input matInput
                          [ngModel]="template.description"
                          (ngModelChange)="updateTemplate(template, 'description', $event)">

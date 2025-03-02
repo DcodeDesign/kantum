@@ -1,1 +1,3 @@
 {{ total | decimalConvertToHour }}
+<span *ngIf="total === max"> ✔️ </span>
+<span *ngIf="total > max"> ⚠️ </span>

@@ -21,6 +21,21 @@
   width: 100%;
 }
 
+table {
+  th, td, .form-field {
+    width: 100px!important;
+    min-width: 100px!important;
+  }
+
+  .mat-column-description {
+    width: 100%!important;
+    min-width: 400px!important;
+    .form-field {
+      width: 100%!important;
+    }
+  }
+}
+
 .description-field {
   grid-column: span 2; /* Étend ce champ sur deux colonnes */
 }

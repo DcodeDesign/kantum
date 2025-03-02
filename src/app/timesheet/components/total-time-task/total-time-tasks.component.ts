@@ -1,6 +1,7 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {ITask} from '../../interfaces/task.interface';
 import {sum} from 'lodash';
+import {max} from 'rxjs';
 
 @Component({
   selector: 'app-total-time-task',
@@ -11,6 +12,7 @@ export class TotalTimeTasksComponent implements OnInit, OnChanges {
   @Input() tasks: ITask[] = [];
   @Input() date: Date = new Date();
   total: number = 0;
+  protected readonly max = 7.6;
 
   ngOnInit(): void {
 

@@ -217,5 +217,27 @@ tr.example-element-row:not(.example-expanded-row):active {
   }
 }
 
+.tasks-container {
+  table {
+    .form-field {
+      width: 100%;
+    }
+
+    th, td {
+      width: 100px!important;
+      min-width: 100px!important;
+    }
+
+    .mat-column-description {
+      width: 100%!important;
+      min-width: 400px!important;
+      .form-field {
+        width: 100%!important;
+      }
+    }
+  }
+}
+
+
 
 
