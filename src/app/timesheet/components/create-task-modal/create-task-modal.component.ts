@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit, signal, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, Inject, OnInit, signal, ViewChild} from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import {MatTable} from '@angular/material/table';
 import * as uuid from 'short-uuid';
@@ -25,13 +25,14 @@ export class CreateTaskModalComponent implements OnInit {
   hours: number | null = null;
   tasks: any[] = [];
   taskTemplates: any[] = [];
-  displayedColumns: string[] = ['project', 'task', 'description', 'hours', 'actions'];
+  displayedColumns: string[] = ['task', 'description', 'hours', 'actions'];
   taskTemplatesTemp: any[] = [];
 
   constructor(
     public dialogRef: MatDialogRef<CreateTaskModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private store: Store
+    private store: Store,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -114,5 +115,9 @@ export class CreateTaskModalComponent implements OnInit {
     this.taskTemplatesTemp = this.taskTemplatesTemp.map(temp =>
       temp.id === template.id ? { ...temp, [key]: value } : temp
     );
+    this.tableTemplate?.renderRows();
   }
+
+  protected readonly parseInt = parseInt;
+  protected readonly Number = Number;
 }

@@ -17,7 +17,7 @@ import {
 import { HttpClientModule } from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
 import {MatDivider} from '@angular/material/divider';
-import {MatFormField, MatLabel, MatSuffix} from '@angular/material/form-field';
+import {MatFormField, MatHint, MatLabel, MatSuffix} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
 import {MatToolbarRow} from '@angular/material/toolbar';
 import {NgxColorsModule} from 'ngx-colors';
@@ -92,7 +92,8 @@ import {MatSlideToggle} from '@angular/material/slide-toggle';
     MatSort,
     MatSortModule,
     MatTooltip,
-    MatSlideToggle
+    MatSlideToggle,
+    MatHint
   ]
 })
 export class TimesheetModule { }
