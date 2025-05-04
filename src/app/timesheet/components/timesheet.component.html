@@ -138,16 +138,15 @@
               </span>
 
               <mat-form-field *ngIf="column !== 'date' && column !== 'actions'"
-                              class="form-field"
+                              class="form-field my-1"
                               subscriptSizing="dynamic"
-                              appearance="fill">
+                              appearance="outline">
                 <input matInput
                        [attr.type]="column === 'hours' ? 'number' : 'text'"
                        (input)="changeRowValue(element, column, $event)"
                        [ngModel]="element[column]"
                        (keydown.enter)="saveRow(element)" />
-
-                <div class="fs-6" *ngIf="column === 'hours'"> {{ element[column] | decimalConvertToHour }} </div>
+                <span class="decimal-convert" *ngIf="column === 'hours'">{{ Number(element[column]?.value) | decimalConvertToHour}}</span>
               </mat-form-field>
               <button *ngIf="column === 'actions'" mat-icon-button (click)="saveRow(element)">
                 <mat-icon>check</mat-icon>

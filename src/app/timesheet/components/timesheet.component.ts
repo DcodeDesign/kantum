@@ -276,15 +276,21 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
 
     data.push(['Date', 'Projet', 'Tâche', 'Description', 'Sales Order Item', 'Quantité']);
 
+    const isFiltering = this.selectedDays.length > 0;
+    const selectedTimestamps = new Set(this.selectedDays.map(day => day.getTime()));
+
     this.dataSource.data.forEach(task => {
-      data.push([
-        task.date,
-        task.project,
-        task.task,
-        task.description,
-        task.salesOrderItem,
-        task.hours
-      ]);
+      const isSelected = !isFiltering || selectedTimestamps.has(task.date.getTime());
+      if (isSelected) {
+        data.push([
+          task.date,
+          task.project,
+          task.task,
+          task.description,
+          task.salesOrderItem,
+          Number(task.hours)
+        ]);
+      }
     });
 
     const ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet(data);
@@ -338,4 +344,6 @@ export class TimesheetComponent implements OnInit, AfterViewInit {
 
     return tooltipParts.length > 0 ? tooltipParts.join(' - ') : ''; // Séparateur clair
   }
+
+  protected readonly Number = Number;
 }

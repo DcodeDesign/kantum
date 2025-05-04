@@ -102,4 +102,5 @@ export class CreateTaskTemplateModalComponent implements OnInit {
     this.dialogRef.close(this.tasks);
   }
 
+    protected readonly Number = Number;
 }
